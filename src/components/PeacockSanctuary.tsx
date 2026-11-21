@@ -1,6 +1,7 @@
 import { motion } from 'motion/react';
 import { weddingConfig } from '../config/weddingConfig';
 import { LotusDivider } from './OrnamentalMotifs';
+import { PalaceArchitectureBg } from './PalaceArchitectureBg';
 import {
   DecorativeCutout,
   StaticPeacockOrnament,
@@ -14,6 +15,7 @@ export function PeacockSanctuary() {
       aria-label="Static Royal Indian Peacock and Lotus Sanctuary"
       className="relative py-20 sm:py-28 px-4 sm:px-8 bg-[#FAF5EB] text-[#2B1418] overflow-hidden"
     >
+      <PalaceArchitectureBg variant="darbar-jharokha" tone="ivory" />
       <div
         aria-hidden="true"
         className="absolute inset-0 pointer-events-none"

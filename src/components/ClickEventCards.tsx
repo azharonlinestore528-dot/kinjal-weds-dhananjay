@@ -381,7 +381,7 @@ function EventInvitationRoom({
 
           <div
             className={`relative preserve-3d ${
-              isOpen ? 'min-h-[380px] sm:min-h-[460px]' : 'min-h-[242px] sm:min-h-[460px]'
+              isOpen ? 'min-h-[420px] sm:min-h-[480px]' : 'min-h-[324px] sm:min-h-[470px]'
             }`}
           >
             {/* Interior Invitation Page (Revealed ONLY on Click/Tap) */}
@@ -415,7 +415,7 @@ function EventInvitationRoom({
                 className="hidden sm:block absolute -bottom-3 -right-3 w-24 h-auto opacity-85 z-10"
               />
 
-              <div className="relative z-20 p-4 sm:p-9 lg:p-11">
+              <div className="relative z-20 p-4 pb-8 sm:p-9 sm:pb-12 lg:p-11 lg:pb-12">
                 {/* Top Row: Toran + Close Control */}
                 <div className="flex items-start justify-between gap-3 mb-2 sm:mb-3">
                   <div className="flex-1 min-w-0">
@@ -583,10 +583,10 @@ function EventInvitationRoom({
                 aria-expanded={isOpen}
                 aria-label={`${event.englishName} invitation — ${event.coverPrompt}`}
                 style={{ background: style.coverGradient }}
-                className={`backface-hidden absolute inset-0 w-full h-full rounded-2xl sm:rounded-3xl border-2 ${style.coverBorderClass} shadow-[0_20px_56px_rgba(10,3,5,0.48)] hover:brightness-[1.03] active:scale-[0.995] transition-all flex flex-col items-center justify-center p-3.5 sm:p-10 text-center cursor-pointer overflow-hidden`}
+                className={`backface-hidden absolute inset-0 w-full h-full rounded-2xl sm:rounded-3xl border-2 ${style.coverBorderClass} shadow-[0_20px_56px_rgba(10,3,5,0.48)] hover:brightness-[1.03] active:scale-[0.995] transition-all flex flex-col items-center justify-center px-5 py-6 pb-8 sm:p-10 sm:pb-12 text-center cursor-pointer overflow-hidden`}
               >
                 <div
-                  className={`absolute inset-2 sm:inset-4 rounded-xl sm:rounded-2xl border ${style.coverBorderClass} opacity-65 pointer-events-none`}
+                  className={`absolute inset-2.5 sm:inset-4 rounded-xl sm:rounded-2xl border ${style.coverBorderClass} opacity-65 pointer-events-none`}
                 />
 
                 {isMainWedding && (
@@ -609,15 +609,15 @@ function EventInvitationRoom({
                 <FloralCornerCluster
                   variant={style.cornerVariant}
                   position="bottom-left"
-                  className="absolute bottom-1 left-1 sm:bottom-1.5 sm:left-1.5 w-12 h-12 sm:w-28 sm:h-28 opacity-90"
+                  className="absolute bottom-1 left-1 sm:bottom-1.5 sm:left-1.5 w-11 h-11 sm:w-24 sm:h-24 opacity-90"
                 />
                 <FloralCornerCluster
                   variant={style.cornerVariant}
                   position="bottom-right"
-                  className="absolute bottom-1 right-1 sm:bottom-1.5 sm:right-1.5 w-12 h-12 sm:w-28 sm:h-28 opacity-90"
+                  className="absolute bottom-1 right-1 sm:bottom-1.5 sm:right-1.5 w-11 h-11 sm:w-24 sm:h-24 opacity-90"
                 />
 
-                <div className="relative z-10 max-w-md flex flex-col items-center">
+                <div className="relative z-10 w-full max-w-md flex flex-col items-center px-2">
                   <CoverOrnamentCenterpiece event={event} />
 
                   <p
@@ -629,7 +629,7 @@ function EventInvitationRoom({
 
                   <LotusDivider
                     tone={style.dividerTone}
-                    className="my-1.5 sm:my-4 scale-75 sm:scale-100"
+                    className="my-1.5 sm:my-3.5 scale-75 sm:scale-100"
                   />
 
                   <p
@@ -651,7 +651,7 @@ function EventInvitationRoom({
                   </p>
 
                   <span
-                    className={`mt-2.5 sm:mt-6 inline-flex items-center gap-2 px-4 py-2 sm:px-6 sm:py-3 rounded-full border text-[11px] sm:text-sm font-semibold tracking-[0.18em] sm:tracking-[0.22em] uppercase shadow-md min-h-[38px] sm:min-h-[44px] ${style.coverCtaClass}`}
+                    className={`mt-4 sm:mt-6 mb-1 inline-flex items-center justify-center gap-2 px-5 py-2.5 sm:px-6 sm:py-3 rounded-full border text-[11px] sm:text-sm font-semibold tracking-[0.18em] sm:tracking-[0.22em] uppercase shadow-md min-h-[40px] sm:min-h-[44px] ${style.coverCtaClass}`}
                   >
                     <BookOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
                     <span>{event.coverPrompt}</span>

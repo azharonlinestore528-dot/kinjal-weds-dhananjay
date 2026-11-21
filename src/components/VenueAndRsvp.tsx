@@ -3,6 +3,7 @@ import { motion } from 'motion/react';
 import { useState } from 'react';
 import { getGoogleMapsUrl, getWhatsAppUrl, weddingConfig } from '../config/weddingConfig';
 import { FloralCornerCluster, LotusDivider } from './OrnamentalMotifs';
+import { PalaceArchitectureBg } from './PalaceArchitectureBg';
 import {
   DecorativeCutout,
   StaticPeacockOrnament,
@@ -33,6 +34,7 @@ export function VenueAndRsvp() {
         aria-label="Wedding Venue in Udaipur"
         className="relative py-20 sm:py-28 px-4 sm:px-8 bg-[#FAF5EB] text-[#2B1418] overflow-hidden"
       >
+        <PalaceArchitectureBg variant="haveli-arches" tone="ivory" />
         <DecorativeCutout
           src={weddingConfig.decor.bougainvilleaBranch}
           alt=""
@@ -138,6 +140,7 @@ export function VenueAndRsvp() {
         aria-label="RSVP and WhatsApp Wedding Updates"
         className="relative py-20 sm:py-24 px-4 sm:px-8 velvet-burgundy text-[#FAF5EB] overflow-hidden"
       >
+        <PalaceArchitectureBg variant="palace-colonnade" tone="dark" />
         <FloralCornerCluster
           variant="lotus-rose"
           position="top-left"

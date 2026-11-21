@@ -6,6 +6,7 @@ import {
   LotusDivider,
   StaticPeacockCrest,
 } from './OrnamentalMotifs';
+import { PalaceArchitectureBg } from './PalaceArchitectureBg';
 import {
   DecorativeCutout,
   StaticPeacockOrnament,
@@ -52,8 +53,11 @@ export function RoyalInvitationCard() {
     <section
       id="royal-invitation"
       aria-label="Official Wedding Invitation and Live Countdown"
-      className="relative py-8 sm:py-16 lg:py-20 px-3.5 sm:px-8 bg-[#FAF5EB] overflow-hidden"
+      className="relative scroll-mt-16 min-h-[calc(100svh-3.5rem)] flex flex-col justify-center py-8 sm:py-16 lg:py-20 px-3.5 sm:px-8 bg-[#FAF5EB] overflow-hidden"
     >
+      {/* Subtle Heritage Palace Arches Architectural Backdrop */}
+      <PalaceArchitectureBg variant="haveli-arches" tone="ivory" />
+
       {/* Subtle Golden Light & Botanical Radiance Behind Hero */}
       <div
         aria-hidden="true"

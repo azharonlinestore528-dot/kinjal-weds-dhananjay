@@ -233,113 +233,146 @@
 /* Subtle natural pendulum swing for hanging lotus garlands */
 @keyframes lotus-swing-a {
   0%, 100% {
-    transform: rotate(-2deg);
+    transform: rotate(-3.4deg);
   }
   50% {
-    transform: rotate(2.1deg);
+    transform: rotate(3.6deg);
   }
 }
 
 @keyframes lotus-swing-b {
   0%, 100% {
-    transform: rotate(1.9deg);
+    transform: rotate(3.2deg);
   }
   50% {
-    transform: rotate(-2.2deg);
+    transform: rotate(-3.8deg);
   }
 }
 
 @keyframes lotus-swing-c {
   0%, 100% {
-    transform: rotate(-1.6deg);
+    transform: rotate(-2.9deg);
   }
   50% {
-    transform: rotate(1.7deg);
+    transform: rotate(3.1deg);
+  }
+}
+
+@keyframes lotus-swing-d {
+  0%, 100% {
+    transform: rotate(4deg);
+  }
+  50% {
+    transform: rotate(-4.2deg);
   }
 }
 
 .animate-lotus-swing-a {
   transform-origin: top center;
-  animation: lotus-swing-a 5.8s ease-in-out infinite;
+  animation: lotus-swing-a 4.8s ease-in-out infinite;
   will-change: transform;
 }
 
 .animate-lotus-swing-b {
   transform-origin: top center;
-  animation: lotus-swing-b 6.9s ease-in-out infinite;
+  animation: lotus-swing-b 5.6s ease-in-out infinite;
   animation-delay: -1.4s;
   will-change: transform;
 }
 
 .animate-lotus-swing-c {
   transform-origin: top center;
-  animation: lotus-swing-c 7.6s ease-in-out infinite;
-  animation-delay: -2.8s;
+  animation: lotus-swing-c 6.2s ease-in-out infinite;
+  animation-delay: -2.6s;
   will-change: transform;
-}
-
-@keyframes lotus-swing-d {
-  0%, 100% {
-    transform: rotate(2.3deg);
-  }
-  50% {
-    transform: rotate(-2.4deg);
-  }
 }
 
 .animate-lotus-swing-d {
   transform-origin: top center;
-  animation: lotus-swing-d 4.7s ease-in-out infinite;
+  animation: lotus-swing-d 3.9s ease-in-out infinite;
   animation-delay: -0.9s;
   will-change: transform;
 }
 
-/* Varied slightly brisker natural sway & float for flowers framing the gate */
+/* Varied brisker natural sway & float for flowers framing the gate */
 @keyframes floral-sway-1 {
   0%, 100% {
-    transform: translate3d(0, 0, 0) rotate(-1.8deg);
+    transform: translate3d(0, 0, 0) rotate(-2.8deg);
   }
   50% {
-    transform: translate3d(3px, -5px, 0) rotate(1.9deg);
+    transform: translate3d(5px, -8px, 0) rotate(3.1deg);
   }
 }
 
 @keyframes floral-sway-2 {
   0%, 100% {
-    transform: translate3d(0, 0, 0) rotate(1.7deg);
+    transform: translate3d(0, 0, 0) rotate(2.6deg);
   }
   50% {
-    transform: translate3d(-4px, -4px, 0) rotate(-2deg);
+    transform: translate3d(-6px, -6px, 0) rotate(-3.2deg);
   }
 }
 
 @keyframes floral-float {
   0%, 100% {
-    transform: translate3d(0, 0, 0) rotate(-1deg);
+    transform: translate3d(0, 0, 0) rotate(-2deg);
   }
   50% {
-    transform: translate3d(2px, -7px, 0) rotate(1.4deg);
+    transform: translate3d(3px, -10px, 0) rotate(2.4deg);
   }
 }
 
 .animate-floral-sway-1 {
   transform-origin: top left;
-  animation: floral-sway-1 3.5s ease-in-out infinite;
+  animation: floral-sway-1 3.1s ease-in-out infinite;
   will-change: transform;
 }
 
 .animate-floral-sway-2 {
   transform-origin: top right;
-  animation: floral-sway-2 4.2s ease-in-out infinite;
-  animation-delay: -1.4s;
+  animation: floral-sway-2 3.7s ease-in-out infinite;
+  animation-delay: -1.3s;
   will-change: transform;
 }
 
 .animate-floral-float {
   transform-origin: bottom center;
-  animation: floral-float 3.8s ease-in-out infinite;
+  animation: floral-float 3.3s ease-in-out infinite;
   animation-delay: -0.7s;
   will-change: transform;
+}
+
+/* Top-Center Gate Decorative Light Warm Glow, Breathing Shimmer & Sparkles */
+@keyframes lantern-warm-glow {
+  0%, 100% {
+    opacity: 0.54;
+    transform: scale(0.94);
+  }
+  50% {
+    opacity: 0.94;
+    transform: scale(1.12);
+  }
+}
+
+@keyframes sparkle-twinkle {
+  0%, 100% {
+    opacity: 0.2;
+    transform: scale(0.65) rotate(0deg);
+  }
+  50% {
+    opacity: 0.98;
+    transform: scale(1.22) rotate(18deg);
+  }
+}
+
+.animate-lantern-glow {
+  animation: lantern-warm-glow 3.6s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+.animate-sparkle-twinkle {
+  animation: sparkle-twinkle 2.6s ease-in-out infinite;
+  will-change: transform, opacity;
 }
 
 /* Gentle royal golden pulse around TAP TO OPEN button */
@@ -450,6 +483,8 @@
   .animate-floral-sway-1,
   .animate-floral-sway-2,
   .animate-floral-float,
+  .animate-lantern-glow,
+  .animate-sparkle-twinkle,
   .animate-tap-halo,
   .animate-golden-mote,
   .animate-gate-curtain-lift,

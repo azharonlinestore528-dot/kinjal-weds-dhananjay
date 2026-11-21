@@ -7,6 +7,7 @@ import {
   HangingFloralToran,
   LotusDivider,
 } from './OrnamentalMotifs';
+import { PalaceArchitectureBg } from './PalaceArchitectureBg';
 import {
   DecorativeCutout,
   StaticPeacockOrnament,
@@ -256,6 +257,7 @@ export function ScratchRevealCard({
       aria-label="Interactive Scratch to Reveal Wedding Date"
       className="relative py-20 sm:py-28 px-4 sm:px-8 velvet-burgundy text-[#FAF5EB] overflow-hidden"
     >
+      <PalaceArchitectureBg variant="palace-colonnade" tone="dark" />
       <FloralCornerCluster
         variant="lotus-rose"
         position="top-left"

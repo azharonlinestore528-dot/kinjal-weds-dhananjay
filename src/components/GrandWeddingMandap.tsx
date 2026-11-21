@@ -2,6 +2,7 @@ import { motion } from 'motion/react';
 import { Calendar, Clock, MapPin } from 'lucide-react';
 import { weddingConfig } from '../config/weddingConfig';
 import { FloralJhoomar, LotusDivider } from './OrnamentalMotifs';
+import { PalaceArchitectureBg } from './PalaceArchitectureBg';
 import {
   DecorativeCutout,
   StaticPeacockOrnament,
@@ -15,6 +16,7 @@ export function GrandWeddingMandap() {
       aria-label="Grand Final Wedding Mandap Celebration"
       className="relative py-20 sm:py-28 px-4 sm:px-8 theme-wedding-maroon text-[#FAF5EB] overflow-hidden border-t-2 border-[#C49A45]/60"
     >
+      <PalaceArchitectureBg variant="palace-colonnade" tone="dark" />
       {/* Emerald Garden Horizon Glow at Bottom */}
       <div
         aria-hidden="true"

@@ -6,6 +6,7 @@ import {
   LotusDivider,
   StaticPeacockCrest,
 } from './OrnamentalMotifs';
+import { PalaceArchitectureBg } from './PalaceArchitectureBg';
 import {
   DecorativeCutout,
   StaticPeacockOrnament,
@@ -36,7 +37,9 @@ export function MiniatureCelebrations({
       />
 
       {/* Celebrations Section Header */}
-      <div className="relative max-w-5xl mx-auto px-4 sm:px-8 pt-10 sm:pt-20 pb-6 sm:pb-12 text-center">
+      <div className="relative overflow-hidden">
+        <PalaceArchitectureBg variant="darbar-jharokha" tone="dark" />
+        <div className="relative z-10 max-w-5xl mx-auto px-4 sm:px-8 pt-10 sm:pt-20 pb-6 sm:pb-12 text-center">
         <SwingingLotusGarland
           timing="a"
           className="hidden sm:block absolute top-0 left-2 w-12 h-36 opacity-90"
@@ -78,6 +81,7 @@ export function MiniatureCelebrations({
               0{idx + 1}. {ev.englishName}
             </button>
           ))}
+          </div>
         </div>
       </div>
 

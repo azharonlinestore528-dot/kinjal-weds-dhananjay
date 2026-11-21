@@ -1,6 +1,7 @@
 import { motion } from 'motion/react';
 import { weddingConfig } from '../config/weddingConfig';
 import { LotusDivider } from './OrnamentalMotifs';
+import { PalaceArchitectureBg } from './PalaceArchitectureBg';
 import {
   DecorativeCutout,
   StaticPeacockOrnament,
@@ -14,6 +15,7 @@ export function FamilyBlessings() {
       aria-label="Blessings of Our Families"
       className="relative py-20 sm:py-28 px-4 sm:px-8 emerald-courtyard text-[#FAF5EB] overflow-hidden border-t border-[#C49A45]/45"
     >
+      <PalaceArchitectureBg variant="darbar-jharokha" tone="dark" />
       {/* Soft Botanical & Gold Radiance */}
       <div
         aria-hidden="true"
