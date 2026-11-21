@@ -50,8 +50,9 @@ export function RoyalInvitationCard() {
 
   return (
     <section
+      id="royal-invitation"
       aria-label="Official Wedding Invitation and Live Countdown"
-      className="relative py-5 sm:py-12 lg:py-16 px-3.5 sm:px-8 bg-[#FAF5EB] overflow-hidden"
+      className="relative py-8 sm:py-16 lg:py-20 px-3.5 sm:px-8 bg-[#FAF5EB] overflow-hidden"
     >
       {/* Subtle Golden Light & Botanical Radiance Behind Hero */}
       <div
@@ -88,7 +89,7 @@ export function RoyalInvitationCard() {
       />
 
       <div className="relative z-20 max-w-5xl mx-auto">
-        <div className="paper-texture relative rounded-2xl border border-[#C49A45]/75 shadow-[0_24px_70px_rgba(92,18,34,0.14)] p-3 sm:p-7 md:p-9 overflow-visible">
+        <div className="paper-texture relative rounded-2xl border border-[#C49A45]/75 shadow-[0_24px_70px_rgba(92,18,34,0.14)] p-3.5 sm:p-8 md:p-10 overflow-visible">
           {/* Static Royal Peacock Perched Naturally on the Upper Right Corner of the Invitation Frame */}
           <StaticPeacockOrnament className="absolute -top-6 right-0 sm:-top-11 sm:-right-7 w-14 sm:w-28 md:w-32 h-auto z-30 drop-shadow-lg" />
 
@@ -100,7 +101,7 @@ export function RoyalInvitationCard() {
           />
 
           {/* Inner double gilt stationery frame */}
-          <div className="relative border border-[#C49A45]/55 rounded-xl px-3.5 py-5 sm:px-10 sm:py-10 overflow-hidden">
+          <div className="relative border border-[#C49A45]/55 rounded-xl px-4 py-6 pb-10 sm:px-10 sm:py-12 sm:pb-14 overflow-hidden">
             <FloralCornerCluster
               variant="lotus-rose"
               position="top-left"
@@ -114,29 +115,29 @@ export function RoyalInvitationCard() {
             <DecorativeCutout
               src={weddingConfig.decor.lotusCluster}
               alt=""
-              className="absolute -bottom-3 -left-3 w-16 sm:w-28 h-auto opacity-85 z-10"
+              className="hidden sm:block absolute -bottom-3 -left-3 w-24 h-auto opacity-75 z-0"
             />
             <DecorativeCutout
               src={weddingConfig.decor.lotusCluster}
               alt=""
               flipHorizontal
-              className="absolute -bottom-3 -right-3 w-16 sm:w-28 h-auto opacity-85 z-10"
+              className="hidden sm:block absolute -bottom-3 -right-3 w-24 h-auto opacity-75 z-0"
             />
 
-            <HangingFloralToran tone="lotus" className="mb-2 sm:mb-4 -mt-2 sm:-mt-3 opacity-90" />
+            <HangingFloralToran tone="lotus" className="mb-3 sm:mb-4 -mt-2 sm:-mt-3 opacity-90" />
 
-            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-8 items-center">
+            <div className="relative z-20 grid grid-cols-1 lg:grid-cols-12 gap-5 sm:gap-9 items-center">
               {/* Left Unframed Transparent Chhatri Pavilion + Lotus Garden Illustration */}
               <div className="lg:col-span-5 relative flex flex-col items-center">
                 <DecorativeCutout
                   src={weddingConfig.decor.gardenChhatri}
                   alt="Hand-painted Rajasthani palace chhatri pavilion with pink bougainvillea, banana leaves, palm tree, and peacock"
-                  className="w-full max-w-[165px] sm:max-w-[310px] h-auto drop-shadow-[0_14px_24px_rgba(92,18,34,0.14)]"
+                  className="w-full max-w-[190px] sm:max-w-[320px] h-auto drop-shadow-[0_14px_24px_rgba(92,18,34,0.14)]"
                 />
                 <DecorativeCutout
                   src={weddingConfig.decor.lotusCluster}
                   alt="Pink lotus flowers and green lotus leaves"
-                  className="w-24 sm:w-44 h-auto -mt-4 sm:-mt-7 relative z-10"
+                  className="w-28 sm:w-44 h-auto -mt-5 sm:-mt-7 relative z-10"
                 />
               </div>
 
@@ -189,7 +190,7 @@ export function RoyalInvitationCard() {
             </div>
 
             {/* Live Wedding Countdown Timer */}
-            <div className="relative z-10 mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-[#C49A45]/40 text-center">
+            <div className="relative z-20 mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-[#C49A45]/40 text-center">
               <p className="text-[11px] sm:text-sm tracking-[0.26em] uppercase text-[#9F7624] font-semibold">
                 Counting Down To The Sacred Union · Udaipur IST
               </p>

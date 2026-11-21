@@ -278,7 +278,88 @@
   will-change: transform;
 }
 
-/* Scroll-Driven Royal Floral Gate & Particle Animations (Pure Transform & Opacity) */
+@keyframes lotus-swing-d {
+  0%, 100% {
+    transform: rotate(2.3deg);
+  }
+  50% {
+    transform: rotate(-2.4deg);
+  }
+}
+
+.animate-lotus-swing-d {
+  transform-origin: top center;
+  animation: lotus-swing-d 4.7s ease-in-out infinite;
+  animation-delay: -0.9s;
+  will-change: transform;
+}
+
+/* Varied slightly brisker natural sway & float for flowers framing the gate */
+@keyframes floral-sway-1 {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) rotate(-1.8deg);
+  }
+  50% {
+    transform: translate3d(3px, -5px, 0) rotate(1.9deg);
+  }
+}
+
+@keyframes floral-sway-2 {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) rotate(1.7deg);
+  }
+  50% {
+    transform: translate3d(-4px, -4px, 0) rotate(-2deg);
+  }
+}
+
+@keyframes floral-float {
+  0%, 100% {
+    transform: translate3d(0, 0, 0) rotate(-1deg);
+  }
+  50% {
+    transform: translate3d(2px, -7px, 0) rotate(1.4deg);
+  }
+}
+
+.animate-floral-sway-1 {
+  transform-origin: top left;
+  animation: floral-sway-1 3.5s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-floral-sway-2 {
+  transform-origin: top right;
+  animation: floral-sway-2 4.2s ease-in-out infinite;
+  animation-delay: -1.4s;
+  will-change: transform;
+}
+
+.animate-floral-float {
+  transform-origin: bottom center;
+  animation: floral-float 3.8s ease-in-out infinite;
+  animation-delay: -0.7s;
+  will-change: transform;
+}
+
+/* Gentle royal golden pulse around TAP TO OPEN button */
+@keyframes tap-halo-pulse {
+  0%, 100% {
+    transform: scale(1);
+    opacity: 0.65;
+  }
+  50% {
+    transform: scale(1.09);
+    opacity: 1;
+  }
+}
+
+.animate-tap-halo {
+  animation: tap-halo-pulse 2.4s ease-in-out infinite;
+  will-change: transform, opacity;
+}
+
+/* Dedicated Full-Screen Gate Opening Sequence (1350ms, triggered by TAP TO OPEN) */
 @keyframes golden-mote-float {
   0%, 100% {
     transform: translate3d(0, 0, 0) scale(1);
@@ -289,8 +370,69 @@
 }
 
 .animate-golden-mote {
-  animation: golden-mote-float 4.2s ease-in-out infinite;
+  animation: golden-mote-float 3.6s ease-in-out infinite;
   will-change: transform;
+}
+
+@keyframes gate-curtain-lift {
+  0% {
+    transform: translate3d(0, 0%, 0) scale(1);
+    opacity: 1;
+  }
+  72% {
+    transform: translate3d(0, -104%, 0) scale(1.04);
+    opacity: 1;
+  }
+  100% {
+    transform: translate3d(0, -110%, 0) scale(1.05);
+    opacity: 0;
+  }
+}
+
+@keyframes gate-golden-flash {
+  0% {
+    opacity: 0;
+    transform: scale(0.72);
+  }
+  44% {
+    opacity: 0;
+    transform: scale(0.8);
+  }
+  68% {
+    opacity: 0.94;
+    transform: scale(1.05);
+  }
+  100% {
+    opacity: 0;
+    transform: scale(1.26);
+  }
+}
+
+@keyframes gate-backdrop-fade {
+  0% {
+    opacity: 1;
+  }
+  74% {
+    opacity: 1;
+  }
+  100% {
+    opacity: 0;
+  }
+}
+
+.animate-gate-curtain-lift {
+  animation: gate-curtain-lift 1150ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  will-change: transform, opacity;
+}
+
+.animate-gate-golden-flash {
+  animation: gate-golden-flash 1350ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  will-change: transform, opacity;
+}
+
+.animate-gate-backdrop-fade {
+  animation: gate-backdrop-fade 1380ms ease forwards;
+  will-change: opacity;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -304,7 +446,15 @@
   .animate-lotus-swing-a,
   .animate-lotus-swing-b,
   .animate-lotus-swing-c,
-  .animate-golden-mote {
+  .animate-lotus-swing-d,
+  .animate-floral-sway-1,
+  .animate-floral-sway-2,
+  .animate-floral-float,
+  .animate-tap-halo,
+  .animate-golden-mote,
+  .animate-gate-curtain-lift,
+  .animate-gate-golden-flash,
+  .animate-gate-backdrop-fade {
     animation: none !important;
   }
 }

@@ -6,11 +6,13 @@ export function DecorativeCutout({
   alt,
   className = '',
   flipHorizontal = false,
+  eager = false,
 }: {
   src: string;
   alt: string;
   className?: string;
   flipHorizontal?: boolean;
+  eager?: boolean;
 }) {
   const [failed, setFailed] = useState(false);
   if (failed) return null;
@@ -19,7 +21,7 @@ export function DecorativeCutout({
     <img
       src={src}
       alt={alt}
-      loading="lazy"
+      loading={eager ? 'eager' : 'lazy'}
       decoding="async"
       referrerPolicy="no-referrer"
       onError={() => setFailed(true)}
@@ -34,10 +36,12 @@ export function SwingingLotusGarland({
   timing = 'a',
   className = '',
   flipHorizontal = false,
+  eager = false,
 }: {
-  timing?: 'a' | 'b' | 'c';
+  timing?: 'a' | 'b' | 'c' | 'd';
   className?: string;
   flipHorizontal?: boolean;
+  eager?: boolean;
 }) {
   const [failed, setFailed] = useState(false);
   if (failed) return null;
@@ -47,7 +51,9 @@ export function SwingingLotusGarland({
       ? 'animate-lotus-swing-a'
       : timing === 'b'
       ? 'animate-lotus-swing-b'
-      : 'animate-lotus-swing-c';
+      : timing === 'c'
+      ? 'animate-lotus-swing-c'
+      : 'animate-lotus-swing-d';
 
   return (
     <div
@@ -57,7 +63,7 @@ export function SwingingLotusGarland({
       <img
         src={weddingConfig.decor.hangingLotus}
         alt=""
-        loading="lazy"
+        loading={eager ? 'eager' : 'lazy'}
         decoding="async"
         referrerPolicy="no-referrer"
         onError={() => setFailed(true)}
