@@ -5,6 +5,7 @@ import {
   FloralCornerCluster,
   HangingFloralToran,
   LotusDivider,
+  StaticPeacockCrest,
 } from './OrnamentalMotifs';
 
 interface CountdownRemaining {
@@ -109,6 +110,7 @@ export function RoyalInvitationCard() {
 
               {/* Right Luxury Stationery Typography & Highlighted Date */}
               <div className="lg:col-span-7 text-center flex flex-col items-center">
+                <StaticPeacockCrest tone="gold" className="w-20 h-12 mb-1.5" />
                 <p className="text-xs sm:text-sm tracking-[0.3em] uppercase text-[#9F7624] font-semibold">
                   Shubh Vivah · Udaipur
                 </p>

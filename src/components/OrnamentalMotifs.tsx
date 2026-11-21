@@ -445,3 +445,58 @@ export function MiniatureMusiciansIllustration({ className = '' }: { className?:
     </svg>
   );
 }
+
+export function StaticPeacockCrest({
+  tone = 'gold',
+  className = '',
+}: {
+  tone?: 'gold' | 'ivory';
+  className?: string;
+}) {
+  const featherColor = tone === 'ivory' ? '#DFBA66' : '#133D38';
+  const accentColor = tone === 'ivory' ? '#F7D0D8' : '#C49A45';
+  const neckColor = tone === 'ivory' ? '#FAF5EB' : '#1E4D3B';
+
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 120 68"
+      fill="none"
+      className={`pointer-events-none select-none ${className}`}
+    >
+      {/* Fanned Royal Peacock Plumes */}
+      {[-42, -26, -12, 0, 12, 26, 42].map((angle, idx) => (
+        <g key={angle} transform={`translate(60, 50) rotate(${angle})`}>
+          <path
+            d="M0 0 C-4 -14 -4 -28 0 -38 C4 -28 4 -14 0 0 Z"
+            fill={featherColor}
+            fillOpacity={idx % 2 === 0 ? 0.24 : 0.36}
+            stroke={accentColor}
+            strokeWidth="0.9"
+          />
+          <circle cx="0" cy="-31" r="2.6" fill={accentColor} />
+          <circle cx="0" cy="-31" r="1.2" fill="#E8839B" />
+        </g>
+      ))}
+
+      {/* Graceful Static Peacock Silhouette */}
+      <path
+        d="M57 52 C54 43 53 33 57 25 C59 21 63 20 65 23 C67 25 65 28 63 29 C61 35 63 44 66 52 Z"
+        fill={neckColor}
+        stroke={accentColor}
+        strokeWidth="1"
+      />
+      {/* Beak & Crown */}
+      <path d="M65 23 L71 24 L65 26 Z" fill={accentColor} />
+      <path d="M60 21 L57 14 M62 20 L62 13 M64 21 L66 15" stroke={accentColor} strokeWidth="0.9" />
+      <circle cx="57" cy="14" r="1.1" fill="#E8839B" />
+      <circle cx="62" cy="13" r="1.1" fill={accentColor} />
+      <circle cx="66" cy="15" r="1.1" fill="#E8839B" />
+
+      {/* Lotus Pedestal Flourish */}
+      <path d="M36 56 Q60 49 84 56" stroke={accentColor} strokeWidth="1.2" strokeLinecap="round" />
+      <circle cx="60" cy="54" r="3" fill="#E8839B" stroke={accentColor} strokeWidth="0.8" />
+    </svg>
+  );
+}
+

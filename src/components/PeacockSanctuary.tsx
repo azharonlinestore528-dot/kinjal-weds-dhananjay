@@ -1,16 +1,20 @@
 import { motion } from 'motion/react';
+import { useState } from 'react';
 import { weddingConfig } from '../config/weddingConfig';
 import {
   FloralCornerCluster,
   HangingFloralToran,
   LotusDivider,
+  StaticPeacockCrest,
 } from './OrnamentalMotifs';
 
 export function PeacockSanctuary() {
+  const [imageError, setImageError] = useState(false);
+
   return (
     <section
       id="royal-peacock"
-      aria-label="Royal Indian Peacock & Lotus Artwork"
+      aria-label="Static Royal Indian Peacock and Lotus Artwork"
       className="relative py-20 sm:py-28 px-4 sm:px-8 bg-[#FAF5EB] text-[#2B1418] overflow-hidden"
     >
       <div
@@ -54,21 +58,34 @@ export function PeacockSanctuary() {
           <HangingFloralToran tone="lotus" className="mb-5 -mt-4 max-w-md opacity-90" />
 
           <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-12 items-center">
-            {/* Static Bespoke Royal Peacock Artwork */}
+            {/* Strictly Static Bespoke Royal Indian Peacock Painting */}
             <div className="lg:col-span-6 flex justify-center">
-              <div className="relative w-full max-w-[380px] rounded-t-[190px] rounded-b-2xl overflow-hidden border-2 border-[#C49A45]/80 shadow-2xl bg-[#FAF5EB]">
-                <img
-                  src={weddingConfig.assets.royalPeacockImage}
-                  alt="Traditional Indian miniature painting of a royal blue-green peacock surrounded by pink lotus blossoms and antique gold filigree"
-                  referrerPolicy="no-referrer"
-                  className="w-full h-auto object-cover block"
-                  loading="lazy"
-                />
+              <div className="relative w-full max-w-[380px] rounded-t-[190px] rounded-b-2xl overflow-hidden border-2 border-[#C49A45]/80 shadow-2xl bg-[#F3E9D4]">
+                {!imageError ? (
+                  <img
+                    src={weddingConfig.assets.royalPeacockImage}
+                    alt="Traditional Indian miniature painting of a royal blue-green peacock surrounded by pink lotus blossoms and antique gold filigree"
+                    referrerPolicy="no-referrer"
+                    onError={() => setImageError(true)}
+                    className="w-full h-auto object-cover block"
+                  />
+                ) : (
+                  <div className="aspect-[3/4] flex flex-col items-center justify-center p-8 text-center bg-gradient-to-b from-[#FAF5EB] to-[#E8DEC5]">
+                    <StaticPeacockCrest tone="gold" className="w-44 h-28" />
+                    <p className="font-calligraphy text-3xl text-[#133D38] mt-3">
+                      Royal Mayur
+                    </p>
+                    <p className="text-xs tracking-[0.22em] uppercase text-[#9F7624] mt-1">
+                      Lotus &amp; Gold Filigree
+                    </p>
+                  </div>
+                )}
               </div>
             </div>
 
             {/* Editorial Blessing */}
             <div className="lg:col-span-6 text-center lg:text-left">
+              <StaticPeacockCrest tone="gold" className="w-24 h-14 mx-auto lg:mx-0 mb-2" />
               <p className="text-xs sm:text-sm tracking-[0.3em] uppercase text-[#9F7624] font-semibold">
                 Mayur · Emblem of Grace &amp; Joy
               </p>

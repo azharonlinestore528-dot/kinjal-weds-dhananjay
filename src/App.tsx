@@ -1,10 +1,11 @@
 import { useState } from 'react';
-import { FloatingFloralLayer } from './components/FloatingFloralLayer';
+import { FloatingFloralLayer, type FloralIntensity } from './components/FloatingFloralLayer';
 import { MiniatureCelebrations } from './components/MiniatureCelebrations';
 import { LotusDivider } from './components/OrnamentalMotifs';
 import { PalaceDoorHero } from './components/PalaceDoorHero';
 import { PeacockSanctuary } from './components/PeacockSanctuary';
 import { RoyalInvitationCard } from './components/RoyalInvitationCard';
+import { RoyalKeepsakeStudio } from './components/RoyalKeepsakeStudio';
 import { RoyalMandap3D } from './components/RoyalMandap3D';
 import { ScratchRevealCard } from './components/ScratchRevealCard';
 import { VenueAndRsvp } from './components/VenueAndRsvp';
@@ -12,7 +13,16 @@ import { weddingConfig } from './config/weddingConfig';
 
 export default function App() {
   const [heroActive, setHeroActive] = useState(true);
+  const [heroGlowActive, setHeroGlowActive] = useState(false);
   const [revealPopupOpen, setRevealPopupOpen] = useState(false);
+  const [eventsFloralIntensity, setEventsFloralIntensity] = useState<FloralIntensity>('ambient');
+
+  const computedIntensity: FloralIntensity =
+    revealPopupOpen || eventsFloralIntensity === 'climax' || (heroActive && heroGlowActive)
+      ? 'climax'
+      : heroActive || eventsFloralIntensity === 'elevated'
+      ? 'elevated'
+      : 'ambient';
 
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
@@ -23,13 +33,14 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#FAF5EB] text-[#2B1418] relative">
-      {/* Realistic multi-layered falling rose, lotus & marigold petals (boosted during entrance & date reveal modal) */}
-      <FloatingFloralLayer boostDensity={heroActive || revealPopupOpen} />
+      {/* Multi-flower falling atmosphere (roses, lotus, lily, marigold & floral flakes) */}
+      <FloatingFloralLayer intensity={computedIntensity} />
 
-      {/* 01-03. Closed Palace Doors -> Scroll-Controlled Opening -> Courtyard Reveal */}
+      {/* 01-03. Full-Screen Edge-to-Edge Tap-to-Enter Palace Gate -> Complete Exit */}
       <PalaceDoorHero
         onEnterInvitation={() => scrollToSection('royal-invitation')}
         onHeroActiveChange={setHeroActive}
+        onGlowChange={setHeroGlowActive}
       />
 
       {/* Clean 3-Zone Editorial Chapter Navigation Bar */}
@@ -48,33 +59,33 @@ export default function App() {
           >
             <a
               href="#royal-invitation"
-              className="hover:text-[#9F7624] transition-colors whitespace-nowrap shrink-0"
+              className="hover:text-[#9F7624] hover:underline underline-offset-4 transition-colors whitespace-nowrap shrink-0"
             >
               Invitation
             </a>
             <a
-              href="#scratch-reveal"
-              className="hover:text-[#9F7624] transition-colors whitespace-nowrap shrink-0"
-            >
-              Reveal Date
-            </a>
-            <a
               href="#celebrations"
-              className="hover:text-[#9F7624] transition-colors whitespace-nowrap shrink-0"
+              className="hover:text-[#9F7624] hover:underline underline-offset-4 transition-colors whitespace-nowrap shrink-0"
             >
               Events
             </a>
             <a
               href="#royal-peacock"
-              className="hover:text-[#9F7624] transition-colors whitespace-nowrap shrink-0"
+              className="hover:text-[#9F7624] hover:underline underline-offset-4 transition-colors whitespace-nowrap shrink-0"
             >
               Peacock
             </a>
             <a
               href="#royal-mandap-3d"
-              className="hover:text-[#9F7624] transition-colors whitespace-nowrap shrink-0"
+              className="hover:text-[#9F7624] hover:underline underline-offset-4 transition-colors whitespace-nowrap shrink-0"
             >
               3D Mandap
+            </a>
+            <a
+              href="#keepsake-studio"
+              className="hover:text-[#9F7624] hover:underline underline-offset-4 transition-colors whitespace-nowrap shrink-0"
+            >
+              Keepsake
             </a>
           </nav>
 
@@ -96,20 +107,26 @@ export default function App() {
         {/* 05. Interactive Burgundy Velvet & Gold Scratch Card + Reveal Popup */}
         <ScratchRevealCard onPopupOpenChange={setRevealPopupOpen} />
 
-        {/* 06-08. Bilingual Event Themes (Ganesh, Haldi, Grah Shanti, Wedding) + Lunch + Royal Procession */}
-        <MiniatureCelebrations onJumpToRsvp={() => scrollToSection('rsvp')} />
+        {/* 06-08. Scroll-Driven Upward-Opening Bilingual Event Cards + Lunch + Royal Procession */}
+        <MiniatureCelebrations
+          onJumpToRsvp={() => scrollToSection('rsvp')}
+          onFloralStateChange={setEventsFloralIntensity}
+        />
 
-        {/* 09. Static Royal Indian Peacock & Lotus Sanctuary */}
+        {/* 09. Static Royal Indian Peacock & Lotus Sanctuary above 3D Mandap */}
         <PeacockSanctuary />
 
         {/* 10. Three.js 3D Royal Palace Courtyard & Wedding Mandap */}
         <RoyalMandap3D />
 
-        {/* 11. Udaipur Wedding Venue & WhatsApp RSVP */}
+        {/* 11. Silent Photo-to-Video Royal Keepsake Studio */}
+        <RoyalKeepsakeStudio />
+
+        {/* 12. Udaipur Wedding Venue & WhatsApp RSVP */}
         <VenueAndRsvp />
       </main>
 
-      {/* 12. Elegant Closing Invitation Footer */}
+      {/* Closing Invitation Footer */}
       <footer className="bg-[#21090F] text-[#FAF5EB] py-14 px-4 text-center border-t border-[#C49A45]/45">
         <div className="max-w-2xl mx-auto">
           <p className="text-xs tracking-[0.3em] uppercase text-[#DFBA66]">

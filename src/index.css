@@ -26,6 +26,12 @@
   body {
     overflow-x: clip;
   }
+
+  h1,
+  h2,
+  h3 {
+    text-wrap: balance;
+  }
 }
 
 .font-calligraphy {
@@ -41,7 +47,6 @@
   line-height: 1.55;
 }
 
-/* Handmade antique paper grain texture */
 .paper-texture {
   background-color: #faf5eb;
   background-image:
@@ -66,11 +71,10 @@
     );
 }
 
-/* Distinct ceremony card textures */
 .theme-ganesh {
   background-color: #fff6e5;
   background-image:
-    radial-gradient(circle at 12% 15%, rgba(245, 158, 11, 0.16) 0%, transparent 45%),
+    radial-gradient(circle at 12% 15%, rgba(245, 158, 11, 0.18) 0%, transparent 45%),
     radial-gradient(circle at 88% 85%, rgba(217, 119, 6, 0.14) 0%, transparent 50%),
     linear-gradient(180deg, #fff9ee 0%, #fcedd2 100%);
 }
@@ -78,23 +82,23 @@
 .theme-haldi {
   background-color: #fef9db;
   background-image:
-    radial-gradient(circle at 85% 18%, rgba(234, 179, 8, 0.22) 0%, transparent 48%),
-    radial-gradient(circle at 15% 88%, rgba(79, 119, 80, 0.14) 0%, transparent 50%),
+    radial-gradient(circle at 85% 18%, rgba(234, 179, 8, 0.24) 0%, transparent 48%),
+    radial-gradient(circle at 15% 88%, rgba(79, 119, 80, 0.15) 0%, transparent 50%),
     linear-gradient(180deg, #fefce8 0%, #f9efc0 100%);
 }
 
 .theme-grahshanti {
   background-color: #f8f1e2;
   background-image:
-    radial-gradient(circle at 50% 15%, rgba(196, 154, 69, 0.16) 0%, transparent 52%),
-    radial-gradient(circle at 15% 85%, rgba(180, 83, 9, 0.09) 0%, transparent 48%),
+    radial-gradient(circle at 50% 15%, rgba(196, 154, 69, 0.18) 0%, transparent 52%),
+    radial-gradient(circle at 15% 85%, rgba(180, 83, 9, 0.1) 0%, transparent 48%),
     linear-gradient(180deg, #fbf6ea 0%, #efe2c8 100%);
 }
 
 .theme-wedding-maroon {
   background-color: #4f0e1c;
   background-image:
-    radial-gradient(circle at 50% 18%, rgba(145, 29, 55, 0.5) 0%, transparent 58%),
+    radial-gradient(circle at 50% 18%, rgba(145, 29, 55, 0.54) 0%, transparent 58%),
     radial-gradient(circle at 20% 85%, rgba(19, 61, 56, 0.45) 0%, transparent 50%),
     linear-gradient(180deg, #5c1222 0%, #3d0914 100%);
 }
@@ -104,6 +108,20 @@
   background-image:
     radial-gradient(circle at 50% 15%, rgba(44, 106, 94, 0.42) 0%, transparent 60%),
     radial-gradient(circle at 50% 90%, rgba(11, 41, 37, 0.85) 0%, transparent 65%);
+}
+
+.perspective-card-stage {
+  perspective: 1400px;
+  perspective-origin: 50% 38%;
+}
+
+.preserve-3d {
+  transform-style: preserve-3d;
+}
+
+.backface-hidden {
+  backface-visibility: hidden;
+  -webkit-backface-visibility: hidden;
 }
 
 @keyframes gentle-sway {

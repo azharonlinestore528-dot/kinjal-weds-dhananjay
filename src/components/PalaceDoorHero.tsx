@@ -1,25 +1,49 @@
 import { ArrowDown } from 'lucide-react';
 import { useEffect, useRef, useState } from 'react';
 import { weddingConfig } from '../config/weddingConfig';
-import { FloralCornerCluster, HangingFloralToran } from './OrnamentalMotifs';
+import { HangingFloralToran } from './OrnamentalMotifs';
 
 export function PalaceDoorHero({
   onEnterInvitation,
   onHeroActiveChange,
+  onGlowChange,
 }: {
   onEnterInvitation: () => void;
   onHeroActiveChange?: (active: boolean) => void;
+  onGlowChange?: (intense: boolean) => void;
 }) {
   const trackRef = useRef<HTMLElement | null>(null);
   const videoRef = useRef<HTMLVideoElement | null>(null);
   const [videoReady, setVideoReady] = useState(false);
   const [videoError, setVideoError] = useState<string | null>(null);
+  const [hasEntered, setHasEntered] = useState(false);
   const [scrollProgress, setScrollProgress] = useState(0);
 
   const targetProgressRef = useRef(0);
   const smoothedTimeRef = useRef(0);
   const durationRef = useRef(7.91);
   const unlockedTouchRef = useRef(false);
+
+  const unlockVideoPlayback = () => {
+    const v = videoRef.current;
+    if (!v || unlockedTouchRef.current) return;
+    unlockedTouchRef.current = true;
+    const cur = v.currentTime;
+    v.play()
+      .then(() => {
+        v.pause();
+        v.currentTime = cur;
+      })
+      .catch(() => {
+        // Ignore if browser restricts programmatic pre-unlock
+      });
+  };
+
+  const handleTapToEnter = () => {
+    setHasEntered(true);
+    unlockVideoPlayback();
+    onGlowChange?.(true);
+  };
 
   useEffect(() => {
     const video = videoRef.current;
@@ -66,21 +90,7 @@ export function PalaceDoorHero({
   }, []);
 
   useEffect(() => {
-    const unlock = () => {
-      if (unlockedTouchRef.current) return;
-      unlockedTouchRef.current = true;
-      const v = videoRef.current;
-      if (!v) return;
-      const cur = v.currentTime;
-      v.play()
-        .then(() => {
-          v.pause();
-          v.currentTime = cur;
-        })
-        .catch(() => {
-          // Ignore if browser rejects
-        });
-    };
+    const unlock = () => unlockVideoPlayback();
     window.addEventListener('touchstart', unlock, { passive: true, once: true });
     return () => window.removeEventListener('touchstart', unlock);
   }, []);
@@ -95,9 +105,17 @@ export function PalaceDoorHero({
       const maxScroll = Math.max(1, track.offsetHeight - window.innerHeight);
       const scrolled = Math.min(maxScroll, Math.max(0, -rect.top));
       const progress = scrolled / maxScroll;
+
       targetProgressRef.current = progress;
       setScrollProgress(progress);
-      onHeroActiveChange?.(rect.bottom > window.innerHeight * 0.35);
+
+      if (progress > 0.02) {
+        setHasEntered(true);
+      }
+
+      const gateStillVisible = progress < 0.98 && rect.bottom > 40;
+      onHeroActiveChange?.(gateStillVisible);
+      onGlowChange?.(gateStillVisible && progress > 0.08);
     };
 
     computeScrollProgress();
@@ -109,14 +127,16 @@ export function PalaceDoorHero({
       const video = videoRef.current;
       if (video && videoReady && !videoError) {
         const dur = durationRef.current;
-        const targetTime = targetProgressRef.current * Math.max(0.1, dur - 0.06);
+        // Doors reach fully open by 0.80 scroll progress, leaving 0.80-1.00 for courtyard reveal & complete exit
+        const doorPhase = Math.min(1, targetProgressRef.current / 0.8);
+        const targetTime = doorPhase * Math.max(0.1, dur - 0.06);
 
         if (prefersReducedMotion) {
           if (!video.seeking && Math.abs(video.currentTime - targetTime) > 0.08) {
             video.currentTime = targetTime;
           }
         } else {
-          smoothedTimeRef.current += (targetTime - smoothedTimeRef.current) * 0.22;
+          smoothedTimeRef.current += (targetTime - smoothedTimeRef.current) * 0.24;
           if (!video.seeking && Math.abs(video.currentTime - smoothedTimeRef.current) > 0.016) {
             video.currentTime = smoothedTimeRef.current;
           }
@@ -132,189 +152,168 @@ export function PalaceDoorHero({
       window.removeEventListener('scroll', computeScrollProgress);
       window.removeEventListener('resize', computeScrollProgress);
     };
-  }, [videoReady, videoError, onHeroActiveChange]);
+  }, [videoReady, videoError, onHeroActiveChange, onGlowChange]);
 
-  const instructionOpacity = Math.max(0, 1 - scrollProgress * 6.5);
-  const finaleOpacity = Math.max(0, Math.min(1, (scrollProgress - 0.78) / 0.18));
+  // Phase curves for entrance overlays & clean full-screen exit
+  const tapOverlayOpacity = hasEntered ? 0 : Math.max(0, 1 - scrollProgress * 10);
+  const scrollPromptOpacity = hasEntered ? Math.max(0, 1 - scrollProgress * 4.5) : 0;
+  const courtyardGlowOpacity = hasEntered
+    ? Math.min(0.88, 0.28 + Math.min(1, scrollProgress / 0.65) * 0.55)
+    : 0.08;
+  const finaleOpacity =
+    scrollProgress > 0.72 && scrollProgress < 0.92
+      ? Math.min(1, (scrollProgress - 0.72) / 0.1) *
+        Math.min(1, (0.92 - scrollProgress) / 0.08)
+      : 0;
+  const exitProgress = Math.max(0, Math.min(1, (scrollProgress - 0.88) / 0.12));
+  const sceneOpacity = 1 - exitProgress;
+  const sceneTranslateY = -exitProgress * 42;
+  const sceneGone = exitProgress >= 0.99;
 
   return (
     <section
       ref={trackRef}
       aria-label="Royal Palace Entrance"
-      className="relative w-full h-[320vh] bg-[#21090F]"
+      className="relative w-full h-[335vh] bg-[#FAF5EB] m-0 p-0"
     >
-      <div className="sticky top-0 h-[100dvh] w-full overflow-hidden flex items-center justify-center velvet-burgundy">
-        <div
-          aria-hidden="true"
-          className="absolute inset-0 pointer-events-none"
-          style={{
-            background:
-              'radial-gradient(circle at 50% 45%, rgba(223, 186, 102, 0.16) 0%, rgba(92, 18, 34, 0.45) 45%, rgba(24, 6, 11, 0.94) 100%)',
-          }}
-        />
-
-        {/* Surrounding Floral Corner Decorations on Wide Viewports */}
-        <FloralCornerCluster
-          variant="lotus-rose"
-          position="top-left"
-          className="hidden sm:block absolute top-2 left-2 w-28 h-28 lg:w-36 lg:h-36 opacity-80 z-10"
-        />
-        <FloralCornerCluster
-          variant="lotus-rose"
-          position="top-right"
-          className="hidden sm:block absolute top-2 right-2 w-28 h-28 lg:w-36 lg:h-36 opacity-80 z-10"
-        />
-        <FloralCornerCluster
-          variant="marigold-leaf"
-          position="bottom-left"
-          className="hidden lg:block absolute bottom-2 left-2 w-32 h-32 opacity-75 z-10"
-        />
-        <FloralCornerCluster
-          variant="marigold-leaf"
-          position="bottom-right"
-          className="hidden lg:block absolute bottom-2 right-2 w-32 h-32 opacity-75 z-10"
-        />
-
-        {/* Desktop flank wedding details */}
-        <div className="hidden lg:flex absolute inset-x-0 top-1/2 -translate-y-1/2 justify-between items-center px-12 xl:px-20 pointer-events-none select-none z-10">
-          <div className="max-w-[230px] text-left space-y-2 text-[#FAF5EB]/90">
-            <p className="text-xs tracking-[0.28em] uppercase text-[#DFBA66]">
-              Shubh Vivah
-            </p>
-            <p className="font-calligraphy text-4xl text-[#FAF5EB]">
-              {weddingConfig.couple.bride} &amp; {weddingConfig.couple.groom}
-            </p>
-            <p className="text-base text-[#F3E9D4]/85 font-medium">
-              {weddingConfig.invitation.date}
-            </p>
-            <p className="text-sm text-[#DFBA66]/90">
-              {weddingConfig.invitation.time}
-            </p>
+      <div
+        className="sticky top-0 left-0 w-screen h-[100svh] min-h-[100dvh] overflow-hidden bg-[#140408]"
+        style={{
+          opacity: sceneOpacity,
+          transform: `translate3d(0, ${sceneTranslateY}px, 0) scale(${1 + exitProgress * 0.03})`,
+          visibility: sceneGone ? 'hidden' : 'visible',
+          pointerEvents: sceneGone ? 'none' : 'auto',
+          willChange: 'transform, opacity',
+        }}
+      >
+        {/* Full-bleed edge-to-edge Google Flow palace door video (no rounded corners, margins, or gaps) */}
+        {!videoReady && !videoError && (
+          <div className="absolute inset-0 z-10 bg-[#140408]">
+            <img
+              src={weddingConfig.assets.lotusArchDoorImage}
+              alt="Closed golden palace doors beneath lotus arch"
+              className="w-full h-full object-cover object-[50%_42%]"
+            />
           </div>
+        )}
 
-          <div className="max-w-[230px] text-right space-y-2 text-[#FAF5EB]/90">
-            <p className="text-xs tracking-[0.28em] uppercase text-[#DFBA66]">
-              Udaipur, Rajasthan
-            </p>
-            <p className="text-lg font-medium text-[#FAF5EB]">
-              {weddingConfig.invitation.venueName}
-            </p>
-            <p className="text-sm text-[#F3E9D4]/80">
-              Hotel Palace, Udaipur
-            </p>
-          </div>
-        </div>
-
-        {/* Original 9:16 Google Flow Palace Doors Video Portal */}
-        <div className="relative z-10 h-full sm:h-[94dvh] w-full sm:w-auto aspect-[9/16] max-w-full flex items-center justify-center sm:rounded-t-[180px] sm:rounded-b-2xl overflow-hidden sm:border sm:border-[#C49A45]/60 shadow-[0_25px_90px_rgba(0,0,0,0.75)] bg-[#1B070C]">
-          {!videoReady && !videoError && (
-            <div className="absolute inset-0 z-20 flex flex-col items-center justify-center bg-[#230910] text-center px-6">
-              <img
-                src={weddingConfig.assets.lotusArchDoorImage}
-                alt="Royal palace closed golden doors beneath lotus arch"
-                className="absolute inset-0 w-full h-full object-cover opacity-55"
-              />
-              <div className="relative z-10 bg-[#230910]/85 border border-[#C49A45]/60 px-6 py-4 rounded-xl shadow-xl">
-                <div className="w-8 h-8 mx-auto mb-3 rounded-full border-2 border-[#C49A45]/30 border-t-[#DFBA66] animate-spin" />
-                <p className="text-base tracking-wider text-[#FAF5EB]">
-                  Preparing the Palace Entrance...
-                </p>
-              </div>
-            </div>
-          )}
-
-          {videoError && (
-            <div className="relative z-30 max-w-sm mx-auto p-6 rounded-xl bg-[#2A0B12] border border-[#E8839B]/60 text-center text-[#FAF5EB]">
+        {videoError && (
+          <div className="absolute inset-0 z-30 flex items-center justify-center p-6 bg-[#230910] text-center text-[#FAF5EB]">
+            <div className="max-w-sm p-6 rounded-xl border border-[#C49A45]/60 bg-[#1B060B]/90">
               <p className="text-base font-medium mb-2">Palace Entrance Video Unavailable</p>
               <p className="text-sm text-[#F3E9D4]/80">{videoError}</p>
             </div>
-          )}
-
-          <video
-            ref={videoRef}
-            src={weddingConfig.assets.palaceDoorsVideo}
-            poster={weddingConfig.assets.lotusArchDoorImage}
-            muted
-            playsInline
-            preload="auto"
-            disablePictureInPicture
-            aria-label="Scroll-controlled royal palace double doors opening to reveal the wedding courtyard"
-            className="w-full h-full object-cover sm:object-contain bg-black"
-          />
-
-          {/* Top Floral Toran & Couple Header */}
-          <div
-            className="absolute top-0 inset-x-0 pt-2 pb-12 px-4 text-center pointer-events-none"
-            style={{
-              background:
-                'linear-gradient(to bottom, rgba(24,6,11,0.78) 0%, rgba(24,6,11,0.32) 60%, transparent 100%)',
-              opacity: Math.max(0.28, 1 - scrollProgress * 1.4),
-            }}
-          >
-            <HangingFloralToran tone="lotus" className="opacity-85 -mt-1 max-w-[260px]" />
-            <p className="text-[11px] sm:text-xs tracking-[0.28em] uppercase text-[#DFBA66] -mt-2">
-              Royal Wedding Invitation
-            </p>
-            <h1 className="font-calligraphy text-3xl sm:text-4xl text-[#FAF5EB] drop-shadow mt-0.5">
-              {weddingConfig.couple.bride} &amp; {weddingConfig.couple.groom}
-            </h1>
           </div>
+        )}
 
-          {/* Initial Closed-Door Scroll Instruction */}
-          <div
-            className="absolute inset-x-0 bottom-0 pb-10 pt-20 px-6 flex flex-col items-center text-center pointer-events-none transition-opacity duration-200"
-            style={{
-              opacity: instructionOpacity,
-              background:
-                'linear-gradient(to top, rgba(18,5,9,0.88) 0%, rgba(18,5,9,0.48) 58%, transparent 100%)',
-            }}
-          >
-            <p className="text-base sm:text-lg tracking-[0.12em] text-[#FAF5EB] font-medium drop-shadow">
-              Scroll to enter our celebration
-            </p>
-            <div className="mt-3 flex flex-col items-center text-[#DFBA66] animate-arrow-float">
-              <ArrowDown className="w-5 h-5" />
-            </div>
-          </div>
+        <video
+          ref={videoRef}
+          src={weddingConfig.assets.palaceDoorsVideo}
+          poster={weddingConfig.assets.lotusArchDoorImage}
+          muted
+          playsInline
+          preload="auto"
+          disablePictureInPicture
+          aria-label="Scroll-controlled royal palace double doors opening to reveal the wedding courtyard"
+          className="absolute inset-0 w-full h-full object-cover object-[50%_42%]"
+        />
 
-          {/* Smooth Finale Overlay when doors have opened into the courtyard */}
-          <div
-            className="absolute inset-x-0 bottom-0 pb-12 pt-24 px-6 flex flex-col items-center text-center transition-opacity duration-300"
-            style={{
-              opacity: finaleOpacity,
-              pointerEvents: finaleOpacity > 0.35 ? 'auto' : 'none',
-              background:
-                'linear-gradient(to top, rgba(22,7,11,0.92) 0%, rgba(22,7,11,0.52) 65%, transparent 100%)',
-            }}
+        {/* Subtle warm golden palace aura emerging from center threshold */}
+        <div
+          aria-hidden="true"
+          className="absolute inset-0 pointer-events-none transition-opacity duration-700"
+          style={{
+            opacity: courtyardGlowOpacity,
+            background:
+              'radial-gradient(ellipse 68% 62% at 50% 48%, rgba(255, 224, 150, 0.34) 0%, rgba(223, 186, 102, 0.14) 38%, rgba(20, 4, 8, 0.25) 75%, rgba(16, 3, 6, 0.62) 100%)',
+          }}
+        />
+
+        {/* Delicate top floral toran whisper */}
+        <div
+          className="absolute top-0 inset-x-0 pt-2 sm:pt-3 px-4 flex flex-col items-center pointer-events-none z-10"
+          style={{
+            opacity: Math.max(0.22, 1 - scrollProgress * 1.4),
+            background:
+              'linear-gradient(to bottom, rgba(18,4,8,0.68) 0%, rgba(18,4,8,0.18) 65%, transparent 100%)',
+          }}
+        >
+          <HangingFloralToran tone="lotus" className="max-w-[240px] sm:max-w-[300px] opacity-85 -mt-1" />
+        </div>
+
+        {/* Initial Minimal "TAP TO ENTER" + "Scroll to discover our celebration" Overlay */}
+        <div
+          className="absolute inset-x-0 bottom-0 z-20 pb-12 sm:pb-16 pt-28 px-6 flex flex-col items-center justify-end text-center transition-opacity duration-500"
+          style={{
+            opacity: tapOverlayOpacity,
+            pointerEvents: tapOverlayOpacity > 0.1 ? 'auto' : 'none',
+            background:
+              'linear-gradient(to top, rgba(16,4,7,0.88) 0%, rgba(16,4,7,0.52) 55%, transparent 100%)',
+          }}
+        >
+          <button
+            type="button"
+            onClick={handleTapToEnter}
+            className="px-8 py-3.5 rounded-full bg-[#24070E]/80 hover:bg-[#5C1222]/90 border border-[#DFBA66]/85 text-[#FAF5EB] text-sm sm:text-base font-semibold tracking-[0.26em] uppercase shadow-[0_0_32px_rgba(223,186,102,0.28)] transition-all duration-300 cursor-pointer whitespace-nowrap min-h-[48px]"
           >
-            <p className="text-xs tracking-[0.28em] uppercase text-[#DFBA66] mb-1.5">
-              17 February 2027 · Udaipur
-            </p>
-            <p className="font-calligraphy text-3xl sm:text-4xl text-[#FAF5EB] mb-4">
-              {weddingConfig.couple.displayCalligraphy}
-            </p>
-            <button
-              type="button"
-              onClick={onEnterInvitation}
-              className="px-6 py-2.5 rounded-full bg-[#C49A45] text-[#230910] text-sm font-semibold tracking-wider uppercase hover:bg-[#DFBA66] transition-colors shadow-lg cursor-pointer min-h-[44px]"
-            >
-              Read Royal Invitation
-            </button>
+            Tap to Enter
+          </button>
+          <p className="mt-4 text-sm sm:text-base tracking-[0.14em] text-[#F3E9D4]/90 font-medium">
+            Scroll to discover our celebration
+          </p>
+        </div>
+
+        {/* Post-Tap Scroll Cue while doors begin opening */}
+        <div
+          className="absolute inset-x-0 bottom-0 z-20 pb-10 sm:pb-14 pt-24 px-6 flex flex-col items-center text-center pointer-events-none transition-opacity duration-500"
+          style={{
+            opacity: scrollPromptOpacity,
+            background:
+              'linear-gradient(to top, rgba(16,4,7,0.84) 0%, rgba(16,4,7,0.42) 58%, transparent 100%)',
+          }}
+        >
+          <p className="text-base sm:text-lg tracking-[0.14em] text-[#FAF5EB] font-medium drop-shadow">
+            Scroll to discover our celebration
+          </p>
+          <div className="mt-3 text-[#DFBA66] animate-arrow-float">
+            <ArrowDown className="w-5 h-5" />
           </div>
         </div>
 
-        {/* Accessible jump button */}
-        <div className="absolute bottom-4 left-4 z-20 flex items-center gap-3">
+        {/* Brief Illuminated Courtyard Moment as doors open wide */}
+        <div
+          className="absolute inset-x-0 bottom-0 z-20 pb-12 sm:pb-16 pt-28 px-6 flex flex-col items-center text-center transition-opacity duration-300"
+          style={{
+            opacity: finaleOpacity,
+            pointerEvents: finaleOpacity > 0.25 ? 'auto' : 'none',
+            background:
+              'linear-gradient(to top, rgba(18,4,8,0.92) 0%, rgba(18,4,8,0.45) 60%, transparent 100%)',
+          }}
+        >
+          <p className="text-xs tracking-[0.28em] uppercase text-[#DFBA66] mb-1">
+            {weddingConfig.invitation.date} · Udaipur
+          </p>
+          <p className="font-calligraphy text-4xl sm:text-5xl text-[#FAF5EB] mb-4">
+            {weddingConfig.couple.displayCalligraphy}
+          </p>
           <button
             type="button"
             onClick={onEnterInvitation}
-            className="px-3.5 py-2 rounded-full bg-[#FAF5EB]/15 hover:bg-[#FAF5EB]/25 text-[#FAF5EB] text-xs tracking-wider uppercase border border-[#C49A45]/40 transition-colors cursor-pointer min-h-[40px]"
+            className="px-6 py-3 rounded-full bg-[#C49A45] text-[#230910] text-sm font-semibold tracking-wider uppercase hover:bg-[#DFBA66] transition-colors shadow-lg cursor-pointer whitespace-nowrap min-h-[44px]"
           >
-            Skip Entrance
+            Enter Celebration
           </button>
-          <span className="hidden sm:inline-block text-xs text-[#F3E9D4]/75 tabular-nums">
-            {Math.round(scrollProgress * 100)}%
-          </span>
+        </div>
+
+        {/* Accessible corner Skip control */}
+        <div className="absolute bottom-4 right-4 z-30">
+          <button
+            type="button"
+            onClick={onEnterInvitation}
+            className="px-3.5 py-2 rounded-full bg-[#1B060B]/70 hover:bg-[#3A0C16]/90 text-[#F3E9D4] text-xs tracking-wider uppercase border border-[#C49A45]/45 transition-colors cursor-pointer whitespace-nowrap min-h-[40px]"
+          >
+            Skip
+          </button>
         </div>
       </div>
     </section>
