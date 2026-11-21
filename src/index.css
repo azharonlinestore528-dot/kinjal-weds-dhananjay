@@ -278,78 +278,19 @@
   will-change: transform;
 }
 
-@keyframes gentle-sway {
+/* Scroll-Driven Royal Floral Gate & Particle Animations (Pure Transform & Opacity) */
+@keyframes golden-mote-float {
   0%, 100% {
-    transform: rotate(-1.5deg) translateY(0px);
+    transform: translate3d(0, 0, 0) scale(1);
   }
   50% {
-    transform: rotate(1.5deg) translateY(-4px);
+    transform: translate3d(6px, -16px, 0) scale(1.18);
   }
 }
 
-@keyframes elephant-walk {
-  0%, 100% {
-    transform: translateY(0px) rotate(0deg);
-  }
-  25% {
-    transform: translateY(-2.5px) rotate(-0.8deg);
-  }
-  75% {
-    transform: translateY(-1.5px) rotate(0.8deg);
-  }
-}
-
-@keyframes trunk-sway {
-  0%, 100% {
-    transform: rotate(0deg);
-  }
-  50% {
-    transform: rotate(6deg);
-  }
-}
-
-@keyframes procession-march {
-  0% {
-    transform: translateX(-6%);
-  }
-  50% {
-    transform: translateX(4%);
-  }
-  100% {
-    transform: translateX(-6%);
-  }
-}
-
-@keyframes arrow-float {
-  0%, 100% {
-    transform: translateY(0px);
-    opacity: 0.72;
-  }
-  50% {
-    transform: translateY(7px);
-    opacity: 1;
-  }
-}
-
-.animate-gentle-sway {
-  animation: gentle-sway 5.5s ease-in-out infinite;
-}
-
-.animate-elephant-walk {
-  animation: elephant-walk 3.2s ease-in-out infinite;
-}
-
-.animate-trunk-sway {
-  transform-origin: top center;
-  animation: trunk-sway 3.6s ease-in-out infinite;
-}
-
-.animate-procession-march {
-  animation: procession-march 18s ease-in-out infinite;
-}
-
-.animate-arrow-float {
-  animation: arrow-float 2s ease-in-out infinite;
+.animate-golden-mote {
+  animation: golden-mote-float 4.2s ease-in-out infinite;
+  will-change: transform;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -363,11 +304,7 @@
   .animate-lotus-swing-a,
   .animate-lotus-swing-b,
   .animate-lotus-swing-c,
-  .animate-gentle-sway,
-  .animate-elephant-walk,
-  .animate-trunk-sway,
-  .animate-procession-march,
-  .animate-arrow-float {
+  .animate-golden-mote {
     animation: none !important;
   }
 }

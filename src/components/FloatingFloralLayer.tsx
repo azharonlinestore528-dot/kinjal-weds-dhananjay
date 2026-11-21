@@ -129,7 +129,7 @@ export function FloatingFloralLayer() {
   return (
     <div
       aria-hidden="true"
-      className="fixed inset-0 z-30 overflow-hidden pointer-events-none select-none motion-reduce:hidden"
+      className="fixed inset-0 z-20 overflow-hidden pointer-events-none select-none motion-reduce:hidden"
     >
       {CONTROLLED_PETALS.map((p) => {
         const animClass =

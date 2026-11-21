@@ -3,10 +3,9 @@ import { FloatingFloralLayer } from './components/FloatingFloralLayer';
 import { GrandWeddingMandap } from './components/GrandWeddingMandap';
 import { MiniatureCelebrations } from './components/MiniatureCelebrations';
 import { LotusDivider } from './components/OrnamentalMotifs';
-import { PalaceDoorHero } from './components/PalaceDoorHero';
 import { PeacockSanctuary } from './components/PeacockSanctuary';
+import { RoyalFloralGate } from './components/RoyalFloralGate';
 import { RoyalInvitationCard } from './components/RoyalInvitationCard';
-import { RoyalMandap3D } from './components/RoyalMandap3D';
 import { ScratchRevealCard } from './components/ScratchRevealCard';
 import { VenueAndRsvp } from './components/VenueAndRsvp';
 import { weddingConfig } from './config/weddingConfig';
@@ -24,81 +23,77 @@ export default function App() {
       {/* Lightweight CSS-animated falling flower petals (zero JS loop, zero blur) */}
       <FloatingFloralLayer />
 
-      {/* Full-Screen Edge-to-Edge Tap-to-Enter Palace Gate */}
-      <PalaceDoorHero onEnterInvitation={() => scrollToSection('royal-invitation')} />
+      <main>
+        {/* Scroll-Controlled Reversible Full-Screen Floral Gate Entrance -> Hero Reveal */}
+        <RoyalFloralGate>
+          <RoyalInvitationCard />
+        </RoyalFloralGate>
 
-      {/* Clean 3-Zone Editorial Chapter Navigation Bar */}
-      <header className="sticky top-0 z-20 bg-[#FAF5EB]/95 border-b border-[#C49A45]/45 shadow-sm">
-        <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-8">
-          <a
-            href="#royal-invitation"
-            className="font-calligraphy text-2xl sm:text-3xl text-[#7A1B2E] whitespace-nowrap shrink-0"
-          >
-            {weddingConfig.couple.bride} &amp; {weddingConfig.couple.groom}
-          </a>
-
-          <nav
-            aria-label="Wedding Story Chapters"
-            className="hidden md:flex items-center gap-6 text-xs tracking-[0.2em] uppercase font-semibold text-[#5C1222]"
-          >
+        {/* Clean 3-Zone Editorial Chapter Navigation Bar (Pins cleanly after Gate Opening) */}
+        <header className="sticky top-0 z-30 bg-[#FAF5EB]/95 border-b border-[#C49A45]/45 shadow-sm">
+          <div className="max-w-6xl mx-auto px-4 sm:px-6 h-14 flex items-center justify-between gap-8">
             <a
               href="#royal-invitation"
-              className="hover:text-[#9F7624] hover:underline underline-offset-4 transition-colors whitespace-nowrap shrink-0"
+              className="font-calligraphy text-2xl sm:text-3xl text-[#7A1B2E] whitespace-nowrap shrink-0"
             >
-              Invitation
+              {weddingConfig.couple.bride} &amp; {weddingConfig.couple.groom}
             </a>
-            <a
-              href="#celebrations"
-              className="hover:text-[#9F7624] hover:underline underline-offset-4 transition-colors whitespace-nowrap shrink-0"
-            >
-              Events
-            </a>
-            <a
-              href="#royal-peacock"
-              className="hover:text-[#9F7624] hover:underline underline-offset-4 transition-colors whitespace-nowrap shrink-0"
-            >
-              Peacock
-            </a>
-            <a
-              href="#grand-mandap"
-              className="hover:text-[#9F7624] hover:underline underline-offset-4 transition-colors whitespace-nowrap shrink-0"
-            >
-              Mandap
-            </a>
-            <a
-              href="#family-blessings"
-              className="hover:text-[#9F7624] hover:underline underline-offset-4 transition-colors whitespace-nowrap shrink-0"
-            >
-              Blessings
-            </a>
-          </nav>
 
-          <div className="shrink-0">
-            <a
-              href="#rsvp"
-              className="px-4 py-2 rounded-full bg-[#7A1B2E] text-[#FAF5EB] text-xs font-semibold tracking-widest uppercase hover:bg-[#5C1222] transition-colors whitespace-nowrap shrink-0"
+            <nav
+              aria-label="Wedding Story Chapters"
+              className="hidden md:flex items-center gap-6 text-xs tracking-[0.2em] uppercase font-semibold text-[#5C1222]"
             >
-              RSVP
-            </a>
+              <a
+                href="#royal-invitation"
+                className="hover:text-[#9F7624] hover:underline underline-offset-4 transition-colors whitespace-nowrap shrink-0"
+              >
+                Invitation
+              </a>
+              <a
+                href="#celebrations"
+                className="hover:text-[#9F7624] hover:underline underline-offset-4 transition-colors whitespace-nowrap shrink-0"
+              >
+                Events
+              </a>
+              <a
+                href="#royal-peacock"
+                className="hover:text-[#9F7624] hover:underline underline-offset-4 transition-colors whitespace-nowrap shrink-0"
+              >
+                Peacock
+              </a>
+              <a
+                href="#grand-mandap"
+                className="hover:text-[#9F7624] hover:underline underline-offset-4 transition-colors whitespace-nowrap shrink-0"
+              >
+                Mandap
+              </a>
+              <a
+                href="#family-blessings"
+                className="hover:text-[#9F7624] hover:underline underline-offset-4 transition-colors whitespace-nowrap shrink-0"
+              >
+                Blessings
+              </a>
+            </nav>
+
+            <div className="shrink-0">
+              <a
+                href="#rsvp"
+                className="px-4 py-2 rounded-full bg-[#7A1B2E] text-[#FAF5EB] text-xs font-semibold tracking-widest uppercase hover:bg-[#5C1222] transition-colors whitespace-nowrap shrink-0"
+              >
+                RSVP
+              </a>
+            </div>
           </div>
-        </div>
-      </header>
-
-      <main>
-        {/* Luxury Antique Ivory Wedding Invitation Card + Live Countdown */}
-        <RoyalInvitationCard />
+        </header>
 
         {/* Interactive Burgundy Velvet & Gold Scratch Card + Reveal Popup */}
         <ScratchRevealCard />
 
-        {/* Four Royal Chambers with Click-to-Open Invitation Books + Lunch + Baraat */}
+        {/* Four Royal Chambers with Click-to-Open Miniature Invitation Booklets + Lunch */}
         <MiniatureCelebrations onJumpToRsvp={() => scrollToSection('rsvp')} />
 
         {/* Unframed Static Royal Indian Peacock & Lotus Sanctuary */}
         <PeacockSanctuary />
-
-        {/* Interactive Three.js 3D Royal Palace Courtyard & Wedding Mandap */}
-        <RoyalMandap3D />
 
         {/* Grand Final Royal Wedding Mandap Highlight with Bride & Groom Centerpiece */}
         <GrandWeddingMandap />

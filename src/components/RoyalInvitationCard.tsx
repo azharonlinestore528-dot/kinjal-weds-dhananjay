@@ -1,4 +1,3 @@
-import { motion } from 'motion/react';
 import { useEffect, useState } from 'react';
 import { weddingConfig } from '../config/weddingConfig';
 import {
@@ -51,17 +50,16 @@ export function RoyalInvitationCard() {
 
   return (
     <section
-      id="royal-invitation"
       aria-label="Official Wedding Invitation and Live Countdown"
-      className="relative py-20 sm:py-28 px-4 sm:px-8 bg-[#FAF5EB] overflow-hidden"
+      className="relative py-5 sm:py-12 lg:py-16 px-3.5 sm:px-8 bg-[#FAF5EB] overflow-hidden"
     >
-      {/* Soft Botanical & Gold Ambient Backdrop */}
+      {/* Subtle Golden Light & Botanical Radiance Behind Hero */}
       <div
         aria-hidden="true"
-        className="absolute inset-0 pointer-events-none"
+        className="absolute inset-0 pointer-events-none opacity-85"
         style={{
           background:
-            'radial-gradient(circle at 18% 18%, rgba(232, 131, 155, 0.18) 0%, transparent 45%), radial-gradient(circle at 82% 82%, rgba(79, 119, 80, 0.14) 0%, transparent 50%)',
+            'radial-gradient(circle at 50% 30%, rgba(255, 226, 150, 0.36) 0%, rgba(232, 131, 155, 0.14) 38%, rgba(79, 119, 80, 0.12) 68%, transparent 100%)',
         }}
       />
 
@@ -90,25 +88,19 @@ export function RoyalInvitationCard() {
       />
 
       <div className="relative z-20 max-w-5xl mx-auto">
-        <motion.div
-          initial={{ opacity: 0, y: 28 }}
-          whileInView={{ opacity: 1, y: 0 }}
-          viewport={{ once: true, amount: 0.2 }}
-          transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
-          className="paper-texture relative rounded-2xl border border-[#C49A45]/75 shadow-[0_24px_70px_rgba(92,18,34,0.14)] p-4 sm:p-8 md:p-10 overflow-visible"
-        >
+        <div className="paper-texture relative rounded-2xl border border-[#C49A45]/75 shadow-[0_24px_70px_rgba(92,18,34,0.14)] p-3 sm:p-7 md:p-9 overflow-visible">
           {/* Static Royal Peacock Perched Naturally on the Upper Right Corner of the Invitation Frame */}
-          <StaticPeacockOrnament className="absolute -top-8 right-1 sm:-top-12 sm:-right-7 w-18 sm:w-28 md:w-32 h-auto z-30 drop-shadow-lg" />
+          <StaticPeacockOrnament className="absolute -top-6 right-0 sm:-top-11 sm:-right-7 w-14 sm:w-28 md:w-32 h-auto z-30 drop-shadow-lg" />
 
           {/* Bougainvillea Floral Branch Draping Over Top Left Corner */}
           <DecorativeCutout
             src={weddingConfig.decor.bougainvilleaBranch}
             alt=""
-            className="absolute -top-4 -left-4 w-28 sm:w-44 h-auto opacity-95 z-20"
+            className="absolute -top-3 -left-3 sm:-top-4 sm:-left-4 w-20 sm:w-44 h-auto opacity-95 z-20"
           />
 
           {/* Inner double gilt stationery frame */}
-          <div className="relative border border-[#C49A45]/55 rounded-xl px-4 py-10 sm:px-12 sm:py-14 overflow-hidden">
+          <div className="relative border border-[#C49A45]/55 rounded-xl px-3.5 py-5 sm:px-10 sm:py-10 overflow-hidden">
             <FloralCornerCluster
               variant="lotus-rose"
               position="top-left"
@@ -122,98 +114,98 @@ export function RoyalInvitationCard() {
             <DecorativeCutout
               src={weddingConfig.decor.lotusCluster}
               alt=""
-              className="absolute -bottom-3 -left-3 w-20 sm:w-28 h-auto opacity-85 z-10"
+              className="absolute -bottom-3 -left-3 w-16 sm:w-28 h-auto opacity-85 z-10"
             />
             <DecorativeCutout
               src={weddingConfig.decor.lotusCluster}
               alt=""
               flipHorizontal
-              className="absolute -bottom-3 -right-3 w-20 sm:w-28 h-auto opacity-85 z-10"
+              className="absolute -bottom-3 -right-3 w-16 sm:w-28 h-auto opacity-85 z-10"
             />
 
-            <HangingFloralToran tone="lotus" className="mb-4 -mt-4 opacity-90" />
+            <HangingFloralToran tone="lotus" className="mb-2 sm:mb-4 -mt-2 sm:-mt-3 opacity-90" />
 
-            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-8 items-center">
               {/* Left Unframed Transparent Chhatri Pavilion + Lotus Garden Illustration */}
               <div className="lg:col-span-5 relative flex flex-col items-center">
                 <DecorativeCutout
                   src={weddingConfig.decor.gardenChhatri}
                   alt="Hand-painted Rajasthani palace chhatri pavilion with pink bougainvillea, banana leaves, palm tree, and peacock"
-                  className="w-full max-w-[330px] sm:max-w-[360px] h-auto drop-shadow-[0_14px_24px_rgba(92,18,34,0.14)]"
+                  className="w-full max-w-[165px] sm:max-w-[310px] h-auto drop-shadow-[0_14px_24px_rgba(92,18,34,0.14)]"
                 />
                 <DecorativeCutout
                   src={weddingConfig.decor.lotusCluster}
                   alt="Pink lotus flowers and green lotus leaves"
-                  className="w-40 sm:w-48 h-auto -mt-8 relative z-10"
+                  className="w-24 sm:w-44 h-auto -mt-4 sm:-mt-7 relative z-10"
                 />
               </div>
 
               {/* Right Luxury Stationery Typography & Highlighted Date */}
               <div className="lg:col-span-7 text-center flex flex-col items-center">
-                <StaticPeacockCrest tone="gold" className="w-20 h-12 mb-1.5" />
-                <p className="text-xs sm:text-sm tracking-[0.3em] uppercase text-[#9F7624] font-semibold">
+                <StaticPeacockCrest tone="gold" className="w-16 sm:w-20 h-10 sm:h-12 mb-1" />
+                <p className="text-[11px] sm:text-sm tracking-[0.3em] uppercase text-[#9F7624] font-semibold">
                   Shubh Vivah · Udaipur
                 </p>
 
-                <h2 className="font-calligraphy text-5xl sm:text-6xl md:text-7xl text-[#7A1B2E] mt-3 leading-tight">
+                <h1 className="font-calligraphy text-5xl sm:text-6xl md:text-7xl text-[#7A1B2E] mt-2 sm:mt-3 leading-tight">
                   {weddingConfig.couple.bride} &amp; {weddingConfig.couple.groom}
-                </h2>
-                <p className="text-sm sm:text-base tracking-[0.28em] uppercase text-[#5C1222]/85 mt-1 font-medium">
+                </h1>
+                <p className="text-xs sm:text-base tracking-[0.28em] uppercase text-[#5C1222]/85 mt-1 font-medium">
                   {weddingConfig.couple.displayUpper}
                 </p>
 
-                <LotusDivider tone="gold" className="my-5" />
+                <LotusDivider tone="gold" className="my-4 sm:my-5" />
 
-                <p className="max-w-md text-lg sm:text-xl italic text-[#2B1418]/90 leading-relaxed">
+                <p className="max-w-md text-base sm:text-xl italic text-[#2B1418]/90 leading-relaxed">
                   {weddingConfig.invitation.message}
                 </p>
 
                 {/* Highlighted Wedding Date Composition */}
-                <div className="mt-7 w-full max-w-md rounded-2xl border-2 border-[#C49A45]/75 bg-[#FAF5EB]/90 px-6 py-6 shadow-sm relative">
-                  <p className="text-xs tracking-[0.26em] uppercase text-[#9F7624] font-semibold">
+                <div className="mt-5 sm:mt-7 w-full max-w-md rounded-2xl border-2 border-[#C49A45]/75 bg-[#FAF5EB]/90 px-5 py-4 sm:px-6 sm:py-6 shadow-sm relative">
+                  <p className="text-[11px] sm:text-xs tracking-[0.26em] uppercase text-[#9F7624] font-semibold">
                     The Auspicious Wedding Day
                   </p>
-                  <p className="text-2xl sm:text-3xl font-bold tracking-[0.14em] uppercase text-[#5C1222] mt-2 tabular-nums">
+                  <p className="text-xl sm:text-3xl font-bold tracking-[0.14em] uppercase text-[#5C1222] mt-1.5 sm:mt-2 tabular-nums">
                     {weddingConfig.invitation.dateUpper}
                   </p>
-                  <p className="text-base sm:text-lg tracking-[0.18em] uppercase text-[#7A1B2E] font-semibold mt-1.5 tabular-nums">
+                  <p className="text-sm sm:text-lg tracking-[0.18em] uppercase text-[#7A1B2E] font-semibold mt-1 sm:mt-1.5 tabular-nums">
                     {weddingConfig.invitation.time}
                   </p>
                 </div>
 
-                <div className="mt-6 space-y-1 text-[#2B1418]">
-                  <p className="text-xl sm:text-2xl font-semibold text-[#133D38]">
+                <div className="mt-5 sm:mt-6 space-y-1 text-[#2B1418]">
+                  <p className="text-lg sm:text-2xl font-semibold text-[#133D38]">
                     {weddingConfig.invitation.venueName}
                   </p>
-                  <p className="text-base sm:text-lg text-[#2B1418]/85">
+                  <p className="text-sm sm:text-lg text-[#2B1418]/85">
                     {weddingConfig.invitation.venueLocation}
                   </p>
                 </div>
 
-                <p className="mt-4 text-base sm:text-lg italic text-[#7A1B2E] font-medium">
+                <p className="mt-3 sm:mt-4 text-sm sm:text-lg italic text-[#7A1B2E] font-medium">
                   {weddingConfig.invitation.receptionNote}
                 </p>
               </div>
             </div>
 
             {/* Live Wedding Countdown Timer */}
-            <div className="relative z-10 mt-12 pt-8 border-t border-[#C49A45]/40 text-center">
-              <p className="text-xs sm:text-sm tracking-[0.28em] uppercase text-[#9F7624] font-semibold">
+            <div className="relative z-10 mt-8 sm:mt-12 pt-6 sm:pt-8 border-t border-[#C49A45]/40 text-center">
+              <p className="text-[11px] sm:text-sm tracking-[0.26em] uppercase text-[#9F7624] font-semibold">
                 Counting Down To The Sacred Union · Udaipur IST
               </p>
 
               {countdown.hasStarted ? (
-                <div className="mt-5 inline-block px-8 py-4 rounded-2xl border border-[#C49A45] bg-[#5C1222] text-[#FAF5EB] shadow-md">
+                <div className="mt-4 sm:mt-5 inline-block px-6 sm:px-8 py-4 rounded-2xl border border-[#C49A45] bg-[#5C1222] text-[#FAF5EB] shadow-md">
                   <p className="font-calligraphy text-3xl sm:text-4xl text-[#DFBA66]">
                     Shubh Vivah Has Begun
                   </p>
-                  <p className="text-sm tracking-widest uppercase mt-1 text-[#F3E9D4]">
+                  <p className="text-xs sm:text-sm tracking-widest uppercase mt-1 text-[#F3E9D4]">
                     17 February 2027 · Celebrate With Kinjal &amp; Dhananjay
                   </p>
                 </div>
               ) : (
                 <div
-                  className="mt-5 grid grid-cols-4 gap-2.5 sm:gap-5 max-w-xl mx-auto"
+                  className="mt-4 sm:mt-5 grid grid-cols-4 gap-2 sm:gap-5 max-w-xl mx-auto"
                   role="timer"
                   aria-live="polite"
                   aria-label="Countdown to 17 February 2027 at 6:00 PM IST"
@@ -226,12 +218,12 @@ export function RoyalInvitationCard() {
                   ].map((unit) => (
                     <div
                       key={unit.label}
-                      className="rounded-xl border border-[#C49A45]/60 bg-[#FAF5EB] py-3.5 sm:py-4 px-2 shadow-sm"
+                      className="rounded-xl border border-[#C49A45]/60 bg-[#FAF5EB] py-3 sm:py-4 px-1.5 sm:px-2 shadow-sm"
                     >
-                      <span className="block text-2xl sm:text-4xl font-bold text-[#7A1B2E] tabular-nums">
+                      <span className="block text-xl sm:text-4xl font-bold text-[#7A1B2E] tabular-nums">
                         {String(unit.value).padStart(2, '0')}
                       </span>
-                      <span className="block text-[11px] sm:text-xs tracking-[0.2em] uppercase text-[#9F7624] font-semibold mt-1">
+                      <span className="block text-[10px] sm:text-xs tracking-[0.18em] uppercase text-[#9F7624] font-semibold mt-0.5 sm:mt-1">
                         {unit.label}
                       </span>
                     </div>
@@ -240,7 +232,7 @@ export function RoyalInvitationCard() {
               )}
             </div>
           </div>
-        </motion.div>
+        </div>
       </div>
     </section>
   );

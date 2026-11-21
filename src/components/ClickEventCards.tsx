@@ -163,50 +163,50 @@ const ROOM_STYLES: Record<EventThemeVariant, RoomStyle> = {
 function CoverOrnamentCenterpiece({ event }: { event: BilingualEventConfig }) {
   if (event.id === 'ganesh') {
     return (
-      <div className="flex flex-col items-center">
-        <div className="flex items-center gap-3">
+      <div className="flex flex-col items-center scale-75 sm:scale-100 -my-1.5 sm:my-0">
+        <div className="flex items-center gap-2.5 sm:gap-3">
           <DecorativeCutout
             src={weddingConfig.decor.kalashCoconut}
             alt=""
-            className="w-11 sm:w-14 h-auto"
+            className="w-10 sm:w-14 h-auto"
           />
-          <SacredGaneshaMedallion className="w-18 h-18 sm:w-22 sm:h-22 drop-shadow" />
+          <SacredGaneshaMedallion className="w-16 h-16 sm:w-22 sm:h-22 drop-shadow" />
         </div>
-        <SilkRibbonBow variant="saffron" className="w-28 h-10 -mt-1.5" />
+        <SilkRibbonBow variant="saffron" className="w-24 sm:w-28 h-8 sm:h-10 -mt-1.5" />
       </div>
     );
   }
 
   if (event.id === 'haldi') {
     return (
-      <div className="flex flex-col items-center">
-        <FloralJhoomar variant="marigold" className="w-16 h-24 sm:w-20 sm:h-28 -mt-4" />
-        <SilkRibbonBow variant="haldi" className="w-28 h-10 -mt-2" />
+      <div className="flex flex-col items-center scale-75 sm:scale-100 -my-1.5 sm:my-0">
+        <FloralJhoomar variant="marigold" className="w-14 h-20 sm:w-20 sm:h-28 -mt-4" />
+        <SilkRibbonBow variant="haldi" className="w-24 sm:w-28 h-8 sm:h-10 -mt-2" />
       </div>
     );
   }
 
   if (event.id === 'grahshanti') {
     return (
-      <div className="flex flex-col items-center">
-        <div className="w-22 h-22 sm:w-26 sm:h-26 rounded-full border-2 border-[#C49A45]/80 bg-[#FAF5EB]/95 p-2 shadow-inner flex items-center justify-center">
+      <div className="flex flex-col items-center scale-75 sm:scale-100 -my-1.5 sm:my-0">
+        <div className="w-18 h-18 sm:w-26 sm:h-26 rounded-full border-2 border-[#C49A45]/80 bg-[#FAF5EB]/95 p-1.5 sm:p-2 shadow-inner flex items-center justify-center">
           <DecorativeCutout
             src={weddingConfig.decor.kalashCoconut}
             alt="Traditional sacred Kalash with coconut and mango leaves"
-            className="w-16 sm:w-20 h-auto"
+            className="w-13 sm:w-20 h-auto"
           />
         </div>
-        <SilkRibbonBow variant="gold" className="w-28 h-10 -mt-2" />
+        <SilkRibbonBow variant="gold" className="w-24 sm:w-28 h-8 sm:h-10 -mt-2" />
       </div>
     );
   }
 
   return (
-    <div className="flex flex-col items-center">
-      <div className="px-4 py-1.5 rounded-full border border-[#DFBA66]/70 bg-[#133D38]/85 mb-2">
-        <StaticPeacockCrest tone="ivory" className="w-20 h-11" />
+    <div className="flex flex-col items-center scale-75 sm:scale-100 -my-1.5 sm:my-0">
+      <div className="px-3.5 py-1 rounded-full border border-[#DFBA66]/70 bg-[#133D38]/85 mb-1.5">
+        <StaticPeacockCrest tone="ivory" className="w-16 sm:w-20 h-9 sm:h-11" />
       </div>
-      <SilkRibbonBow variant="maroon" className="w-32 h-11 -mt-1" />
+      <SilkRibbonBow variant="maroon" className="w-28 sm:w-32 h-9 sm:h-11 -mt-1" />
     </div>
   );
 }
@@ -307,9 +307,9 @@ function EventInvitationRoom({
     <section
       id={`event-room-${event.id}`}
       aria-label={`${event.englishName} Royal Palace Chamber`}
-      className="relative py-20 sm:py-28 px-4 sm:px-8 overflow-hidden border-t border-[#C49A45]/35"
+      className="relative py-6 sm:py-24 lg:py-28 px-3.5 sm:px-8 overflow-hidden border-t border-[#C49A45]/35"
     >
-      {/* Unique Royal Palace Architectural Room Backdrop (Lazy-loaded, Zero Blur) */}
+      {/* Unique Royal Palace Architectural Room Backdrop */}
       <img
         src={event.roomBackdropSrc}
         alt={event.roomBackdropAlt}
@@ -329,16 +329,16 @@ function EventInvitationRoom({
       {/* Top Draped Garland Toran & Gently Swinging Real Lotus Garlands */}
       <HangingFloralToran
         tone={style.toranTone}
-        className="block absolute top-0 left-1/2 -translate-x-1/2 w-[310px] sm:w-full sm:max-w-2xl opacity-90 z-10"
+        className="hidden sm:block absolute top-0 left-1/2 -translate-x-1/2 w-full max-w-2xl opacity-90 z-10"
       />
       <SwingingLotusGarland
         timing={style.swingTimingLeft}
-        className="block absolute top-0 left-1 sm:left-5 lg:left-12 w-9 sm:w-13 lg:w-16 h-28 sm:h-40 lg:h-48 opacity-95 z-10"
+        className="block absolute top-0 left-0.5 sm:left-5 lg:left-12 w-7 sm:w-13 lg:w-16 h-20 sm:h-40 lg:h-48 opacity-95 z-10"
       />
       <SwingingLotusGarland
         timing={style.swingTimingRight}
         flipHorizontal
-        className="block absolute top-0 right-1 sm:right-5 lg:right-12 w-9 sm:w-13 lg:w-16 h-28 sm:h-40 lg:h-48 opacity-95 z-10"
+        className="block absolute top-0 right-0.5 sm:right-5 lg:right-12 w-7 sm:w-13 lg:w-16 h-20 sm:h-40 lg:h-48 opacity-95 z-10"
       />
       <FloralJhoomar
         variant={style.jhoomarVariant}
@@ -353,51 +353,55 @@ function EventInvitationRoom({
       <EventChamberBotanicalBorder id={event.id} />
 
       <div className="relative z-10 max-w-4xl mx-auto">
-        {/* Room Chamber Heading */}
-        <div className="text-center mb-8 sm:mb-10 pt-4 sm:pt-0">
-          <p className={`text-xs sm:text-sm tracking-[0.28em] uppercase font-semibold ${style.roomKickerClass}`}>
+        {/* Compact Room Header on Mobile, Full Editorial Header on Desktop */}
+        <div className="text-center mb-3 sm:mb-10 pt-1 sm:pt-0">
+          <p className={`text-[10px] sm:text-sm tracking-[0.24em] sm:tracking-[0.28em] uppercase font-semibold ${style.roomKickerClass}`}>
             {event.roomTitle} · {event.date}
           </p>
-          <h3 className={`font-calligraphy text-4xl sm:text-5xl mt-1.5 drop-shadow ${style.roomHeadingClass}`}>
+          <h3 className={`font-calligraphy text-2xl sm:text-5xl mt-0.5 sm:mt-1.5 drop-shadow ${style.roomHeadingClass}`}>
             {event.englishName}
           </h3>
         </div>
 
-        {/* Interactive Click-to-Open Invitation Book Stage */}
-        <div className="relative perspective-card-stage">
-          {/* Static Royal Peacock Perched Naturally on the Wedding Ceremony Card Frame (Visible on Mobile & Desktop) */}
+        {/* Interactive Click-to-Open Invitation Booklet Stage (Compact Miniature Proportion on Mobile) */}
+        <div className="relative perspective-card-stage max-w-[332px] sm:max-w-none mx-auto">
+          {/* Static Royal Peacock Perched Naturally on the Wedding Ceremony Booklet Frame */}
           {isMainWedding && (
-            <StaticPeacockOrnament className="absolute -top-9 right-0 sm:-top-12 sm:-right-8 w-18 sm:w-28 h-auto z-40 drop-shadow-xl" />
+            <StaticPeacockOrnament className="absolute -top-6 -right-2 sm:-top-12 sm:-right-8 w-14 sm:w-28 h-auto z-40 drop-shadow-xl" />
           )}
 
-          {/* Sacred Kalash Sitting Beside Ganesh & Grah Shanti Card Corners on Mobile Too */}
+          {/* Sacred Kalash Sitting Beside Ganesh & Grah Shanti Card Corners on Mobile */}
           {(event.id === 'ganesh' || event.id === 'grahshanti') && (
             <DecorativeCutout
               src={weddingConfig.decor.kalashCoconut}
               alt=""
-              className="sm:hidden absolute -bottom-5 -right-2 w-16 h-auto z-40 drop-shadow-lg"
+              className="sm:hidden absolute -bottom-3 -right-2 w-12 h-auto z-40 drop-shadow-lg"
             />
           )}
 
-          <div className="relative preserve-3d min-h-[430px] sm:min-h-[460px]">
+          <div
+            className={`relative preserve-3d ${
+              isOpen ? 'min-h-[380px] sm:min-h-[460px]' : 'min-h-[242px] sm:min-h-[460px]'
+            }`}
+          >
             {/* Interior Invitation Page (Revealed ONLY on Click/Tap) */}
             <article
               aria-hidden={!isOpen}
               className={`book-interior-content ${
-                isOpen ? 'is-visible' : 'is-hidden'
-              } relative rounded-3xl border-2 ${style.interiorClass} ${
+                isOpen ? 'is-visible relative' : 'is-hidden absolute inset-0 pointer-events-none'
+              } rounded-2xl sm:rounded-3xl border-2 ${style.interiorClass} ${
                 style.interiorBorderClass
-              } shadow-[0_28px_72px_rgba(12,4,6,0.45)] overflow-hidden`}
+              } shadow-[0_22px_60px_rgba(12,4,6,0.45)] overflow-hidden`}
             >
               <FloralCornerCluster
                 variant={style.cornerVariant}
                 position="top-left"
-                className="absolute top-0 left-0 w-18 h-18 sm:w-28 sm:h-28 opacity-90 z-10"
+                className="absolute top-0 left-0 w-14 h-14 sm:w-28 sm:h-28 opacity-90 z-10"
               />
               <FloralCornerCluster
                 variant={style.cornerVariant}
                 position="top-right"
-                className="absolute top-0 right-0 w-18 h-18 sm:w-28 sm:h-28 opacity-90 z-10"
+                className="absolute top-0 right-0 w-14 h-14 sm:w-28 sm:h-28 opacity-90 z-10"
               />
               <DecorativeCutout
                 src={weddingConfig.decor.lotusCluster}
@@ -411,20 +415,20 @@ function EventInvitationRoom({
                 className="hidden sm:block absolute -bottom-3 -right-3 w-24 h-auto opacity-85 z-10"
               />
 
-              <div className="relative z-20 p-5 sm:p-9 lg:p-11">
+              <div className="relative z-20 p-4 sm:p-9 lg:p-11">
                 {/* Top Row: Toran + Close Control */}
-                <div className="flex items-start justify-between gap-4 mb-3">
+                <div className="flex items-start justify-between gap-3 mb-2 sm:mb-3">
                   <div className="flex-1 min-w-0">
                     <HangingFloralToran
                       tone={style.toranTone}
-                      className="-mt-3 max-w-xs sm:max-w-md opacity-90"
+                      className="-mt-2 sm:-mt-3 max-w-[180px] sm:max-w-md opacity-90"
                     />
                   </div>
                   <button
                     type="button"
                     onClick={() => onToggleOpen(event.id, false)}
                     aria-label={`Close ${event.englishName} invitation`}
-                    className={`inline-flex items-center gap-1.5 px-3.5 py-2 rounded-full border text-xs font-semibold tracking-wider uppercase transition-colors cursor-pointer whitespace-nowrap shrink-0 min-h-[40px] ${style.closeBtnClass}`}
+                    className={`inline-flex items-center gap-1 px-3 py-1.5 sm:px-3.5 sm:py-2 rounded-full border text-[11px] sm:text-xs font-semibold tracking-wider uppercase transition-colors cursor-pointer whitespace-nowrap shrink-0 min-h-[36px] sm:min-h-[40px] ${style.closeBtnClass}`}
                   >
                     <X className="w-3.5 h-3.5" />
                     <span>Close</span>
@@ -432,24 +436,24 @@ function EventInvitationRoom({
                 </div>
 
                 <div
-                  className={`grid grid-cols-1 lg:grid-cols-12 gap-6 lg:gap-10 items-center ${
+                  className={`grid grid-cols-1 lg:grid-cols-12 gap-4 sm:gap-6 lg:gap-10 items-center ${
                     index % 2 === 1 ? 'lg:[&>*:first-child]:order-2' : ''
                   }`}
                 >
                   {/* Event Miniature / Cutout Plate */}
                   <div className="lg:col-span-5 flex flex-col items-center">
                     <div
-                      className={`relative w-full max-w-[270px] sm:max-w-[310px] rounded-2xl overflow-hidden border-2 ${
+                      className={`relative w-full max-w-[210px] sm:max-w-[310px] rounded-xl sm:rounded-2xl overflow-hidden border-2 ${
                         isMainWedding ? 'border-[#DFBA66]' : 'border-[#C49A45]/75'
-                      } shadow-xl bg-[#FAF5EB]`}
+                      } shadow-lg bg-[#FAF5EB]`}
                     >
                       {event.id === 'grahshanti' ? (
-                        <div className="relative p-4 flex flex-col items-center justify-center bg-gradient-to-b from-[#FBF6EA] to-[#EFE2C8]">
-                          <SacredKalashMandala className="w-full max-h-[260px] h-auto mx-auto opacity-30 absolute inset-0" />
+                        <div className="relative p-3 sm:p-4 flex flex-col items-center justify-center bg-gradient-to-b from-[#FBF6EA] to-[#EFE2C8]">
+                          <SacredKalashMandala className="w-full max-h-[160px] sm:max-h-[260px] h-auto mx-auto opacity-30 absolute inset-0" />
                           <DecorativeCutout
                             src={weddingConfig.decor.kalashCoconut}
                             alt="Traditional Mangal Kalash with coconut and mango leaves for Grah Shanti Puja"
-                            className="relative z-10 w-44 sm:w-52 h-auto py-3 drop-shadow-md"
+                            className="relative z-10 w-28 sm:w-52 h-auto py-2 sm:py-3 drop-shadow-md"
                           />
                         </div>
                       ) : event.artworkSrc ? (
@@ -459,10 +463,10 @@ function EventInvitationRoom({
                           loading="lazy"
                           decoding="async"
                           referrerPolicy="no-referrer"
-                          className="w-full h-[220px] sm:h-[310px] lg:h-[340px] object-cover block"
+                          className="w-full h-[145px] sm:h-[310px] lg:h-[340px] object-cover block"
                         />
                       ) : (
-                        <SacredKalashMandala className="w-full max-h-[300px] lg:max-h-[340px] h-auto mx-auto" />
+                        <SacredKalashMandala className="w-full max-h-[160px] sm:max-h-[300px] lg:max-h-[340px] h-auto mx-auto" />
                       )}
                     </div>
                   </div>
@@ -475,51 +479,51 @@ function EventInvitationRoom({
                         className="w-10 h-6 hidden sm:block shrink-0"
                       />
                       <p
-                        className={`text-xs tracking-[0.24em] uppercase font-semibold ${style.kickerClass}`}
+                        className={`text-[10px] sm:text-xs tracking-[0.22em] sm:tracking-[0.24em] uppercase font-semibold ${style.kickerClass}`}
                       >
                         {event.subtitle}
                       </p>
                     </div>
 
                     <h4
-                      className={`text-3xl sm:text-4xl lg:text-[2.75rem] font-semibold tracking-[0.05em] uppercase mt-1.5 leading-tight ${style.titleClass}`}
+                      className={`text-2xl sm:text-4xl lg:text-[2.75rem] font-semibold tracking-[0.05em] uppercase mt-1 leading-tight ${style.titleClass}`}
                     >
                       {event.englishName}
                     </h4>
                     <p
                       lang="gu"
-                      className={`font-gujarati text-2xl sm:text-3xl font-semibold mt-1 ${style.gujaratiClass}`}
+                      className={`font-gujarati text-lg sm:text-3xl font-semibold mt-0.5 sm:mt-1 ${style.gujaratiClass}`}
                     >
                       {event.gujaratiName}
                     </p>
 
-                    <LotusDivider tone={style.dividerTone} className="my-4 lg:justify-start" />
+                    <LotusDivider tone={style.dividerTone} className="my-2.5 sm:my-4 lg:justify-start" />
 
                     <div
-                      className={`rounded-2xl border px-4 py-3 sm:px-5 sm:py-3.5 inline-flex flex-wrap items-center justify-center lg:justify-start gap-x-4 gap-y-1.5 ${style.metaBoxClass}`}
+                      className={`rounded-xl sm:rounded-2xl border px-3 py-2 sm:px-5 sm:py-3.5 inline-flex flex-wrap items-center justify-center lg:justify-start gap-x-3 sm:gap-x-4 gap-y-1 ${style.metaBoxClass}`}
                     >
-                      <div className="flex items-center gap-2 text-sm sm:text-base font-semibold tabular-nums">
-                        <Calendar className="w-4 h-4 shrink-0 text-[#C49A45]" />
+                      <div className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-base font-semibold tabular-nums">
+                        <Calendar className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 text-[#C49A45]" />
                         <span>{event.date}</span>
                       </div>
                       <span className="opacity-40" aria-hidden="true">
                         ·
                       </span>
-                      <div className="flex items-center gap-2 text-sm sm:text-base font-semibold tabular-nums">
-                        <Clock className="w-4 h-4 shrink-0 text-[#C49A45]" />
+                      <div className="flex items-center gap-1.5 sm:gap-2 text-xs sm:text-base font-semibold tabular-nums">
+                        <Clock className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0 text-[#C49A45]" />
                         <span>{event.time}</span>
                       </div>
                     </div>
 
                     <p
-                      className={`mt-4 text-base sm:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0 ${style.bodyClass}`}
+                      className={`mt-3 sm:mt-4 text-sm sm:text-lg leading-relaxed max-w-xl mx-auto lg:mx-0 ${style.bodyClass}`}
                     >
                       {event.description}
                     </p>
 
-                    <div className="mt-5 pt-4 border-t border-current/15 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
-                      <div className="flex items-start justify-center lg:justify-start gap-2 text-sm">
-                        <MapPin className="w-4 h-4 mt-0.5 shrink-0 text-[#C49A45]" />
+                    <div className="mt-4 pt-3 sm:mt-5 sm:pt-4 border-t border-current/15 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 sm:gap-3">
+                      <div className="flex items-start justify-center lg:justify-start gap-1.5 sm:gap-2 text-xs sm:text-sm">
+                        <MapPin className="w-3.5 h-3.5 sm:w-4 sm:h-4 mt-0.5 shrink-0 text-[#C49A45]" />
                         <span
                           className={
                             isMainWedding ? 'font-semibold text-[#DFBA66]' : 'italic opacity-85'
@@ -535,7 +539,7 @@ function EventInvitationRoom({
                             href={whatsappUrl}
                             target="_blank"
                             rel="noopener noreferrer"
-                            className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full border border-current/35 text-xs font-semibold tracking-wider uppercase hover:bg-black/5 transition-colors whitespace-nowrap shrink-0 min-h-[40px]"
+                            className="inline-flex items-center justify-center gap-2 px-3.5 py-2 rounded-full border border-current/35 text-[11px] sm:text-xs font-semibold tracking-wider uppercase hover:bg-black/5 transition-colors whitespace-nowrap shrink-0 min-h-[38px] sm:min-h-[40px]"
                           >
                             <MessageCircle className="w-3.5 h-3.5" />
                             <span>WhatsApp Updates</span>
@@ -544,7 +548,7 @@ function EventInvitationRoom({
                           <button
                             type="button"
                             onClick={onJumpToRsvp}
-                            className="inline-flex items-center justify-center gap-2 px-4 py-2 rounded-full border border-current/35 text-xs font-semibold tracking-wider uppercase hover:bg-black/5 transition-colors cursor-pointer whitespace-nowrap shrink-0 min-h-[40px]"
+                            className="inline-flex items-center justify-center gap-2 px-3.5 py-2 rounded-full border border-current/35 text-[11px] sm:text-xs font-semibold tracking-wider uppercase hover:bg-black/5 transition-colors cursor-pointer whitespace-nowrap shrink-0 min-h-[38px] sm:min-h-[40px]"
                           >
                             <MessageCircle className="w-3.5 h-3.5" />
                             <span>Venue Updates</span>
@@ -552,11 +556,11 @@ function EventInvitationRoom({
                         ))}
                     </div>
 
-                    <div className="mt-5 flex justify-center lg:justify-start">
+                    <div className="mt-4 sm:mt-5 flex justify-center lg:justify-start">
                       <button
                         type="button"
                         onClick={() => onToggleOpen(event.id, false)}
-                        className={`inline-flex items-center gap-2 px-5 py-2.5 rounded-full border text-xs font-semibold tracking-wider uppercase transition-colors cursor-pointer whitespace-nowrap min-h-[44px] ${style.closeBtnClass}`}
+                        className={`inline-flex items-center gap-2 px-4 py-2 sm:px-5 sm:py-2.5 rounded-full border text-xs font-semibold tracking-wider uppercase transition-colors cursor-pointer whitespace-nowrap min-h-[40px] sm:min-h-[44px] ${style.closeBtnClass}`}
                       >
                         <ChevronUp className="w-4 h-4" />
                         <span>Fold Invitation Cover</span>
@@ -579,38 +583,38 @@ function EventInvitationRoom({
                 aria-expanded={isOpen}
                 aria-label={`${event.englishName} invitation — ${event.coverPrompt}`}
                 style={{ background: style.coverGradient }}
-                className={`backface-hidden absolute inset-0 w-full h-full rounded-3xl border-2 ${style.coverBorderClass} shadow-[0_28px_72px_rgba(10,3,5,0.5)] hover:brightness-[1.03] active:scale-[0.995] transition-all flex flex-col items-center justify-center p-6 sm:p-10 text-center cursor-pointer overflow-hidden`}
+                className={`backface-hidden absolute inset-0 w-full h-full rounded-2xl sm:rounded-3xl border-2 ${style.coverBorderClass} shadow-[0_20px_56px_rgba(10,3,5,0.48)] hover:brightness-[1.03] active:scale-[0.995] transition-all flex flex-col items-center justify-center p-3.5 sm:p-10 text-center cursor-pointer overflow-hidden`}
               >
                 <div
-                  className={`absolute inset-3 sm:inset-4 rounded-2xl border ${style.coverBorderClass} opacity-65 pointer-events-none`}
+                  className={`absolute inset-2 sm:inset-4 rounded-xl sm:rounded-2xl border ${style.coverBorderClass} opacity-65 pointer-events-none`}
                 />
 
                 {isMainWedding && (
                   <div
                     aria-hidden="true"
-                    className="absolute inset-6 sm:inset-8 rounded-t-[180px] rounded-b-xl border border-[#DFBA66]/55 pointer-events-none"
+                    className="absolute inset-4 sm:inset-8 rounded-t-[120px] sm:rounded-t-[180px] rounded-b-xl border border-[#DFBA66]/55 pointer-events-none"
                   />
                 )}
 
                 <FloralCornerCluster
                   variant={style.cornerVariant}
                   position="top-left"
-                  className="absolute top-1.5 left-1.5 w-20 h-20 sm:w-28 sm:h-28 opacity-95"
+                  className="absolute top-1 left-1 sm:top-1.5 sm:left-1.5 w-12 h-12 sm:w-28 sm:h-28 opacity-95"
                 />
                 <FloralCornerCluster
                   variant={style.cornerVariant}
                   position="top-right"
-                  className="absolute top-1.5 right-1.5 w-20 h-20 sm:w-28 sm:h-28 opacity-95"
+                  className="absolute top-1 right-1 sm:top-1.5 sm:right-1.5 w-12 h-12 sm:w-28 sm:h-28 opacity-95"
                 />
                 <FloralCornerCluster
                   variant={style.cornerVariant}
                   position="bottom-left"
-                  className="absolute bottom-1.5 left-1.5 w-20 h-20 sm:w-28 sm:h-28 opacity-90"
+                  className="absolute bottom-1 left-1 sm:bottom-1.5 sm:left-1.5 w-12 h-12 sm:w-28 sm:h-28 opacity-90"
                 />
                 <FloralCornerCluster
                   variant={style.cornerVariant}
                   position="bottom-right"
-                  className="absolute bottom-1.5 right-1.5 w-20 h-20 sm:w-28 sm:h-28 opacity-90"
+                  className="absolute bottom-1 right-1 sm:bottom-1.5 sm:right-1.5 w-12 h-12 sm:w-28 sm:h-28 opacity-90"
                 />
 
                 <div className="relative z-10 max-w-md flex flex-col items-center">
@@ -618,35 +622,38 @@ function EventInvitationRoom({
 
                   <p
                     lang="gu"
-                    className={`font-gujarati text-lg sm:text-xl font-semibold mt-2 ${style.coverSubClass}`}
+                    className={`font-gujarati text-sm sm:text-xl font-semibold mt-0.5 sm:mt-2 ${style.coverSubClass}`}
                   >
                     {event.coverSealText}
                   </p>
 
-                  <LotusDivider tone={style.dividerTone} className="my-3 sm:my-4" />
+                  <LotusDivider
+                    tone={style.dividerTone}
+                    className="my-1.5 sm:my-4 scale-75 sm:scale-100"
+                  />
 
                   <p
-                    className={`text-xs sm:text-sm tracking-[0.24em] uppercase font-semibold tabular-nums ${style.coverSubClass}`}
+                    className={`text-[11px] sm:text-sm tracking-[0.18em] sm:tracking-[0.24em] uppercase font-semibold tabular-nums ${style.coverSubClass}`}
                   >
                     {event.date} · {event.time}
                   </p>
 
                   <h4
-                    className={`text-3xl sm:text-5xl font-semibold tracking-[0.06em] uppercase mt-2 ${style.coverTextClass}`}
+                    className={`text-xl sm:text-5xl font-semibold tracking-[0.06em] uppercase mt-1 sm:mt-2 ${style.coverTextClass}`}
                   >
                     {event.englishName}
                   </h4>
                   <p
                     lang="gu"
-                    className={`font-gujarati text-xl sm:text-2xl font-semibold mt-1 ${style.coverSubClass}`}
+                    className={`font-gujarati text-base sm:text-2xl font-semibold mt-0.5 sm:mt-1 ${style.coverSubClass}`}
                   >
                     {event.gujaratiName}
                   </p>
 
                   <span
-                    className={`mt-6 inline-flex items-center gap-2.5 px-6 py-3 rounded-full border text-xs sm:text-sm font-semibold tracking-[0.22em] uppercase shadow-lg min-h-[44px] ${style.coverCtaClass}`}
+                    className={`mt-2.5 sm:mt-6 inline-flex items-center gap-2 px-4 py-2 sm:px-6 sm:py-3 rounded-full border text-[11px] sm:text-sm font-semibold tracking-[0.18em] sm:tracking-[0.22em] uppercase shadow-md min-h-[38px] sm:min-h-[44px] ${style.coverCtaClass}`}
                   >
-                    <BookOpen className="w-4 h-4 shrink-0" />
+                    <BookOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
                     <span>{event.coverPrompt}</span>
                   </span>
                 </div>
@@ -654,7 +661,7 @@ function EventInvitationRoom({
 
               <div
                 aria-hidden="true"
-                className={`backface-hidden absolute inset-0 rounded-3xl border-2 ${style.coverBorderClass} shadow-inner`}
+                className={`backface-hidden absolute inset-0 rounded-2xl sm:rounded-3xl border-2 ${style.coverBorderClass} shadow-inner`}
                 style={{
                   background: style.coverUndersideGradient,
                   transform: 'rotateX(180deg)',

@@ -14,6 +14,7 @@ import kalashCoconutCutout from '../assets/decor/kalash_coconut.webp';
 import elephantBananaCutout from '../assets/decor/elephant_banana.webp';
 import coconutPalmCutout from '../assets/decor/coconut_palm.webp';
 import gardenChhatriCutout from '../assets/decor/garden_chhatri.webp';
+import royalFloralGateImage from '../assets/images/royal_floral_gate_1795298728019.jpg';
 
 export type EventThemeVariant = 'ganesh' | 'haldi' | 'grahshanti' | 'wedding';
 
@@ -85,12 +86,10 @@ export const weddingConfig = {
     coordinates: null as { lat: number; lng: number } | null,
   },
   assets: {
-    palaceDoorsVideo: '/assets/aistudio/Palace_doors_opening_for_wedding_5d79b019_be44724a.mp4',
+    royalFloralGateImage,
     lotusArchDoorImage: '/assets/aistudio/e8fc6b19-8181-4ee6-be7e-ff9ddc5da284_ad6d1dbc.jpg',
     chhatriPavilionImage: '/assets/aistudio/b6b2168a-1180-4ebd-ad64-b9513fc3a16e_cb3fe323.jpg',
     udaipurPalaceArchImage: '/assets/aistudio/aede9782-a7d7-4f6d-ba58-d434fa8e9bb0_a32986a6.jpg',
-    miniatureMusiciansImage: '/assets/aistudio/08d6a697-491d-49bc-a339-2fd9c62a65f5_b026d5e2.jpg',
-    royalProcessionImage: '/assets/aistudio/97ebb9fe-cd68-44bd-a1fe-32082fa05510_c3e6cb97.jpg',
     royalPeacockImage,
     maroonLotusDiyaImage,
     ganeshPujaImage: ganeshArtworkLegacy,
