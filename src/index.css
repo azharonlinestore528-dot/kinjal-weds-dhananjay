@@ -1,0 +1,191 @@
+@import "tailwindcss";
+
+@layer base {
+  :root {
+    --ivory: #faf5eb;
+    --champagne: #f3e9d4;
+    --burgundy: #5c1222;
+    --maroon: #7a1b2e;
+    --emerald: #133d38;
+    --forest: #1e4d3b;
+    --lotus-pink: #e8839b;
+    --rose-blush: #f7d0d8;
+    --gold: #c49a45;
+    --gold-deep: #9f7624;
+    --botanical: #4f7750;
+    --ink: #2b1418;
+  }
+
+  html {
+    font-family: "Cormorant Garamond", Georgia, serif;
+    background-color: #faf5eb;
+    color: #2b1418;
+    overflow-x: clip;
+  }
+
+  body {
+    overflow-x: clip;
+  }
+}
+
+.font-calligraphy {
+  font-family: "Great Vibes", "Cormorant Garamond", cursive, serif;
+}
+
+.font-editorial {
+  font-family: "Cormorant Garamond", Georgia, serif;
+}
+
+.font-gujarati {
+  font-family: "Noto Sans Gujarati", "Cormorant Garamond", sans-serif;
+  line-height: 1.55;
+}
+
+/* Handmade antique paper grain texture */
+.paper-texture {
+  background-color: #faf5eb;
+  background-image:
+    radial-gradient(rgba(196, 154, 69, 0.08) 1px, transparent 0),
+    radial-gradient(rgba(122, 27, 46, 0.04) 1px, transparent 0),
+    linear-gradient(135deg, rgba(255, 252, 245, 0.94) 0%, rgba(243, 233, 212, 0.65) 100%);
+  background-size: 26px 26px, 19px 19px, 100% 100%;
+  background-position: 0 0, 11px 13px, 0 0;
+}
+
+.velvet-burgundy {
+  background-color: #5c1222;
+  background-image:
+    radial-gradient(circle at 25% 20%, rgba(154, 34, 60, 0.45) 0%, transparent 55%),
+    radial-gradient(circle at 80% 80%, rgba(65, 9, 21, 0.65) 0%, transparent 55%),
+    repeating-linear-gradient(
+      45deg,
+      rgba(255, 224, 178, 0.025) 0px,
+      rgba(255, 224, 178, 0.025) 1px,
+      transparent 1px,
+      transparent 8px
+    );
+}
+
+/* Distinct ceremony card textures */
+.theme-ganesh {
+  background-color: #fff6e5;
+  background-image:
+    radial-gradient(circle at 12% 15%, rgba(245, 158, 11, 0.16) 0%, transparent 45%),
+    radial-gradient(circle at 88% 85%, rgba(217, 119, 6, 0.14) 0%, transparent 50%),
+    linear-gradient(180deg, #fff9ee 0%, #fcedd2 100%);
+}
+
+.theme-haldi {
+  background-color: #fef9db;
+  background-image:
+    radial-gradient(circle at 85% 18%, rgba(234, 179, 8, 0.22) 0%, transparent 48%),
+    radial-gradient(circle at 15% 88%, rgba(79, 119, 80, 0.14) 0%, transparent 50%),
+    linear-gradient(180deg, #fefce8 0%, #f9efc0 100%);
+}
+
+.theme-grahshanti {
+  background-color: #f8f1e2;
+  background-image:
+    radial-gradient(circle at 50% 15%, rgba(196, 154, 69, 0.16) 0%, transparent 52%),
+    radial-gradient(circle at 15% 85%, rgba(180, 83, 9, 0.09) 0%, transparent 48%),
+    linear-gradient(180deg, #fbf6ea 0%, #efe2c8 100%);
+}
+
+.theme-wedding-maroon {
+  background-color: #4f0e1c;
+  background-image:
+    radial-gradient(circle at 50% 18%, rgba(145, 29, 55, 0.5) 0%, transparent 58%),
+    radial-gradient(circle at 20% 85%, rgba(19, 61, 56, 0.45) 0%, transparent 50%),
+    linear-gradient(180deg, #5c1222 0%, #3d0914 100%);
+}
+
+.emerald-courtyard {
+  background-color: #133d38;
+  background-image:
+    radial-gradient(circle at 50% 15%, rgba(44, 106, 94, 0.42) 0%, transparent 60%),
+    radial-gradient(circle at 50% 90%, rgba(11, 41, 37, 0.85) 0%, transparent 65%);
+}
+
+@keyframes gentle-sway {
+  0%, 100% {
+    transform: rotate(-1.5deg) translateY(0px);
+  }
+  50% {
+    transform: rotate(1.5deg) translateY(-4px);
+  }
+}
+
+@keyframes elephant-walk {
+  0%, 100% {
+    transform: translateY(0px) rotate(0deg);
+  }
+  25% {
+    transform: translateY(-2.5px) rotate(-0.8deg);
+  }
+  75% {
+    transform: translateY(-1.5px) rotate(0.8deg);
+  }
+}
+
+@keyframes trunk-sway {
+  0%, 100% {
+    transform: rotate(0deg);
+  }
+  50% {
+    transform: rotate(6deg);
+  }
+}
+
+@keyframes procession-march {
+  0% {
+    transform: translateX(-6%);
+  }
+  50% {
+    transform: translateX(4%);
+  }
+  100% {
+    transform: translateX(-6%);
+  }
+}
+
+@keyframes arrow-float {
+  0%, 100% {
+    transform: translateY(0px);
+    opacity: 0.72;
+  }
+  50% {
+    transform: translateY(7px);
+    opacity: 1;
+  }
+}
+
+.animate-gentle-sway {
+  animation: gentle-sway 5.5s ease-in-out infinite;
+}
+
+.animate-elephant-walk {
+  animation: elephant-walk 3.2s ease-in-out infinite;
+}
+
+.animate-trunk-sway {
+  transform-origin: top center;
+  animation: trunk-sway 3.6s ease-in-out infinite;
+}
+
+.animate-procession-march {
+  animation: procession-march 18s ease-in-out infinite;
+}
+
+.animate-arrow-float {
+  animation: arrow-float 2s ease-in-out infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .animate-gentle-sway,
+  .animate-elephant-walk,
+  .animate-trunk-sway,
+  .animate-procession-march,
+  .animate-arrow-float {
+    animation: none !important;
+  }
+}

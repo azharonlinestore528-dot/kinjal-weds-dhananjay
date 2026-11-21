@@ -1,0 +1,6 @@
+{
+  "name": "Kinjal & Dhananjay — Royal Wedding Invitation",
+  "description": "A cinematic, scroll-controlled 3D Indian royal wedding invitation experience for Kinjal & Dhananjay in Udaipur, Rajasthan.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}
