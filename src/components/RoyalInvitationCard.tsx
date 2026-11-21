@@ -7,6 +7,11 @@ import {
   LotusDivider,
   StaticPeacockCrest,
 } from './OrnamentalMotifs';
+import {
+  DecorativeCutout,
+  StaticPeacockOrnament,
+  SwingingLotusGarland,
+} from './RoyalBotanicalDecor';
 
 interface CountdownRemaining {
   days: number;
@@ -56,56 +61,91 @@ export function RoyalInvitationCard() {
         className="absolute inset-0 pointer-events-none"
         style={{
           background:
-            'radial-gradient(circle at 18% 18%, rgba(232, 131, 155, 0.16) 0%, transparent 45%), radial-gradient(circle at 82% 82%, rgba(196, 154, 69, 0.16) 0%, transparent 48%)',
+            'radial-gradient(circle at 18% 18%, rgba(232, 131, 155, 0.18) 0%, transparent 45%), radial-gradient(circle at 82% 82%, rgba(79, 119, 80, 0.14) 0%, transparent 50%)',
         }}
       />
 
-      <div className="relative max-w-5xl mx-auto">
+      {/* Swinging Hanging Lotus Garlands on Section Outer Edges */}
+      <SwingingLotusGarland
+        timing="a"
+        className="hidden sm:block absolute top-0 left-3 lg:left-10 w-12 lg:w-16 h-40 lg:h-52 z-10 opacity-90"
+      />
+      <SwingingLotusGarland
+        timing="b"
+        flipHorizontal
+        className="hidden sm:block absolute top-0 right-3 lg:right-10 w-12 lg:w-16 h-40 lg:h-52 z-10 opacity-90"
+      />
+
+      {/* Outer Garden Coconut Palm Silhouettes */}
+      <DecorativeCutout
+        src={weddingConfig.decor.coconutPalm}
+        alt=""
+        className="hidden xl:block absolute bottom-6 left-2 w-44 h-auto opacity-65 z-10"
+      />
+      <DecorativeCutout
+        src={weddingConfig.decor.coconutPalm}
+        alt=""
+        flipHorizontal
+        className="hidden xl:block absolute bottom-6 right-2 w-44 h-auto opacity-65 z-10"
+      />
+
+      <div className="relative z-20 max-w-5xl mx-auto">
         <motion.div
           initial={{ opacity: 0, y: 28 }}
           whileInView={{ opacity: 1, y: 0 }}
           viewport={{ once: true, amount: 0.2 }}
           transition={{ duration: 0.75, ease: [0.16, 1, 0.3, 1] }}
-          className="paper-texture relative rounded-2xl border border-[#C49A45]/65 shadow-[0_24px_70px_rgba(92,18,34,0.12)] p-4 sm:p-8 md:p-10"
+          className="paper-texture relative rounded-2xl border border-[#C49A45]/75 shadow-[0_24px_70px_rgba(92,18,34,0.14)] p-4 sm:p-8 md:p-10 overflow-visible"
         >
+          {/* Static Royal Peacock Perched Naturally on the Upper Right Corner of the Invitation Frame */}
+          <StaticPeacockOrnament className="absolute -top-8 right-1 sm:-top-12 sm:-right-7 w-18 sm:w-28 md:w-32 h-auto z-30 drop-shadow-lg" />
+
+          {/* Bougainvillea Floral Branch Draping Over Top Left Corner */}
+          <DecorativeCutout
+            src={weddingConfig.decor.bougainvilleaBranch}
+            alt=""
+            className="absolute -top-4 -left-4 w-28 sm:w-44 h-auto opacity-95 z-20"
+          />
+
           {/* Inner double gilt stationery frame */}
-          <div className="relative border border-[#C49A45]/50 rounded-xl px-5 py-10 sm:px-12 sm:py-14 overflow-hidden">
-            {/* Lush Floral Corner Ornaments */}
+          <div className="relative border border-[#C49A45]/55 rounded-xl px-4 py-10 sm:px-12 sm:py-14 overflow-hidden">
             <FloralCornerCluster
               variant="lotus-rose"
               position="top-left"
-              className="absolute top-1 left-1 w-20 h-20 sm:w-28 sm:h-28 opacity-90"
+              className="hidden sm:block absolute top-1 left-1 w-24 h-24 opacity-80"
             />
             <FloralCornerCluster
               variant="lotus-rose"
               position="top-right"
-              className="absolute top-1 right-1 w-20 h-20 sm:w-28 sm:h-28 opacity-90"
+              className="hidden sm:block absolute top-1 right-1 w-24 h-24 opacity-80"
             />
-            <FloralCornerCluster
-              variant="marigold-leaf"
-              position="bottom-left"
-              className="absolute bottom-1 left-1 w-20 h-20 sm:w-28 sm:h-28 opacity-85"
+            <DecorativeCutout
+              src={weddingConfig.decor.lotusCluster}
+              alt=""
+              className="absolute -bottom-3 -left-3 w-20 sm:w-28 h-auto opacity-85 z-10"
             />
-            <FloralCornerCluster
-              variant="marigold-leaf"
-              position="bottom-right"
-              className="absolute bottom-1 right-1 w-20 h-20 sm:w-28 sm:h-28 opacity-85"
+            <DecorativeCutout
+              src={weddingConfig.decor.lotusCluster}
+              alt=""
+              flipHorizontal
+              className="absolute -bottom-3 -right-3 w-20 sm:w-28 h-auto opacity-85 z-10"
             />
 
             <HangingFloralToran tone="lotus" className="mb-4 -mt-4 opacity-90" />
 
-            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-              {/* Left Watercolor Chhatri & Peacock Illustration */}
-              <div className="lg:col-span-5 flex flex-col items-center">
-                <div className="relative w-full max-w-[320px] rounded-t-[160px] rounded-b-xl overflow-hidden border border-[#C49A45]/55 shadow-md bg-[#FAF5EB]">
-                  <img
-                    src={weddingConfig.assets.chhatriPavilionImage}
-                    alt="Hand-painted Rajasthani palace chhatri pavilion with pink bougainvillea and peacock"
-                    referrerPolicy="no-referrer"
-                    className="w-full h-auto object-cover"
-                    loading="lazy"
-                  />
-                </div>
+            <div className="relative z-10 grid grid-cols-1 lg:grid-cols-12 gap-8 lg:gap-10 items-center">
+              {/* Left Unframed Transparent Chhatri Pavilion + Lotus Garden Illustration */}
+              <div className="lg:col-span-5 relative flex flex-col items-center">
+                <DecorativeCutout
+                  src={weddingConfig.decor.gardenChhatri}
+                  alt="Hand-painted Rajasthani palace chhatri pavilion with pink bougainvillea, banana leaves, palm tree, and peacock"
+                  className="w-full max-w-[330px] sm:max-w-[360px] h-auto drop-shadow-[0_14px_24px_rgba(92,18,34,0.14)]"
+                />
+                <DecorativeCutout
+                  src={weddingConfig.decor.lotusCluster}
+                  alt="Pink lotus flowers and green lotus leaves"
+                  className="w-40 sm:w-48 h-auto -mt-8 relative z-10"
+                />
               </div>
 
               {/* Right Luxury Stationery Typography & Highlighted Date */}
@@ -129,7 +169,7 @@ export function RoyalInvitationCard() {
                 </p>
 
                 {/* Highlighted Wedding Date Composition */}
-                <div className="mt-7 w-full max-w-md rounded-2xl border-2 border-[#C49A45]/75 bg-[#FAF5EB]/85 px-6 py-6 shadow-sm relative">
+                <div className="mt-7 w-full max-w-md rounded-2xl border-2 border-[#C49A45]/75 bg-[#FAF5EB]/90 px-6 py-6 shadow-sm relative">
                   <p className="text-xs tracking-[0.26em] uppercase text-[#9F7624] font-semibold">
                     The Auspicious Wedding Day
                   </p>

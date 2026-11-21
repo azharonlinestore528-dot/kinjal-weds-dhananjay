@@ -642,12 +642,14 @@ export function RoyalMandap3D() {
 
     const clock = new THREE.Clock();
     let frameId = 0;
+    let isVisible = false;
 
     function afterDraw(cb: () => void) {
       const gl = renderer.getContext() as WebGL2RenderingContext;
       const sync = gl.fenceSync(gl.SYNC_GPU_COMMANDS_COMPLETE, 0);
       gl.flush();
       const poll = () => {
+        if (!isVisible) return;
         const state = sync && gl.getSyncParameter(sync, gl.SYNC_STATUS);
         if (state === gl.UNSIGNALED) {
           frameId = window.setTimeout(poll, 5);
@@ -663,6 +665,7 @@ export function RoyalMandap3D() {
     const _targetLookVec = new THREE.Vector3();
 
     const tick = () => {
+      if (!isVisible) return;
       const dt = Math.min(clock.getDelta(), 0.08);
       const elapsed = clock.getElapsedTime();
 
@@ -722,14 +725,29 @@ export function RoyalMandap3D() {
       else frameId = requestAnimationFrame(tick);
     };
 
-    if (isSoftwareGl) {
-      renderer.render(scene, camera);
-      afterDraw(tick);
-    } else {
-      frameId = requestAnimationFrame(tick);
-    }
+    // Initial static render + viewport-gated loop
+    renderer.render(scene, camera);
+
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        const nextVisible = entry.isIntersecting;
+        if (nextVisible === isVisible) return;
+        isVisible = nextVisible;
+        if (isVisible) {
+          clock.getDelta(); // Reset delta jump after idle pause
+          if (isSoftwareGl) afterDraw(tick);
+          else frameId = requestAnimationFrame(tick);
+        } else {
+          cancelAnimationFrame(frameId);
+          clearTimeout(frameId);
+        }
+      },
+      { rootMargin: '160px' }
+    );
+    observer.observe(container);
 
     return () => {
+      observer.disconnect();
       cancelAnimationFrame(frameId);
       clearTimeout(frameId);
       window.removeEventListener('resize', onResize);

@@ -500,3 +500,192 @@ export function StaticPeacockCrest({
   );
 }
 
+export function FloralJhoomar({
+  variant = 'marigold',
+  className = '',
+}: {
+  variant?: 'marigold' | 'lotus' | 'royal-maroon';
+  className?: string;
+}) {
+  const flowerA =
+    variant === 'marigold' ? '#F59E0B' : variant === 'royal-maroon' ? '#E8839B' : '#F48FB1';
+  const flowerB =
+    variant === 'marigold' ? '#FACC15' : variant === 'royal-maroon' ? '#FAF5EB' : '#FBBF24';
+  const accent =
+    variant === 'royal-maroon' ? '#7A1B2E' : variant === 'lotus' ? '#B45309' : '#1E4D3B';
+
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 88 180"
+      fill="none"
+      className={`pointer-events-none select-none ${className}`}
+    >
+      {/* Hanging Golden Cord */}
+      <line x1="44" y1="0" x2="44" y2="20" stroke="#DFBA66" strokeWidth="2" />
+      <circle cx="44" cy="22" r="4" fill="#FAF5EB" stroke="#C49A45" strokeWidth="1" />
+
+      {/* Ornate Golden Jhoomar Canopy */}
+      <path
+        d="M14 48 Q44 20 74 48 Z"
+        fill={accent}
+        stroke="#DFBA66"
+        strokeWidth="1.8"
+      />
+      <path
+        d="M22 48 Q44 30 66 48"
+        stroke="#DFBA66"
+        strokeWidth="1.2"
+        fill="none"
+      />
+
+      {/* Mango Leaves along Canopy Rim */}
+      {[20, 32, 44, 56, 68].map((lx) => (
+        <path
+          key={lx}
+          d={`M${lx} 48 C${lx - 4} 57 ${lx - 2} 63 ${lx} 65 C${lx + 2} 63 ${lx + 4} 57 ${lx} 48 Z`}
+          fill="#4F7750"
+          stroke="#1E4D3B"
+          strokeWidth="0.6"
+        />
+      ))}
+
+      {/* Three Cascading Floral Ladi Strands */}
+      {[
+        { x: 24, endY: 132 },
+        { x: 44, endY: 164 },
+        { x: 64, endY: 132 },
+      ].map((strand, sIdx) => (
+        <g key={strand.x}>
+          <line
+            x1={strand.x}
+            y1="52"
+            x2={strand.x}
+            y2={strand.endY - 12}
+            stroke="#C49A45"
+            strokeWidth="1"
+          />
+          {Array.from({ length: sIdx === 1 ? 5 : 4 }).map((_, i) => {
+            const cy = 66 + i * 20;
+            const fill = (i + sIdx) % 2 === 0 ? flowerA : flowerB;
+            return (
+              <g key={cy}>
+                <circle cx={strand.x} cy={cy} r="6.5" fill={fill} stroke="#C49A45" strokeWidth="0.7" />
+                <circle cx={strand.x} cy={cy} r="2" fill="#FAF5EB" />
+              </g>
+            );
+          })}
+          {/* Gold Bell & Floral Tassel */}
+          <path
+            d={`M${strand.x - 5} ${strand.endY - 14} L${strand.x + 5} ${strand.endY - 14} L${strand.x + 7} ${strand.endY - 5} L${strand.x - 7} ${strand.endY - 5} Z`}
+            fill="#DFBA66"
+            stroke="#9F7624"
+            strokeWidth="0.8"
+          />
+          <circle cx={strand.x} cy={strand.endY} r="3.5" fill={flowerA} />
+        </g>
+      ))}
+    </svg>
+  );
+}
+
+export function SilkRibbonBow({
+  variant = 'gold',
+  className = '',
+}: {
+  variant?: 'saffron' | 'haldi' | 'gold' | 'maroon';
+  className?: string;
+}) {
+  const palette =
+    variant === 'saffron'
+      ? { ribbon: '#D97706', shade: '#9A3412', trim: '#FDE68A' }
+      : variant === 'haldi'
+      ? { ribbon: '#EAB308', shade: '#A16207', trim: '#FEF9C3' }
+      : variant === 'maroon'
+      ? { ribbon: '#7A1B2E', shade: '#4A0B18', trim: '#DFBA66' }
+      : { ribbon: '#C49A45', shade: '#8A631B', trim: '#FAF5EB' };
+
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 180 64"
+      fill="none"
+      className={`pointer-events-none select-none ${className}`}
+    >
+      {/* Flowing Left & Right Ribbon Tails */}
+      <path
+        d="M84 28 C66 42 54 54 38 60 L48 48 L34 45 C52 38 68 30 84 24 Z"
+        fill={palette.shade}
+        stroke={palette.trim}
+        strokeWidth="0.9"
+      />
+      <path
+        d="M96 28 C114 42 126 54 142 60 L132 48 L146 45 C128 38 112 30 96 24 Z"
+        fill={palette.shade}
+        stroke={palette.trim}
+        strokeWidth="0.9"
+      />
+      {/* Left Loop */}
+      <path
+        d="M86 24 C66 6 36 10 38 26 C40 40 66 38 86 28 Z"
+        fill={palette.ribbon}
+        stroke={palette.trim}
+        strokeWidth="1.2"
+      />
+      {/* Right Loop */}
+      <path
+        d="M94 24 C114 6 144 10 142 26 C140 40 114 38 94 28 Z"
+        fill={palette.ribbon}
+        stroke={palette.trim}
+        strokeWidth="1.2"
+      />
+      {/* Center Gold-Trimmed Silk Knot */}
+      <rect
+        x="82"
+        y="17"
+        width="16"
+        height="16"
+        rx="5"
+        fill={palette.ribbon}
+        stroke={palette.trim}
+        strokeWidth="1.4"
+      />
+      <circle cx="90" cy="25" r="3" fill={palette.trim} />
+    </svg>
+  );
+}
+
+export function SacredGaneshaMedallion({ className = '' }: { className?: string }) {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 112 112"
+      fill="none"
+      className={`pointer-events-none select-none ${className}`}
+    >
+      <circle cx="56" cy="56" r="50" fill="#FFF7E2" stroke="#D97706" strokeWidth="1.8" />
+      <circle cx="56" cy="56" r="43" stroke="#C49A45" strokeWidth="1" strokeDasharray="3 3" />
+      {/* Stylized Auspicious Temple Crown, Tilak & Swastik-Free Lotus Arc Motif */}
+      <path
+        d="M34 62 C34 44 44 32 56 32 C68 32 78 44 78 62"
+        stroke="#B45309"
+        strokeWidth="1.8"
+        fill="#FDE68A"
+        fillOpacity="0.4"
+      />
+      {/* Crown */}
+      <path d="M46 32 L56 19 L66 32 Z" fill="#D97706" stroke="#7C2D12" strokeWidth="1" />
+      {/* Sacred Tilak Crest & Lotus Base */}
+      <path d="M56 38 C59 44 59 50 56 54 C53 50 53 44 56 38 Z" fill="#7C2D12" />
+      <path d="M44 56 Q56 68 68 56" stroke="#D97706" strokeWidth="2.5" strokeLinecap="round" />
+      <path d="M56 62 C64 62 67 70 61 74 C57 76 53 74 53 71" stroke="#9A3412" strokeWidth="3" strokeLinecap="round" />
+      {/* Lotus Petal Halo Base */}
+      <path d="M36 78 Q56 88 76 78" stroke="#4F7750" strokeWidth="1.6" />
+      <circle cx="42" cy="79" r="3.5" fill="#E8839B" />
+      <circle cx="56" cy="83" r="4" fill="#F59E0B" />
+      <circle cx="70" cy="79" r="3.5" fill="#E8839B" />
+    </svg>
+  );
+}
+
+

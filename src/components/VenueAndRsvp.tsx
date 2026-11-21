@@ -3,6 +3,11 @@ import { motion } from 'motion/react';
 import { useState } from 'react';
 import { getGoogleMapsUrl, getWhatsAppUrl, weddingConfig } from '../config/weddingConfig';
 import { FloralCornerCluster, LotusDivider } from './OrnamentalMotifs';
+import {
+  DecorativeCutout,
+  StaticPeacockOrnament,
+  SwingingLotusGarland,
+} from './RoyalBotanicalDecor';
 
 export function VenueAndRsvp() {
   const [copied, setCopied] = useState(false);
@@ -22,38 +27,51 @@ export function VenueAndRsvp() {
 
   return (
     <>
-      {/* WEDDING VENUE PRESENTATION */}
+      {/* WEDDING VENUE PRESENTATION WITH GARDEN TERRACE & PALACE ARCH */}
       <section
         id="wedding-venue"
         aria-label="Wedding Venue in Udaipur"
         className="relative py-20 sm:py-28 px-4 sm:px-8 bg-[#FAF5EB] text-[#2B1418] overflow-hidden"
       >
-        <FloralCornerCluster
-          variant="lotus-rose"
-          position="top-left"
-          className="hidden sm:block absolute top-2 left-2 w-28 h-28 opacity-80"
+        <DecorativeCutout
+          src={weddingConfig.decor.bougainvilleaBranch}
+          alt=""
+          className="absolute -top-3 -left-4 w-28 sm:w-44 h-auto opacity-85 z-10"
         />
-        <FloralCornerCluster
-          variant="marigold-leaf"
-          position="bottom-right"
-          className="hidden sm:block absolute bottom-2 right-2 w-28 h-28 opacity-80"
+        <DecorativeCutout
+          src={weddingConfig.decor.coconutPalm}
+          alt=""
+          flipHorizontal
+          className="hidden lg:block absolute bottom-2 right-2 w-40 h-auto opacity-75 z-10"
         />
 
-        <div className="relative z-10 max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
+        <div className="relative z-20 max-w-6xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 lg:gap-14 items-center">
           <motion.div
             initial={{ opacity: 0, x: -24 }}
             whileInView={{ opacity: 1, x: 0 }}
             viewport={{ once: true, amount: 0.25 }}
             transition={{ duration: 0.7, ease: [0.16, 1, 0.3, 1] }}
-            className="lg:col-span-6 flex justify-center"
+            className="lg:col-span-6 flex justify-center relative"
           >
-            <div className="relative w-full max-w-[440px] rounded-t-[220px] rounded-b-2xl overflow-hidden border-2 border-[#C49A45]/75 shadow-[0_25px_70px_rgba(92,18,34,0.16)] bg-[#F3E9D4]">
-              <img
-                src={weddingConfig.assets.udaipurPalaceArchImage}
-                alt="Golden carved Rajasthani palace balcony arch overlooking hillside palace domes and flowering courtyard"
-                referrerPolicy="no-referrer"
-                className="w-full h-[460px] sm:h-[520px] object-cover"
-                loading="lazy"
+            <div className="relative w-full max-w-[440px]">
+              {/* Static Royal Peacock Sitting on the Upper Arch Balcony Edge */}
+              <StaticPeacockOrnament className="absolute -top-10 -right-2 sm:-top-12 sm:-right-7 w-20 sm:w-28 h-auto z-30 drop-shadow-xl" />
+
+              <div className="relative rounded-t-[220px] rounded-b-2xl overflow-hidden border-2 border-[#C49A45]/80 shadow-[0_25px_70px_rgba(92,18,34,0.16)] bg-[#F3E9D4]">
+                <img
+                  src={weddingConfig.assets.udaipurPalaceArchImage}
+                  alt="Golden carved Rajasthani palace garden terrace arch overlooking hillside palace domes and flowering courtyard"
+                  referrerPolicy="no-referrer"
+                  className="w-full h-[440px] sm:h-[520px] object-cover block"
+                  loading="lazy"
+                  decoding="async"
+                />
+              </div>
+
+              <DecorativeCutout
+                src={weddingConfig.decor.lotusCluster}
+                alt=""
+                className="absolute -bottom-5 -left-4 w-28 sm:w-36 h-auto z-20 drop-shadow-md"
               />
             </div>
           </motion.div>
@@ -123,12 +141,22 @@ export function VenueAndRsvp() {
         <FloralCornerCluster
           variant="lotus-rose"
           position="top-left"
-          className="absolute top-0 left-0 w-24 h-24 sm:w-28 sm:h-28 opacity-70"
+          className="absolute top-2 left-2 w-24 h-24 sm:w-28 sm:h-28 opacity-70"
         />
         <FloralCornerCluster
           variant="lotus-rose"
           position="bottom-right"
-          className="absolute bottom-0 right-0 w-24 h-24 sm:w-28 sm:h-28 opacity-70"
+          className="absolute bottom-2 right-2 w-24 h-24 sm:w-28 sm:h-28 opacity-70"
+        />
+
+        <SwingingLotusGarland
+          timing="c"
+          className="hidden sm:block absolute top-0 left-8 lg:left-16 w-12 h-36 opacity-85 z-10"
+        />
+        <SwingingLotusGarland
+          timing="a"
+          flipHorizontal
+          className="hidden sm:block absolute top-0 right-8 lg:right-16 w-12 h-36 opacity-85 z-10"
         />
 
         <div className="relative z-10 max-w-3xl mx-auto text-center">

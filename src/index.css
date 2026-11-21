@@ -74,15 +74,15 @@
 .theme-ganesh {
   background-color: #fff6e5;
   background-image:
-    radial-gradient(circle at 12% 15%, rgba(245, 158, 11, 0.18) 0%, transparent 45%),
+    radial-gradient(circle at 12% 15%, rgba(245, 158, 11, 0.16) 0%, transparent 45%),
     radial-gradient(circle at 88% 85%, rgba(217, 119, 6, 0.14) 0%, transparent 50%),
-    linear-gradient(180deg, #fff9ee 0%, #fcedd2 100%);
+    linear-gradient(180deg, #fffaf0 0%, #fbedd3 100%);
 }
 
 .theme-haldi {
   background-color: #fef9db;
   background-image:
-    radial-gradient(circle at 85% 18%, rgba(234, 179, 8, 0.24) 0%, transparent 48%),
+    radial-gradient(circle at 85% 18%, rgba(234, 179, 8, 0.22) 0%, transparent 48%),
     radial-gradient(circle at 15% 88%, rgba(79, 119, 80, 0.15) 0%, transparent 50%),
     linear-gradient(180deg, #fefce8 0%, #f9efc0 100%);
 }
@@ -91,7 +91,7 @@
   background-color: #f8f1e2;
   background-image:
     radial-gradient(circle at 50% 15%, rgba(196, 154, 69, 0.18) 0%, transparent 52%),
-    radial-gradient(circle at 15% 85%, rgba(180, 83, 9, 0.1) 0%, transparent 48%),
+    radial-gradient(circle at 15% 85%, rgba(180, 83, 9, 0.09) 0%, transparent 48%),
     linear-gradient(180deg, #fbf6ea 0%, #efe2c8 100%);
 }
 
@@ -112,7 +112,7 @@
 
 .perspective-card-stage {
   perspective: 1400px;
-  perspective-origin: 50% 38%;
+  perspective-origin: 50% 35%;
 }
 
 .preserve-3d {
@@ -122,6 +122,160 @@
 .backface-hidden {
   backface-visibility: hidden;
   -webkit-backface-visibility: hidden;
+}
+
+/* Lightweight GPU-composited upward/forward card cover hinge transition */
+.book-cover-flap {
+  transform-origin: top center;
+  transition:
+    transform 660ms cubic-bezier(0.22, 1, 0.36, 1),
+    opacity 420ms ease 220ms;
+  will-change: transform, opacity;
+}
+
+.book-cover-flap.is-open {
+  transform: rotateX(156deg) translateZ(16px);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.book-cover-flap.is-closed {
+  transform: rotateX(0deg) translateZ(0px);
+  opacity: 1;
+}
+
+.book-interior-content {
+  transition:
+    opacity 420ms ease 140ms,
+    transform 520ms cubic-bezier(0.22, 1, 0.36, 1) 120ms;
+}
+
+.book-interior-content.is-hidden {
+  opacity: 0.12;
+  transform: translate3d(0, 12px, 0);
+}
+
+.book-interior-content.is-visible {
+  opacity: 1;
+  transform: translate3d(0, 0, 0);
+}
+
+/* Lightweight GPU-composited falling flower petal animation */
+@keyframes petal-drift-a {
+  0% {
+    transform: translate3d(0, -8vh, 0) rotate(0deg);
+  }
+  25% {
+    transform: translate3d(22px, 24vh, 0) rotate(85deg);
+  }
+  50% {
+    transform: translate3d(-18px, 54vh, 0) rotate(175deg);
+  }
+  75% {
+    transform: translate3d(16px, 82vh, 0) rotate(265deg);
+  }
+  100% {
+    transform: translate3d(-10px, 110vh, 0) rotate(355deg);
+  }
+}
+
+@keyframes petal-drift-b {
+  0% {
+    transform: translate3d(0, -10vh, 0) rotate(40deg);
+  }
+  30% {
+    transform: translate3d(-24px, 26vh, 0) rotate(-45deg);
+  }
+  65% {
+    transform: translate3d(20px, 68vh, 0) rotate(-145deg);
+  }
+  100% {
+    transform: translate3d(-12px, 110vh, 0) rotate(-255deg);
+  }
+}
+
+@keyframes petal-drift-c {
+  0% {
+    transform: translate3d(0, -10vh, 0) rotate(-25deg);
+  }
+  35% {
+    transform: translate3d(26px, 34vh, 0) rotate(95deg);
+  }
+  70% {
+    transform: translate3d(-22px, 72vh, 0) rotate(210deg);
+  }
+  100% {
+    transform: translate3d(12px, 112vh, 0) rotate(320deg);
+  }
+}
+
+.animate-petal-a {
+  animation-name: petal-drift-a;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+
+.animate-petal-b {
+  animation-name: petal-drift-b;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+
+.animate-petal-c {
+  animation-name: petal-drift-c;
+  animation-timing-function: linear;
+  animation-iteration-count: infinite;
+  will-change: transform;
+}
+
+/* Subtle natural pendulum swing for hanging lotus garlands */
+@keyframes lotus-swing-a {
+  0%, 100% {
+    transform: rotate(-2deg);
+  }
+  50% {
+    transform: rotate(2.1deg);
+  }
+}
+
+@keyframes lotus-swing-b {
+  0%, 100% {
+    transform: rotate(1.9deg);
+  }
+  50% {
+    transform: rotate(-2.2deg);
+  }
+}
+
+@keyframes lotus-swing-c {
+  0%, 100% {
+    transform: rotate(-1.6deg);
+  }
+  50% {
+    transform: rotate(1.7deg);
+  }
+}
+
+.animate-lotus-swing-a {
+  transform-origin: top center;
+  animation: lotus-swing-a 5.8s ease-in-out infinite;
+  will-change: transform;
+}
+
+.animate-lotus-swing-b {
+  transform-origin: top center;
+  animation: lotus-swing-b 6.9s ease-in-out infinite;
+  animation-delay: -1.4s;
+  will-change: transform;
+}
+
+.animate-lotus-swing-c {
+  transform-origin: top center;
+  animation: lotus-swing-c 7.6s ease-in-out infinite;
+  animation-delay: -2.8s;
+  will-change: transform;
 }
 
 @keyframes gentle-sway {
@@ -199,6 +353,16 @@
 }
 
 @media (prefers-reduced-motion: reduce) {
+  .book-cover-flap,
+  .book-interior-content {
+    transition: none !important;
+  }
+  .animate-petal-a,
+  .animate-petal-b,
+  .animate-petal-c,
+  .animate-lotus-swing-a,
+  .animate-lotus-swing-b,
+  .animate-lotus-swing-c,
   .animate-gentle-sway,
   .animate-elephant-walk,
   .animate-trunk-sway,

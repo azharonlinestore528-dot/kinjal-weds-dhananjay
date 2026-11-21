@@ -1,7 +1,19 @@
-import ganeshPujaImage from '../assets/images/ganesh_puja_artwork_1795268175524.jpg';
+import ganeshRoomBackdrop from '../assets/images/palace_room_ganesh_1795296241579.jpg';
+import ganeshArtworkLegacy from '../assets/images/ganesh_puja_artwork_1795268175524.jpg';
 import haldiFloralImage from '../assets/images/haldi_floral_artwork_1795268176363.jpg';
+import haldiRoomBackdrop from '../assets/images/palace_room_haldi_1795296241903.jpg';
+import grahshantiRoomBackdrop from '../assets/images/palace_room_grahshanti_1795296241838.jpg';
+import weddingRoomBackdrop from '../assets/images/palace_room_wedding_1795296240627.jpg';
 import maroonLotusDiyaImage from '../assets/images/maroon_lotus_diya_1795268173704.jpg';
 import royalPeacockImage from '../assets/images/royal_peacock_lotus_1795268172948.jpg';
+import bougainvilleaBranchCutout from '../assets/decor/bougainvillea_branch.webp';
+import royalPeacockCutout from '../assets/decor/royal_peacock.webp';
+import lotusClusterCutout from '../assets/decor/lotus_cluster.webp';
+import hangingLotusCutout from '../assets/decor/hanging_lotus_single.webp';
+import kalashCoconutCutout from '../assets/decor/kalash_coconut.webp';
+import elephantBananaCutout from '../assets/decor/elephant_banana.webp';
+import coconutPalmCutout from '../assets/decor/coconut_palm.webp';
+import gardenChhatriCutout from '../assets/decor/garden_chhatri.webp';
 
 export type EventThemeVariant = 'ganesh' | 'haldi' | 'grahshanti' | 'wedding';
 
@@ -14,11 +26,14 @@ export interface BilingualEventConfig {
   time: string;
   coverSealText: string;
   coverPrompt: string;
+  roomTitle: string;
   description: string;
   venueLabel: string;
   isVenueConfirmed: boolean;
   artworkSrc?: string;
   artworkAlt: string;
+  roomBackdropSrc: string;
+  roomBackdropAlt: string;
 }
 
 export const weddingConfig = {
@@ -78,66 +93,59 @@ export const weddingConfig = {
     royalProcessionImage: '/assets/aistudio/97ebb9fe-cd68-44bd-a1fe-32082fa05510_c3e6cb97.jpg',
     royalPeacockImage,
     maroonLotusDiyaImage,
-    ganeshPujaImage,
+    ganeshPujaImage: ganeshArtworkLegacy,
     haldiFloralImage,
   },
-  keepsakePresets: [
-    {
-      id: 'peacock-sanctum',
-      label: 'Royal Peacock & Lotus',
-      src: royalPeacockImage,
-      prompt:
-        'Pink lotus petals drift softly across the serene golden palace frame as sunlight glimmers gently over emerald foliage while the regal peacock rests gracefully.',
-    },
-    {
-      id: 'udaipur-arch',
-      label: 'Udaipur Palace Terrace',
-      src: '/assets/aistudio/aede9782-a7d7-4f6d-ba58-d434fa8e9bb0_a32986a6.jpg',
-      prompt:
-        'A warm Rajasthani breeze sways the bougainvillea blossoms along the carved golden palace balcony while distant Aravalli mist shimmers in golden hour light.',
-    },
-    {
-      id: 'chhatri-pavilion',
-      label: 'Floral Chhatri Pavilion',
-      src: '/assets/aistudio/b6b2168a-1180-4ebd-ad64-b9513fc3a16e_cb3fe323.jpg',
-      prompt:
-        'Delicate rose and bougainvillea petals float peacefully around the sunlit Rajasthani marble chhatri pavilion while hanging brass lanterns sway lightly.',
-    },
-    {
-      id: 'royal-baraat',
-      label: 'Royal Baraat Procession',
-      src: '/assets/aistudio/97ebb9fe-cd68-44bd-a1fe-32082fa05510_c3e6cb97.jpg',
-      prompt:
-        'Soft rose and marigold petals shower down gently over the ceremonial royal elephant baraat under glowing evening palace lanterns.',
-    },
-  ],
+  decor: {
+    bougainvilleaBranch: bougainvilleaBranchCutout,
+    royalPeacock: royalPeacockCutout,
+    lotusCluster: lotusClusterCutout,
+    hangingLotus: hangingLotusCutout,
+    kalashCoconut: kalashCoconutCutout,
+    elephantBanana: elephantBananaCutout,
+    coconutPalm: coconutPalmCutout,
+    gardenChhatri: gardenChhatriCutout,
+  },
+  blessings: {
+    englishHeading: 'Blessings of Our Families',
+    gujaratiHeading: 'પરિવારજનોના આશીર્વાદ',
+    gujaratiVerseOne:
+      'બે પરિવારોનો પવિત્ર સંગમ,\nબે હૃદયોની નવી શરૂઆત.\nઆપના પ્રેમ, આશીર્વાદ અને ઉપસ્થિતિથી\nઆ શુભ પ્રસંગ વધુ સુંદર બની રહેશે.',
+    gujaratiVerseTwo:
+      'આપ સૌ પરિવારજનોને હાર્દિક આમંત્રણ.\nપધારીને નવદંપતીને આશીર્વાદ આપશો\nઅને અમારી ખુશીઓમાં સહભાગી બનશો.',
+  },
   events: [
     {
       id: 'ganesh',
       englishName: 'Ganesh Puja',
       gujaratiName: 'ગણેશ પૂજા',
-      subtitle: 'Chapter I · Auspicious Invocation & Saffron Blessings',
+      subtitle: 'Chapter I · Auspicious Saffron Invocation',
       date: '15 February 2027',
       time: '9:30 AM',
       coverSealText: 'શ્રી ગણેશાય નમઃ',
-      coverPrompt: 'Continue scrolling to unfold invitation',
+      coverPrompt: 'TAP TO OPEN',
+      roomTitle: 'The Saffron Temple Courtyard',
       description:
         'Invoking Lord Ganesha’s divine grace with sacred chants, marigold garlands, saffron tilak, and family blessings as the wedding festivities begin.',
       venueLabel: 'Venue details will be shared on WhatsApp once confirmed.',
       isVenueConfirmed: false,
-      artworkSrc: ganeshPujaImage,
+      artworkSrc: ganeshArtworkLegacy,
       artworkAlt:
         'Traditional Indian miniature Ganesh Puja painting with saffron marigold arch and glowing diyas',
+      roomBackdropSrc: ganeshRoomBackdrop,
+      roomBackdropAlt:
+        'Traditional Rajasthani sandstone temple courtyard with carved cusped arches, glowing diyas, and pink lotus garlands',
     },
     {
       id: 'haldi',
       englishName: 'Haldi Ceremony',
       gujaratiName: 'હળદી સમારોહ',
-      subtitle: 'Chapter II · Golden Turmeric & Marigold Courtyard',
+      subtitle: 'Chapter II · Golden Turmeric & Marigold Morning',
       date: '16 February 2027',
       time: '10:00 AM – 11:00 AM',
       coverSealText: 'શુભ હળદી',
-      coverPrompt: 'Continue scrolling to unfold invitation',
+      coverPrompt: 'OPEN YOUR INVITATION',
+      roomTitle: 'The Sunlit Marigold Pavilion',
       description:
         'A joyful morning filled with radiant turmeric blessings, cascading yellow marigold and jasmine garlands, folk songs, and sunlit laughter.',
       venueLabel: 'Venue details will be shared on WhatsApp once confirmed.',
@@ -145,6 +153,9 @@ export const weddingConfig = {
       artworkSrc: haldiFloralImage,
       artworkAlt:
         'Brass urli bowl of golden turmeric surrounded by yellow marigold and jasmine garlands',
+      roomBackdropSrc: haldiRoomBackdrop,
+      roomBackdropAlt:
+        'Sunlit Udaipur palace courtyard pavilion decorated with bright yellow marigold flower jhoomars and mango leaves',
     },
     {
       id: 'grahshanti',
@@ -154,12 +165,16 @@ export const weddingConfig = {
       date: '17 February 2027',
       time: '10:00 AM – 12:00 PM',
       coverSealText: 'શુભ ગ્રહ શાંતિ',
-      coverPrompt: 'Continue scrolling to unfold invitation',
+      coverPrompt: 'TAP TO OPEN',
+      roomTitle: 'The Golden Sandstone Darbar',
       description:
         'A serene morning prayer seeking cosmic peace, ancestral blessings, and harmony for Kinjal and Dhananjay before the evening wedding ceremony.',
       venueLabel: 'Venue details will be shared on WhatsApp once confirmed.',
       isVenueConfirmed: false,
       artworkAlt: 'Sacred Mangal Kalash and golden lotus mandala artwork for Grah Shanti Puja',
+      roomBackdropSrc: grahshantiRoomBackdrop,
+      roomBackdropAlt:
+        'Serene ivory and antique gold Rajasthani darbar chamber with mandala dome and brass kalash borders',
     },
     {
       id: 'wedding',
@@ -169,7 +184,8 @@ export const weddingConfig = {
       date: '17 February 2027',
       time: '6:00 PM – 8:30 PM',
       coverSealText: 'શુભ વિવાહ',
-      coverPrompt: 'Continue scrolling to unfold the royal wedding invitation',
+      coverPrompt: 'OPEN YOUR INVITATION',
+      roomTitle: 'The Grand Royal Maroon Palace',
       description:
         'Underneath the illuminated floral mandap, royal elephants and joyful procession welcome the union of Kinjal and Dhananjay as they take seven sacred vows.',
       venueLabel: 'The Grand Ballroom, Hotel Palace, Udaipur, Rajasthan.',
@@ -177,6 +193,9 @@ export const weddingConfig = {
       artworkSrc: '/assets/aistudio/97ebb9fe-cd68-44bd-a1fe-32082fa05510_c3e6cb97.jpg',
       artworkAlt:
         'Royal Indian miniature wedding procession with caparisoned elephants and golden howdah',
+      roomBackdropSrc: weddingRoomBackdrop,
+      roomBackdropAlt:
+        'Grand royal maroon and gold Indian wedding palace courtyard at twilight with glowing chandeliers and floral mandap',
     },
   ] satisfies BilingualEventConfig[],
 } as const;

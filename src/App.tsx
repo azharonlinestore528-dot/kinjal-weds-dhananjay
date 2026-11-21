@@ -1,29 +1,17 @@
-import { useState } from 'react';
-import { FloatingFloralLayer, type FloralIntensity } from './components/FloatingFloralLayer';
+import { FamilyBlessings } from './components/FamilyBlessings';
+import { FloatingFloralLayer } from './components/FloatingFloralLayer';
+import { GrandWeddingMandap } from './components/GrandWeddingMandap';
 import { MiniatureCelebrations } from './components/MiniatureCelebrations';
 import { LotusDivider } from './components/OrnamentalMotifs';
 import { PalaceDoorHero } from './components/PalaceDoorHero';
 import { PeacockSanctuary } from './components/PeacockSanctuary';
 import { RoyalInvitationCard } from './components/RoyalInvitationCard';
-import { RoyalKeepsakeStudio } from './components/RoyalKeepsakeStudio';
 import { RoyalMandap3D } from './components/RoyalMandap3D';
 import { ScratchRevealCard } from './components/ScratchRevealCard';
 import { VenueAndRsvp } from './components/VenueAndRsvp';
 import { weddingConfig } from './config/weddingConfig';
 
 export default function App() {
-  const [heroActive, setHeroActive] = useState(true);
-  const [heroGlowActive, setHeroGlowActive] = useState(false);
-  const [revealPopupOpen, setRevealPopupOpen] = useState(false);
-  const [eventsFloralIntensity, setEventsFloralIntensity] = useState<FloralIntensity>('ambient');
-
-  const computedIntensity: FloralIntensity =
-    revealPopupOpen || eventsFloralIntensity === 'climax' || (heroActive && heroGlowActive)
-      ? 'climax'
-      : heroActive || eventsFloralIntensity === 'elevated'
-      ? 'elevated'
-      : 'ambient';
-
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
     if (el) {
@@ -33,15 +21,11 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#FAF5EB] text-[#2B1418] relative">
-      {/* Multi-flower falling atmosphere (roses, lotus, lily, marigold & floral flakes) */}
-      <FloatingFloralLayer intensity={computedIntensity} />
+      {/* Lightweight CSS-animated falling flower petals (zero JS loop, zero blur) */}
+      <FloatingFloralLayer />
 
-      {/* 01-03. Full-Screen Edge-to-Edge Tap-to-Enter Palace Gate -> Complete Exit */}
-      <PalaceDoorHero
-        onEnterInvitation={() => scrollToSection('royal-invitation')}
-        onHeroActiveChange={setHeroActive}
-        onGlowChange={setHeroGlowActive}
-      />
+      {/* Full-Screen Edge-to-Edge Tap-to-Enter Palace Gate */}
+      <PalaceDoorHero onEnterInvitation={() => scrollToSection('royal-invitation')} />
 
       {/* Clean 3-Zone Editorial Chapter Navigation Bar */}
       <header className="sticky top-0 z-20 bg-[#FAF5EB]/95 border-b border-[#C49A45]/45 shadow-sm">
@@ -76,16 +60,16 @@ export default function App() {
               Peacock
             </a>
             <a
-              href="#royal-mandap-3d"
+              href="#grand-mandap"
               className="hover:text-[#9F7624] hover:underline underline-offset-4 transition-colors whitespace-nowrap shrink-0"
             >
-              3D Mandap
+              Mandap
             </a>
             <a
-              href="#keepsake-studio"
+              href="#family-blessings"
               className="hover:text-[#9F7624] hover:underline underline-offset-4 transition-colors whitespace-nowrap shrink-0"
             >
-              Keepsake
+              Blessings
             </a>
           </nav>
 
@@ -101,28 +85,28 @@ export default function App() {
       </header>
 
       <main>
-        {/* 04. Luxury Antique Ivory Wedding Invitation Card + Live Countdown */}
+        {/* Luxury Antique Ivory Wedding Invitation Card + Live Countdown */}
         <RoyalInvitationCard />
 
-        {/* 05. Interactive Burgundy Velvet & Gold Scratch Card + Reveal Popup */}
-        <ScratchRevealCard onPopupOpenChange={setRevealPopupOpen} />
+        {/* Interactive Burgundy Velvet & Gold Scratch Card + Reveal Popup */}
+        <ScratchRevealCard />
 
-        {/* 06-08. Scroll-Driven Upward-Opening Bilingual Event Cards + Lunch + Royal Procession */}
-        <MiniatureCelebrations
-          onJumpToRsvp={() => scrollToSection('rsvp')}
-          onFloralStateChange={setEventsFloralIntensity}
-        />
+        {/* Four Royal Chambers with Click-to-Open Invitation Books + Lunch + Baraat */}
+        <MiniatureCelebrations onJumpToRsvp={() => scrollToSection('rsvp')} />
 
-        {/* 09. Static Royal Indian Peacock & Lotus Sanctuary above 3D Mandap */}
+        {/* Unframed Static Royal Indian Peacock & Lotus Sanctuary */}
         <PeacockSanctuary />
 
-        {/* 10. Three.js 3D Royal Palace Courtyard & Wedding Mandap */}
+        {/* Interactive Three.js 3D Royal Palace Courtyard & Wedding Mandap */}
         <RoyalMandap3D />
 
-        {/* 11. Silent Photo-to-Video Royal Keepsake Studio */}
-        <RoyalKeepsakeStudio />
+        {/* Grand Final Royal Wedding Mandap Highlight with Bride & Groom Centerpiece */}
+        <GrandWeddingMandap />
 
-        {/* 12. Udaipur Wedding Venue & WhatsApp RSVP */}
+        {/* Gujarati Family Blessings Section */}
+        <FamilyBlessings />
+
+        {/* Udaipur Wedding Venue & WhatsApp RSVP */}
         <VenueAndRsvp />
       </main>
 

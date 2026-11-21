@@ -7,6 +7,11 @@ import {
   HangingFloralToran,
   LotusDivider,
 } from './OrnamentalMotifs';
+import {
+  DecorativeCutout,
+  StaticPeacockOrnament,
+  SwingingLotusGarland,
+} from './RoyalBotanicalDecor';
 
 interface Sparkle {
   x: number;
@@ -262,16 +267,30 @@ export function ScratchRevealCard({
         className="absolute top-2 right-2 w-24 h-24 sm:w-32 sm:h-32 opacity-75"
       />
 
+      <SwingingLotusGarland
+        timing="b"
+        className="hidden sm:block absolute top-0 left-3 lg:left-10 w-11 lg:w-14 h-36 lg:h-44 opacity-85 z-10"
+      />
+      <SwingingLotusGarland
+        timing="c"
+        flipHorizontal
+        className="hidden sm:block absolute top-0 right-3 lg:right-10 w-11 lg:w-14 h-36 lg:h-44 opacity-85 z-10"
+      />
+
       <div className="relative z-10 max-w-5xl mx-auto grid grid-cols-1 lg:grid-cols-12 gap-10 items-center">
-        {/* Clean Watermark-Free Maroon Velvet & Lotus Diya Painting */}
-        <div className="lg:col-span-5 flex justify-center">
-          <div className="relative max-w-[330px] w-full rounded-2xl overflow-hidden border-2 border-[#C49A45]/75 shadow-[0_24px_60px_rgba(0,0,0,0.45)] bg-[#3D0B16]">
-            <img
-              src={weddingConfig.assets.maroonLotusDiyaImage}
-              alt="Royal burgundy wedding mandap miniature artwork with glowing brass temple diyas and pink lotus stems"
-              referrerPolicy="no-referrer"
-              className="w-full h-auto object-cover"
-              loading="lazy"
+        {/* Unframed Royal Elephant with Banana Tree & Lotus Garden Vignette */}
+        <div className="lg:col-span-5 relative flex flex-col items-center justify-center">
+          <div className="relative w-full max-w-[340px] rounded-t-[170px] rounded-b-2xl border border-[#DFBA66]/65 bg-gradient-to-b from-[#133D38]/75 via-[#2E0812]/80 to-[#1E4D3B]/75 px-4 pt-8 pb-5 shadow-[0_24px_60px_rgba(0,0,0,0.45)] flex flex-col items-center">
+            <StaticPeacockOrnament className="absolute -top-9 -right-3 sm:-right-6 w-20 sm:w-24 h-auto z-20 drop-shadow-lg" />
+            <DecorativeCutout
+              src={weddingConfig.decor.elephantBanana}
+              alt="Traditional royal wedding elephant with golden howdah beside green banana tree and lotus flowers"
+              className="w-full max-w-[300px] h-auto relative z-10"
+            />
+            <DecorativeCutout
+              src={weddingConfig.decor.lotusCluster}
+              alt=""
+              className="w-36 sm:w-44 h-auto -mt-5 relative z-20"
             />
           </div>
         </div>
