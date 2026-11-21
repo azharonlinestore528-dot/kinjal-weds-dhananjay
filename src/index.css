@@ -407,65 +407,24 @@
   will-change: transform;
 }
 
-@keyframes gate-curtain-lift {
-  0% {
-    transform: translate3d(0, 0%, 0) scale(1);
-    opacity: 1;
-  }
-  72% {
-    transform: translate3d(0, -104%, 0) scale(1.04);
-    opacity: 1;
-  }
-  100% {
-    transform: translate3d(0, -110%, 0) scale(1.05);
-    opacity: 0;
-  }
-}
-
 @keyframes gate-golden-flash {
   0% {
     opacity: 0;
-    transform: scale(0.72);
+    transform: scale(0.76);
   }
-  44% {
-    opacity: 0;
-    transform: scale(0.8);
-  }
-  68% {
-    opacity: 0.94;
-    transform: scale(1.05);
+  32% {
+    opacity: 0.92;
+    transform: scale(1.04);
   }
   100% {
     opacity: 0;
-    transform: scale(1.26);
+    transform: scale(1.24);
   }
-}
-
-@keyframes gate-backdrop-fade {
-  0% {
-    opacity: 1;
-  }
-  74% {
-    opacity: 1;
-  }
-  100% {
-    opacity: 0;
-  }
-}
-
-.animate-gate-curtain-lift {
-  animation: gate-curtain-lift 1150ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
-  will-change: transform, opacity;
 }
 
 .animate-gate-golden-flash {
-  animation: gate-golden-flash 1350ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
+  animation: gate-golden-flash 900ms cubic-bezier(0.22, 1, 0.36, 1) forwards;
   will-change: transform, opacity;
-}
-
-.animate-gate-backdrop-fade {
-  animation: gate-backdrop-fade 1380ms ease forwards;
-  will-change: opacity;
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -487,9 +446,7 @@
   .animate-sparkle-twinkle,
   .animate-tap-halo,
   .animate-golden-mote,
-  .animate-gate-curtain-lift,
-  .animate-gate-golden-flash,
-  .animate-gate-backdrop-fade {
+  .animate-gate-golden-flash {
     animation: none !important;
   }
 }

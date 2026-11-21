@@ -163,7 +163,7 @@ const ROOM_STYLES: Record<EventThemeVariant, RoomStyle> = {
 function CoverOrnamentCenterpiece({ event }: { event: BilingualEventConfig }) {
   if (event.id === 'ganesh') {
     return (
-      <div className="flex flex-col items-center scale-75 sm:scale-100 -my-1.5 sm:my-0">
+      <div className="flex flex-col items-center scale-[0.72] sm:scale-100 -my-2.5 sm:my-0">
         <div className="flex items-center gap-2.5 sm:gap-3">
           <DecorativeCutout
             src={weddingConfig.decor.kalashCoconut}
@@ -179,7 +179,7 @@ function CoverOrnamentCenterpiece({ event }: { event: BilingualEventConfig }) {
 
   if (event.id === 'haldi') {
     return (
-      <div className="flex flex-col items-center scale-75 sm:scale-100 -my-1.5 sm:my-0">
+      <div className="flex flex-col items-center scale-[0.72] sm:scale-100 -my-2.5 sm:my-0">
         <FloralJhoomar variant="marigold" className="w-14 h-20 sm:w-20 sm:h-28 -mt-4" />
         <SilkRibbonBow variant="haldi" className="w-24 sm:w-28 h-8 sm:h-10 -mt-2" />
       </div>
@@ -188,7 +188,7 @@ function CoverOrnamentCenterpiece({ event }: { event: BilingualEventConfig }) {
 
   if (event.id === 'grahshanti') {
     return (
-      <div className="flex flex-col items-center scale-75 sm:scale-100 -my-1.5 sm:my-0">
+      <div className="flex flex-col items-center scale-[0.72] sm:scale-100 -my-2.5 sm:my-0">
         <div className="w-18 h-18 sm:w-26 sm:h-26 rounded-full border-2 border-[#C49A45]/80 bg-[#FAF5EB]/95 p-1.5 sm:p-2 shadow-inner flex items-center justify-center">
           <DecorativeCutout
             src={weddingConfig.decor.kalashCoconut}
@@ -202,7 +202,7 @@ function CoverOrnamentCenterpiece({ event }: { event: BilingualEventConfig }) {
   }
 
   return (
-    <div className="flex flex-col items-center scale-75 sm:scale-100 -my-1.5 sm:my-0">
+    <div className="flex flex-col items-center scale-[0.72] sm:scale-100 -my-2.5 sm:my-0">
       <div className="px-3.5 py-1 rounded-full border border-[#DFBA66]/70 bg-[#133D38]/85 mb-1.5">
         <StaticPeacockCrest tone="ivory" className="w-16 sm:w-20 h-9 sm:h-11" />
       </div>
@@ -364,24 +364,24 @@ function EventInvitationRoom({
         </div>
 
         {/* Interactive Click-to-Open Invitation Booklet Stage (Compact Miniature Proportion on Mobile) */}
-        <div className="relative perspective-card-stage max-w-[332px] sm:max-w-none mx-auto">
+        <div className="relative perspective-card-stage max-w-[350px] sm:max-w-none mx-auto">
           {/* Static Royal Peacock Perched Naturally on the Wedding Ceremony Booklet Frame */}
           {isMainWedding && (
             <StaticPeacockOrnament className="absolute -top-6 -right-2 sm:-top-12 sm:-right-8 w-14 sm:w-28 h-auto z-40 drop-shadow-xl" />
           )}
 
-          {/* Sacred Kalash Sitting Beside Ganesh & Grah Shanti Card Corners on Mobile */}
+          {/* Sacred Kalash Sitting Beside Ganesh & Grah Shanti Card Outer Corners on Mobile */}
           {(event.id === 'ganesh' || event.id === 'grahshanti') && (
             <DecorativeCutout
               src={weddingConfig.decor.kalashCoconut}
               alt=""
-              className="sm:hidden absolute -bottom-3 -right-2 w-12 h-auto z-40 drop-shadow-lg"
+              className="sm:hidden absolute -bottom-2.5 -right-2 w-10 h-auto z-40 drop-shadow-lg"
             />
           )}
 
           <div
             className={`relative preserve-3d ${
-              isOpen ? 'min-h-[420px] sm:min-h-[480px]' : 'min-h-[324px] sm:min-h-[470px]'
+              isOpen ? 'min-h-[420px] sm:min-h-[480px]' : 'min-h-[348px] sm:min-h-[470px]'
             }`}
           >
             {/* Interior Invitation Page (Revealed ONLY on Click/Tap) */}
@@ -571,10 +571,10 @@ function EventInvitationRoom({
               </div>
             </article>
 
-            {/* Vertically Top-Hinged Closed Front Cover (Strictly Upward & Forward rotateX, Zero Auto-Open) */}
+            {/* Vertically Top-Hinged Closed Front Cover (Relative in Closed State so Height Never Clips Content/Button) */}
             <div
-              className={`book-cover-flap preserve-3d absolute inset-0 z-30 ${
-                isOpen ? 'is-open' : 'is-closed'
+              className={`book-cover-flap preserve-3d z-30 ${
+                isOpen ? 'is-open absolute inset-0' : 'is-closed relative'
               }`}
             >
               <button
@@ -583,7 +583,7 @@ function EventInvitationRoom({
                 aria-expanded={isOpen}
                 aria-label={`${event.englishName} invitation — ${event.coverPrompt}`}
                 style={{ background: style.coverGradient }}
-                className={`backface-hidden absolute inset-0 w-full h-full rounded-2xl sm:rounded-3xl border-2 ${style.coverBorderClass} shadow-[0_20px_56px_rgba(10,3,5,0.48)] hover:brightness-[1.03] active:scale-[0.995] transition-all flex flex-col items-center justify-center px-5 py-6 pb-8 sm:p-10 sm:pb-12 text-center cursor-pointer overflow-hidden`}
+                className={`backface-hidden relative w-full min-h-[348px] sm:min-h-[470px] rounded-2xl sm:rounded-3xl border-2 ${style.coverBorderClass} shadow-[0_20px_56px_rgba(10,3,5,0.48)] hover:brightness-[1.03] active:scale-[0.995] transition-all flex flex-col items-center justify-center px-5 pt-6 pb-10 sm:p-10 sm:pb-12 text-center cursor-pointer overflow-hidden`}
               >
                 <div
                   className={`absolute inset-2.5 sm:inset-4 rounded-xl sm:rounded-2xl border ${style.coverBorderClass} opacity-65 pointer-events-none`}
@@ -599,22 +599,22 @@ function EventInvitationRoom({
                 <FloralCornerCluster
                   variant={style.cornerVariant}
                   position="top-left"
-                  className="absolute top-1 left-1 sm:top-1.5 sm:left-1.5 w-12 h-12 sm:w-28 sm:h-28 opacity-95"
+                  className="absolute top-1 left-1 sm:top-1.5 sm:left-1.5 w-11 h-11 sm:w-28 sm:h-28 opacity-95"
                 />
                 <FloralCornerCluster
                   variant={style.cornerVariant}
                   position="top-right"
-                  className="absolute top-1 right-1 sm:top-1.5 sm:right-1.5 w-12 h-12 sm:w-28 sm:h-28 opacity-95"
+                  className="absolute top-1 right-1 sm:top-1.5 sm:right-1.5 w-11 h-11 sm:w-28 sm:h-28 opacity-95"
                 />
                 <FloralCornerCluster
                   variant={style.cornerVariant}
                   position="bottom-left"
-                  className="absolute bottom-1 left-1 sm:bottom-1.5 sm:left-1.5 w-11 h-11 sm:w-24 sm:h-24 opacity-90"
+                  className="absolute bottom-1 left-1 sm:bottom-1.5 sm:left-1.5 w-9 h-9 sm:w-24 sm:h-24 opacity-90"
                 />
                 <FloralCornerCluster
                   variant={style.cornerVariant}
                   position="bottom-right"
-                  className="absolute bottom-1 right-1 sm:bottom-1.5 sm:right-1.5 w-11 h-11 sm:w-24 sm:h-24 opacity-90"
+                  className="absolute bottom-1 right-1 sm:bottom-1.5 sm:right-1.5 w-9 h-9 sm:w-24 sm:h-24 opacity-90"
                 />
 
                 <div className="relative z-10 w-full max-w-md flex flex-col items-center px-2">
@@ -629,17 +629,17 @@ function EventInvitationRoom({
 
                   <LotusDivider
                     tone={style.dividerTone}
-                    className="my-1.5 sm:my-3.5 scale-75 sm:scale-100"
+                    className="my-1 sm:my-3.5 scale-75 sm:scale-100"
                   />
 
                   <p
-                    className={`text-[11px] sm:text-sm tracking-[0.18em] sm:tracking-[0.24em] uppercase font-semibold tabular-nums ${style.coverSubClass}`}
+                    className={`text-[11px] sm:text-sm tracking-[0.14em] sm:tracking-[0.24em] uppercase font-semibold tabular-nums ${style.coverSubClass}`}
                   >
                     {event.date} · {event.time}
                   </p>
 
                   <h4
-                    className={`text-xl sm:text-5xl font-semibold tracking-[0.06em] uppercase mt-1 sm:mt-2 ${style.coverTextClass}`}
+                    className={`text-lg sm:text-5xl font-semibold tracking-[0.05em] sm:tracking-[0.06em] uppercase mt-1 sm:mt-2 ${style.coverTextClass}`}
                   >
                     {event.englishName}
                   </h4>
@@ -651,7 +651,7 @@ function EventInvitationRoom({
                   </p>
 
                   <span
-                    className={`mt-4 sm:mt-6 mb-1 inline-flex items-center justify-center gap-2 px-5 py-2.5 sm:px-6 sm:py-3 rounded-full border text-[11px] sm:text-sm font-semibold tracking-[0.18em] sm:tracking-[0.22em] uppercase shadow-md min-h-[40px] sm:min-h-[44px] ${style.coverCtaClass}`}
+                    className={`mt-3.5 sm:mt-6 inline-flex items-center justify-center gap-2 px-4 py-2 sm:px-6 sm:py-3 rounded-full border text-[11px] sm:text-sm font-semibold tracking-[0.16em] sm:tracking-[0.22em] uppercase shadow-md min-h-[38px] sm:min-h-[44px] ${style.coverCtaClass}`}
                   >
                     <BookOpen className="w-3.5 h-3.5 sm:w-4 sm:h-4 shrink-0" />
                     <span>{event.coverPrompt}</span>

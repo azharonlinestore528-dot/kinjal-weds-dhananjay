@@ -1,33 +1,16 @@
-import { useCallback, useEffect, useState } from 'react';
 import { FamilyBlessings } from './components/FamilyBlessings';
 import { FloatingFloralLayer } from './components/FloatingFloralLayer';
 import { GrandWeddingMandap } from './components/GrandWeddingMandap';
 import { MiniatureCelebrations } from './components/MiniatureCelebrations';
 import { LotusDivider } from './components/OrnamentalMotifs';
 import { PeacockSanctuary } from './components/PeacockSanctuary';
-import { RoyalFloralGate, type GateState } from './components/RoyalFloralGate';
+import { RoyalFloralGate } from './components/RoyalFloralGate';
 import { RoyalInvitationCard } from './components/RoyalInvitationCard';
 import { ScratchRevealCard } from './components/ScratchRevealCard';
 import { VenueAndRsvp } from './components/VenueAndRsvp';
 import { weddingConfig } from './config/weddingConfig';
 
 export default function App() {
-  const [gateState, setGateState] = useState<GateState>('closed');
-
-  const handleOpenGate = useCallback(() => {
-    setGateState((prev) => (prev === 'closed' ? 'opening' : prev));
-  }, []);
-
-  useEffect(() => {
-    if (gateState !== 'opening') return;
-    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
-    const timer = window.setTimeout(() => {
-      window.scrollTo({ top: 0, behavior: 'auto' });
-      setGateState('entered');
-    }, prefersReduced ? 180 : 1360);
-    return () => window.clearTimeout(timer);
-  }, [gateState]);
-
   const scrollToSection = (id: string) => {
     const el = document.getElementById(id);
     if (el) {
@@ -37,11 +20,11 @@ export default function App() {
 
   return (
     <div className="min-h-screen bg-[#FAF5EB] text-[#2B1418] relative">
-      {/* Dedicated Full-Screen Royal Floral Entrance Gate Stage */}
-      <RoyalFloralGate state={gateState} onTriggerOpen={handleOpenGate} />
-
       {/* Lightweight CSS-animated falling flower petals (zero JS loop, zero blur) */}
       <FloatingFloralLayer />
+
+      {/* Persistent Full-Screen Royal Floral Entrance Gate in Normal Document Flow */}
+      <RoyalFloralGate />
 
       {/* Clean 3-Zone Editorial Chapter Navigation Bar */}
       <header className="sticky top-0 z-30 bg-[#FAF5EB]/95 border-b border-[#C49A45]/45 shadow-sm">
