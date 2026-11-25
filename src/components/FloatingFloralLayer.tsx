@@ -1,158 +1,393 @@
-import { useEffect, useState } from 'react';
+import { useEffect, useRef } from 'react';
 
-type PetalKind =
-  | 'rose-pink'
+type FloralKind =
   | 'rose-red'
-  | 'rose-white'
+  | 'rose-pink'
   | 'lotus-pink'
   | 'lily-white'
-  | 'marigold';
+  | 'marigold'
+  | 'yellow-petal'
+  | 'green-leaf'
+  | 'jasmine-gold';
 
-interface StaticPetalSpec {
-  id: number;
-  kind: PetalKind;
-  leftPct: number;
-  sizePx: number;
-  durationSec: number;
-  delaySec: number;
-  anim: 'a' | 'b' | 'c';
-  desktopOnly?: boolean;
+interface FloralParticle {
+  kind: FloralKind;
+  x: number;
+  y: number;
+  vy: number;
+  vxDrift: number;
+  swayAmp: number;
+  swayFreq: number;
+  swayPhase: number;
+  rotation: number;
+  vr: number;
+  flutterPhase: number;
+  flutterSpeed: number;
+  size: number;
+  alpha: number;
 }
 
-// Controlled pool: 18 petals visible on mobile, 28 on desktop; zero JS render loop.
-const CONTROLLED_PETALS: StaticPetalSpec[] = [
-  { id: 1, kind: 'rose-pink', leftPct: 4, sizePx: 18, durationSec: 12.5, delaySec: -2, anim: 'a' },
-  { id: 2, kind: 'lotus-pink', leftPct: 9, sizePx: 23, durationSec: 15.5, delaySec: -7, anim: 'b' },
-  { id: 3, kind: 'marigold', leftPct: 14, sizePx: 16, durationSec: 13.5, delaySec: -4, anim: 'c' },
-  { id: 4, kind: 'lily-white', leftPct: 19, sizePx: 21, durationSec: 17.2, delaySec: -10, anim: 'b', desktopOnly: true },
-  { id: 5, kind: 'rose-red', leftPct: 24, sizePx: 19, durationSec: 14.5, delaySec: -6, anim: 'a' },
-  { id: 6, kind: 'rose-white', leftPct: 29, sizePx: 17, durationSec: 18.4, delaySec: -12, anim: 'c' },
-  { id: 7, kind: 'marigold', leftPct: 34, sizePx: 18, durationSec: 13.8, delaySec: -3, anim: 'a', desktopOnly: true },
-  { id: 8, kind: 'lotus-pink', leftPct: 39, sizePx: 22, durationSec: 16.4, delaySec: -9, anim: 'b' },
-  { id: 9, kind: 'rose-pink', leftPct: 44, sizePx: 19, durationSec: 12.9, delaySec: -5, anim: 'c' },
-  { id: 10, kind: 'lily-white', leftPct: 49, sizePx: 20, durationSec: 17.5, delaySec: -11, anim: 'b', desktopOnly: true },
-  { id: 11, kind: 'rose-red', leftPct: 54, sizePx: 17, durationSec: 15.1, delaySec: -1, anim: 'a' },
-  { id: 12, kind: 'rose-white', leftPct: 59, sizePx: 16, durationSec: 14.2, delaySec: -8, anim: 'c' },
-  { id: 13, kind: 'marigold', leftPct: 64, sizePx: 15, durationSec: 18.0, delaySec: -14, anim: 'b' },
-  { id: 14, kind: 'lotus-pink', leftPct: 69, sizePx: 24, durationSec: 16.2, delaySec: -11, anim: 'a', desktopOnly: true },
-  { id: 15, kind: 'rose-red', leftPct: 74, sizePx: 18, durationSec: 14.8, delaySec: -13, anim: 'c' },
-  { id: 16, kind: 'rose-pink', leftPct: 79, sizePx: 20, durationSec: 13.4, delaySec: -6, anim: 'a' },
-  { id: 17, kind: 'lily-white', leftPct: 84, sizePx: 19, durationSec: 18.8, delaySec: -15, anim: 'b' },
-  { id: 18, kind: 'marigold', leftPct: 89, sizePx: 16, durationSec: 15.6, delaySec: -9, anim: 'c' },
-  { id: 19, kind: 'rose-white', leftPct: 94, sizePx: 17, durationSec: 14.4, delaySec: -4, anim: 'a' },
-  { id: 20, kind: 'lotus-pink', leftPct: 16, sizePx: 20, durationSec: 19.2, delaySec: -16, anim: 'c', desktopOnly: true },
-  { id: 21, kind: 'rose-red', leftPct: 32, sizePx: 16, durationSec: 16.8, delaySec: -12, anim: 'b', desktopOnly: true },
-  { id: 22, kind: 'marigold', leftPct: 47, sizePx: 19, durationSec: 14.1, delaySec: -7, anim: 'a', desktopOnly: true },
-  { id: 23, kind: 'lily-white', leftPct: 61, sizePx: 22, durationSec: 17.9, delaySec: -3, anim: 'c', desktopOnly: true },
-  { id: 24, kind: 'rose-pink', leftPct: 76, sizePx: 16, durationSec: 15.9, delaySec: -14, anim: 'b', desktopOnly: true },
-  { id: 25, kind: 'rose-white', leftPct: 87, sizePx: 18, durationSec: 18.2, delaySec: -5, anim: 'a', desktopOnly: true },
-  { id: 26, kind: 'lotus-pink', leftPct: 26, sizePx: 19, durationSec: 14.7, delaySec: -10, anim: 'a' },
-  { id: 27, kind: 'rose-red', leftPct: 71, sizePx: 17, durationSec: 16.5, delaySec: -8, anim: 'b' },
-  { id: 28, kind: 'marigold', leftPct: 52, sizePx: 16, durationSec: 13.9, delaySec: -2, anim: 'c' },
+const ALL_KINDS: FloralKind[] = [
+  'rose-red',
+  'rose-pink',
+  'lotus-pink',
+  'lily-white',
+  'marigold',
+  'yellow-petal',
+  'green-leaf',
+  'rose-pink',
+  'lotus-pink',
+  'marigold',
+  'yellow-petal',
+  'green-leaf',
+  'jasmine-gold',
 ];
 
-function PetalSvg({ kind, sizePx }: { kind: PetalKind; sizePx: number }) {
-  if (kind === 'lotus-pink') {
-    return (
-      <svg width={sizePx} height={sizePx * 1.2} viewBox="0 0 24 28" fill="none">
-        <path
-          d="M12 2C17.5 8 18.5 19.5 12 26C5.5 19.5 6.5 8 12 2Z"
-          fill="#F48FB1"
-          fillOpacity="0.92"
-          stroke="#DB6387"
-          strokeWidth="0.7"
-        />
-        <line x1="12" y1="6" x2="12" y2="23" stroke="#FFF4E6" strokeOpacity="0.65" strokeWidth="0.8" />
-      </svg>
-    );
-  }
+function createSpriteCache(): Record<FloralKind, HTMLCanvasElement> {
+  const spriteSize = 64;
+  const center = spriteSize / 2;
 
-  if (kind === 'lily-white') {
-    return (
-      <svg width={sizePx} height={sizePx * 1.25} viewBox="0 0 22 28" fill="none">
-        <path
-          d="M11 1C15.5 7 16.5 17 11 26C5.5 17 6.5 7 11 1Z"
-          fill="#FFFBF2"
-          fillOpacity="0.94"
-          stroke="#D6B56A"
-          strokeWidth="0.75"
-        />
-        <line x1="11" y1="5" x2="11" y2="23" stroke="#DFBA66" strokeOpacity="0.6" strokeWidth="0.7" />
-      </svg>
-    );
-  }
+  const makeCanvas = (draw: (ctx: CanvasRenderingContext2D) => void): HTMLCanvasElement => {
+    const c = document.createElement('canvas');
+    c.width = spriteSize;
+    c.height = spriteSize;
+    const ctx = c.getContext('2d');
+    if (ctx) {
+      ctx.save();
+      ctx.translate(center, center);
+      draw(ctx);
+      ctx.restore();
+    }
+    return c;
+  };
 
-  if (kind === 'marigold') {
-    return (
-      <svg width={sizePx} height={sizePx} viewBox="0 0 24 24" fill="none">
-        <circle cx="12" cy="12" r="7" fill="#F59E0B" fillOpacity="0.92" />
-        <path
-          d="M12 3 L14.5 8 L20 7 L16.5 12 L20 17 L14.5 16 L12 21 L9.5 16 L4 17 L7.5 12 L4 7 L9.5 8 Z"
-          fill="#FBBF24"
-          fillOpacity="0.82"
-          stroke="#D97706"
-          strokeWidth="0.5"
-        />
-      </svg>
-    );
-  }
+  return {
+    'rose-red': makeCanvas((ctx) => {
+      // Multi-petal crimson rose blossom
+      for (let i = 0; i < 6; i++) {
+        ctx.save();
+        ctx.rotate((i * Math.PI) / 3);
+        ctx.beginPath();
+        ctx.moveTo(0, -4);
+        ctx.bezierCurveTo(14, -18, 22, -4, 8, 12);
+        ctx.bezierCurveTo(2, 16, -8, 10, 0, -4);
+        ctx.fillStyle = i % 2 === 0 ? '#BE123C' : '#9F1239';
+        ctx.fill();
+        ctx.strokeStyle = '#7A1126';
+        ctx.lineWidth = 0.9;
+        ctx.stroke();
+        ctx.restore();
+      }
+      ctx.beginPath();
+      ctx.arc(0, 0, 5.5, 0, Math.PI * 2);
+      ctx.fillStyle = '#FB7185';
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(0, 0, 2.2, 0, Math.PI * 2);
+      ctx.fillStyle = '#FDE68A';
+      ctx.fill();
+    }),
 
-  const fill =
-    kind === 'rose-red' ? '#BE123C' : kind === 'rose-white' ? '#FAF3E6' : '#F47296';
-  const stroke =
-    kind === 'rose-red' ? '#7A1126' : kind === 'rose-white' ? '#D6C4A6' : '#D95A7A';
+    'rose-pink': makeCanvas((ctx) => {
+      // Soft rose pink blossom & curled petals
+      for (let i = 0; i < 5; i++) {
+        ctx.save();
+        ctx.rotate((i * Math.PI * 2) / 5);
+        ctx.beginPath();
+        ctx.moveTo(0, -3);
+        ctx.bezierCurveTo(14, -17, 20, -2, 6, 11);
+        ctx.bezierCurveTo(0, 14, -8, 8, 0, -3);
+        ctx.fillStyle = i % 2 === 0 ? '#F47296' : '#EC5C85';
+        ctx.fill();
+        ctx.strokeStyle = '#BE436A';
+        ctx.lineWidth = 0.85;
+        ctx.stroke();
+        ctx.restore();
+      }
+      ctx.beginPath();
+      ctx.arc(0, 0, 4.5, 0, Math.PI * 2);
+      ctx.fillStyle = '#FBCFE8';
+      ctx.fill();
+    }),
 
-  return (
-    <svg width={sizePx} height={sizePx} viewBox="0 0 24 24" fill="none">
-      <path
-        d="M12 2C19 4 22 14 14 21C12 19 10 21 8 20C2 14 5 5 12 2Z"
-        fill={fill}
-        fillOpacity="0.9"
-        stroke={stroke}
-        strokeWidth="0.75"
-      />
-    </svg>
-  );
+    'lotus-pink': makeCanvas((ctx) => {
+      // Pointed lotus petal with central vein
+      ctx.beginPath();
+      ctx.moveTo(0, -22);
+      ctx.bezierCurveTo(14, -10, 14, 12, 0, 22);
+      ctx.bezierCurveTo(-14, 12, -14, -10, 0, -22);
+      const grad = ctx.createLinearGradient(0, -22, 0, 22);
+      grad.addColorStop(0, '#FBCFE8');
+      grad.addColorStop(0.55, '#F48FB1');
+      grad.addColorStop(1, '#DB6387');
+      ctx.fillStyle = grad;
+      ctx.fill();
+      ctx.strokeStyle = '#C95479';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(0, -16);
+      ctx.lineTo(0, 17);
+      ctx.strokeStyle = 'rgba(255, 245, 248, 0.72)';
+      ctx.lineWidth = 1.2;
+      ctx.stroke();
+    }),
+
+    'lily-white': makeCanvas((ctx) => {
+      // Graceful ivory-white lily petal with gold highlight
+      ctx.beginPath();
+      ctx.moveTo(0, -23);
+      ctx.bezierCurveTo(11, -11, 11, 11, 0, 23);
+      ctx.bezierCurveTo(-11, 11, -11, -11, 0, -23);
+      ctx.fillStyle = '#FFFDF7';
+      ctx.fill();
+      ctx.strokeStyle = '#D6B56A';
+      ctx.lineWidth = 1.1;
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(0, -15);
+      ctx.lineTo(0, 17);
+      ctx.strokeStyle = 'rgba(223, 186, 102, 0.75)';
+      ctx.lineWidth = 1.1;
+      ctx.stroke();
+    }),
+
+    marigold: makeCanvas((ctx) => {
+      // Traditional Indian genda (marigold) flower head
+      for (let i = 0; i < 10; i++) {
+        ctx.save();
+        ctx.rotate((i * Math.PI * 2) / 10);
+        ctx.beginPath();
+        ctx.ellipse(0, -12, 5.5, 9.5, 0, 0, Math.PI * 2);
+        ctx.fillStyle = i % 2 === 0 ? '#F59E0B' : '#FBBF24';
+        ctx.fill();
+        ctx.strokeStyle = '#D97706';
+        ctx.lineWidth = 0.75;
+        ctx.stroke();
+        ctx.restore();
+      }
+      ctx.beginPath();
+      ctx.arc(0, 0, 7.5, 0, Math.PI * 2);
+      ctx.fillStyle = '#D97706';
+      ctx.fill();
+      ctx.beginPath();
+      ctx.arc(0, 0, 3.5, 0, Math.PI * 2);
+      ctx.fillStyle = '#FDE68A';
+      ctx.fill();
+    }),
+
+    'yellow-petal': makeCanvas((ctx) => {
+      // Small golden yellow flower petal
+      ctx.beginPath();
+      ctx.moveTo(0, -17);
+      ctx.bezierCurveTo(11, -7, 10, 11, 0, 17);
+      ctx.bezierCurveTo(-10, 11, -11, -7, 0, -17);
+      ctx.fillStyle = '#FDE047';
+      ctx.fill();
+      ctx.strokeStyle = '#CA8A04';
+      ctx.lineWidth = 0.9;
+      ctx.stroke();
+    }),
+
+    'green-leaf': makeCanvas((ctx) => {
+      // Delicate mango/botanical leaf
+      ctx.beginPath();
+      ctx.moveTo(0, -22);
+      ctx.bezierCurveTo(11, -9, 10, 12, 0, 21);
+      ctx.bezierCurveTo(-10, 12, -11, -9, 0, -22);
+      ctx.fillStyle = '#4F7750';
+      ctx.fill();
+      ctx.strokeStyle = '#2F5233';
+      ctx.lineWidth = 0.95;
+      ctx.stroke();
+
+      ctx.beginPath();
+      ctx.moveTo(0, -16);
+      ctx.lineTo(0, 23);
+      ctx.strokeStyle = '#A7C99E';
+      ctx.lineWidth = 1;
+      ctx.stroke();
+    }),
+
+    'jasmine-gold': makeCanvas((ctx) => {
+      // Occasional decorative 5-petal jasmine / champa blossom with antique gold heart
+      for (let i = 0; i < 5; i++) {
+        ctx.save();
+        ctx.rotate((i * Math.PI * 2) / 5);
+        ctx.beginPath();
+        ctx.ellipse(0, -11, 4.5, 8.5, 0, 0, Math.PI * 2);
+        ctx.fillStyle = '#FFFBEB';
+        ctx.fill();
+        ctx.strokeStyle = '#DFBA66';
+        ctx.lineWidth = 0.9;
+        ctx.stroke();
+        ctx.restore();
+      }
+      ctx.beginPath();
+      ctx.arc(0, 0, 4.2, 0, Math.PI * 2);
+      ctx.fillStyle = '#D97706';
+      ctx.fill();
+    }),
+  };
+}
+
+function createParticle(
+  width: number,
+  height: number,
+  index: number,
+  spreadVertically: boolean
+): FloralParticle {
+  const kind = ALL_KINDS[index % ALL_KINDS.length];
+  const isAccent = kind === 'marigold' || kind === 'rose-red' || kind === 'jasmine-gold';
+  const size = isAccent
+    ? 14 + Math.random() * 9
+    : kind === 'yellow-petal'
+    ? 10 + Math.random() * 6
+    : 12 + Math.random() * 9;
+
+  return {
+    kind,
+    x: Math.random() * width,
+    y: spreadVertically ? Math.random() * (height + 80) - 40 : -30 - Math.random() * 60,
+    vy: 26 + Math.random() * 32,
+    vxDrift: (Math.random() - 0.5) * 14,
+    swayAmp: 12 + Math.random() * 26,
+    swayFreq: 0.7 + Math.random() * 1.1,
+    swayPhase: Math.random() * Math.PI * 2,
+    rotation: Math.random() * Math.PI * 2,
+    vr: (Math.random() - 0.5) * 1.4,
+    flutterPhase: Math.random() * Math.PI * 2,
+    flutterSpeed: 1.4 + Math.random() * 1.8,
+    size,
+    alpha: 0.52 + Math.random() * 0.28,
+  };
 }
 
 export function FloatingFloralLayer() {
-  const [isPaused, setIsPaused] = useState(false);
+  const canvasRef = useRef<HTMLCanvasElement | null>(null);
 
   useEffect(() => {
-    const handleVisibility = () => {
-      setIsPaused(document.hidden);
+    const canvas = canvasRef.current;
+    if (!canvas) return;
+
+    const motionQuery = window.matchMedia('(prefers-reduced-motion: reduce)');
+    if (motionQuery.matches) return;
+
+    const ctx = canvas.getContext('2d', { alpha: true });
+    if (!ctx) return;
+
+    const sprites = createSpriteCache();
+    let width = window.innerWidth;
+    let height = window.innerHeight;
+    let dpr = Math.min(window.devicePixelRatio || 1, 2);
+
+    const targetCount = width < 768 ? 52 : 58;
+    const particles: FloralParticle[] = Array.from({ length: targetCount }, (_, i) =>
+      createParticle(width, height, i, true)
+    );
+
+    const resize = () => {
+      width = window.innerWidth;
+      height = window.innerHeight;
+      dpr = Math.min(window.devicePixelRatio || 1, 2);
+      canvas.width = Math.floor(width * dpr);
+      canvas.height = Math.floor(height * dpr);
+      canvas.style.width = `${width}px`;
+      canvas.style.height = `${height}px`;
+      ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
     };
+
+    resize();
+
+    let rafId = 0;
+    let lastTime = performance.now();
+    let elapsed = 0;
+    let paused = document.hidden;
+
+    const tick = (now: number) => {
+      if (paused || motionQuery.matches) return;
+
+      const dt = Math.min((now - lastTime) / 1000, 0.05);
+      lastTime = now;
+      elapsed += dt;
+
+      ctx.clearRect(0, 0, width, height);
+
+      for (let i = 0; i < particles.length; i++) {
+        const p = particles[i];
+        p.y += p.vy * dt;
+        p.x += p.vxDrift * dt;
+        p.rotation += p.vr * dt;
+        p.flutterPhase += p.flutterSpeed * dt;
+
+        const swayX = Math.sin(elapsed * p.swayFreq + p.swayPhase) * p.swayAmp;
+        const drawX = p.x + swayX;
+
+        if (p.y > height + 36) {
+          p.y = -28 - Math.random() * 35;
+          p.x = Math.random() * width;
+        }
+        if (drawX < -40) p.x += width + 60;
+        if (drawX > width + 40) p.x -= width + 60;
+
+        const flutterScaleX = 0.68 + 0.32 * Math.cos(p.flutterPhase);
+
+        ctx.save();
+        ctx.globalAlpha = p.alpha;
+        ctx.translate(drawX, p.y);
+        ctx.rotate(p.rotation);
+        ctx.scale(flutterScaleX, 1);
+        const half = p.size / 2;
+        ctx.drawImage(sprites[p.kind], -half, -half, p.size, p.size);
+        ctx.restore();
+      }
+
+      rafId = window.requestAnimationFrame(tick);
+    };
+
+    const handleVisibility = () => {
+      paused = document.hidden;
+      if (!paused && !motionQuery.matches) {
+        lastTime = performance.now();
+        rafId = window.requestAnimationFrame(tick);
+      } else if (paused && rafId) {
+        window.cancelAnimationFrame(rafId);
+      }
+    };
+
+    const handleMotionChange = () => {
+      if (motionQuery.matches) {
+        if (rafId) window.cancelAnimationFrame(rafId);
+        ctx.clearRect(0, 0, width, height);
+      } else if (!paused) {
+        lastTime = performance.now();
+        rafId = window.requestAnimationFrame(tick);
+      }
+    };
+
+    window.addEventListener('resize', resize, { passive: true });
     document.addEventListener('visibilitychange', handleVisibility);
-    return () => document.removeEventListener('visibilitychange', handleVisibility);
+    motionQuery.addEventListener('change', handleMotionChange);
+
+    if (!paused) {
+      rafId = window.requestAnimationFrame(tick);
+    }
+
+    return () => {
+      if (rafId) window.cancelAnimationFrame(rafId);
+      window.removeEventListener('resize', resize);
+      document.removeEventListener('visibilitychange', handleVisibility);
+      motionQuery.removeEventListener('change', handleMotionChange);
+    };
   }, []);
 
   return (
-    <div
+    <canvas
+      ref={canvasRef}
       aria-hidden="true"
-      className="fixed inset-0 z-20 overflow-hidden pointer-events-none select-none motion-reduce:hidden"
-    >
-      {CONTROLLED_PETALS.map((p) => {
-        const animClass =
-          p.anim === 'a'
-            ? 'animate-petal-a'
-            : p.anim === 'b'
-            ? 'animate-petal-b'
-            : 'animate-petal-c';
-        return (
-          <div
-            key={p.id}
-            className={`absolute top-0 ${p.desktopOnly ? 'hidden sm:block' : ''} ${animClass}`}
-            style={{
-              left: `${p.leftPct}%`,
-              animationDuration: `${p.durationSec}s`,
-              animationDelay: `${p.delaySec}s`,
-              animationPlayState: isPaused ? 'paused' : 'running',
-            }}
-          >
-            <PetalSvg kind={p.kind} sizePx={p.sizePx} />
-          </div>
-        );
-      })}
-    </div>
+      className="fixed inset-0 z-[25] pointer-events-none select-none motion-reduce:hidden"
+    />
   );
 }

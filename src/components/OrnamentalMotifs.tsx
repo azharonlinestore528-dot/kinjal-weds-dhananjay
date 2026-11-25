@@ -514,4 +514,37 @@ export function SacredGaneshaMedallion({ className = '' }: { className?: string 
   );
 }
 
+export function HaldiSunflowerMedallion({ className = '' }: { className?: string }) {
+  return (
+    <svg
+      aria-hidden="true"
+      viewBox="0 0 112 112"
+      fill="none"
+      className={`pointer-events-none select-none ${className}`}
+    >
+      <circle cx="56" cy="56" r="48" fill="#FEF9C3" stroke="#CA8A04" strokeWidth="1.6" />
+      {Array.from({ length: 14 }).map((_, i) => {
+        const angle = (i * 360) / 14;
+        return (
+          <g key={i} transform={`translate(56, 56) rotate(${angle})`}>
+            <path
+              d="M0 -42 C6 -29 6 -16 0 -10 C-6 -16 -6 -29 0 -42 Z"
+              fill={i % 2 === 0 ? '#FACC15' : '#F59E0B'}
+              stroke="#B45309"
+              strokeWidth="0.7"
+            />
+          </g>
+        );
+      })}
+      <circle cx="56" cy="56" r="17" fill="#92400E" stroke="#FDE047" strokeWidth="2" />
+      <circle cx="56" cy="56" r="10" fill="#B45309" />
+      <circle cx="51" cy="52" r="1.8" fill="#FEF08A" />
+      <circle cx="60" cy="53" r="1.8" fill="#FEF08A" />
+      <circle cx="55" cy="60" r="1.8" fill="#FEF08A" />
+      <path d="M24 84 C34 74 44 82 38 92 C31 92 26 88 24 84 Z" fill="#4F7750" />
+      <path d="M88 84 C78 74 68 82 74 92 C81 92 86 88 88 84 Z" fill="#4F7750" />
+    </svg>
+  );
+}
+
 

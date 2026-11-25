@@ -88,11 +88,11 @@
 }
 
 .theme-grahshanti {
-  background-color: #f8f1e2;
+  background-color: #f6f2e4;
   background-image:
-    radial-gradient(circle at 50% 15%, rgba(196, 154, 69, 0.18) 0%, transparent 52%),
-    radial-gradient(circle at 15% 85%, rgba(180, 83, 9, 0.09) 0%, transparent 48%),
-    linear-gradient(180deg, #fbf6ea 0%, #efe2c8 100%);
+    radial-gradient(circle at 14% 16%, rgba(79, 119, 80, 0.16) 0%, transparent 48%),
+    radial-gradient(circle at 86% 84%, rgba(196, 154, 69, 0.2) 0%, transparent 52%),
+    linear-gradient(180deg, #faf7ee 0%, #ebe7d4 100%);
 }
 
 .theme-wedding-maroon {
@@ -111,8 +111,8 @@
 }
 
 .perspective-card-stage {
-  perspective: 1400px;
-  perspective-origin: 50% 35%;
+  perspective: 1650px;
+  perspective-origin: 50% 42%;
 }
 
 .preserve-3d {
@@ -124,40 +124,44 @@
   -webkit-backface-visibility: hidden;
 }
 
-/* Lightweight GPU-composited upward/forward card cover hinge transition */
+/* Realistic left-spined physical wedding invitation book cover opening */
 .book-cover-flap {
-  transform-origin: top center;
+  transform-origin: left center;
   transition:
-    transform 660ms cubic-bezier(0.22, 1, 0.36, 1),
-    opacity 420ms ease 220ms;
+    transform 680ms cubic-bezier(0.22, 1, 0.36, 1) 140ms,
+    opacity 360ms ease 360ms;
   will-change: transform, opacity;
 }
 
 .book-cover-flap.is-open {
-  transform: rotateX(156deg) translateZ(16px);
+  transform: rotateY(-156deg) translateZ(8px);
   opacity: 0;
   pointer-events: none;
 }
 
 .book-cover-flap.is-closed {
-  transform: rotateX(0deg) translateZ(0px);
+  transform: rotateY(0deg) translateZ(1px);
   opacity: 1;
+  transition:
+    transform 540ms cubic-bezier(0.22, 1, 0.36, 1) 0ms,
+    opacity 240ms ease 0ms;
 }
 
 .book-interior-content {
   transition:
-    opacity 420ms ease 140ms,
-    transform 520ms cubic-bezier(0.22, 1, 0.36, 1) 120ms;
+    opacity 460ms ease 180ms,
+    transform 560ms cubic-bezier(0.22, 1, 0.36, 1) 160ms;
+  will-change: transform, opacity;
 }
 
 .book-interior-content.is-hidden {
-  opacity: 0.12;
-  transform: translate3d(0, 12px, 0);
+  opacity: 0.16;
+  transform: scale(0.97);
 }
 
 .book-interior-content.is-visible {
   opacity: 1;
-  transform: translate3d(0, 0, 0);
+  transform: scale(1);
 }
 
 /* Lightweight GPU-composited falling flower petal animation */
