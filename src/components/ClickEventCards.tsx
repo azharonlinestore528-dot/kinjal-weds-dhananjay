@@ -2,9 +2,11 @@ import {
   Calendar,
   ChevronLeft,
   ChevronRight,
+  ChevronUp,
   Clock,
   MapPin,
   MessageCircle,
+  Sparkles,
 } from 'lucide-react';
 import {
   useCallback,
@@ -224,19 +226,27 @@ function EventSlideCard({
   event,
   index,
   isActive,
+  isGaneshOpened,
+  showGaneshShine,
   slideWidth,
   onSelect,
+  onOpenGanesh,
   onJumpToRsvp,
 }: {
   event: BilingualEventConfig;
   index: number;
   isActive: boolean;
+  isGaneshOpened: boolean;
+  showGaneshShine: boolean;
   slideWidth: number;
   onSelect: (idx: number) => void;
+  onOpenGanesh: () => void;
   onJumpToRsvp: () => void;
 }) {
   const style = ROOM_STYLES[event.id];
+  const isGanesh = event.id === 'ganesh';
   const isMainWedding = event.id === 'wedding';
+  const isCardOpen = isGanesh ? isActive && isGaneshOpened : isActive;
   const whatsappUrl = getWhatsAppUrl();
 
   const jumpToVenue = () => {
@@ -262,11 +272,11 @@ function EventSlideCard({
         )}
 
         <div className="relative preserve-3d">
-          {/* LAYER 1: Open Wedding Invitation Book Interior (Automatically Revealed When Active) */}
+          {/* LAYER 1: Open Wedding Invitation Book Interior (Ganesh opens after TAP TO OPEN; others open automatically when active) */}
           <article
-            aria-hidden={!isActive}
+            aria-hidden={!isCardOpen}
             className={`book-interior-content ${
-              isActive ? 'is-visible relative' : 'is-hidden relative pointer-events-none'
+              isCardOpen ? 'is-visible relative' : 'is-hidden relative pointer-events-none'
             } min-h-[452px] sm:min-h-[470px] rounded-2xl sm:rounded-3xl border-2 ${style.interiorClass} ${
               style.interiorBorderClass
             } shadow-[0_24px_64px_rgba(10,3,5,0.48)] overflow-hidden flex flex-col justify-between`}
@@ -471,113 +481,278 @@ function EventSlideCard({
             </div>
           </article>
 
-          {/* LAYER 2: Ornate Left-Spined Physical Invitation Book Cover (Closed on Side Previews, Swings Open on Active) */}
-          <div
-            className={`book-cover-flap preserve-3d absolute inset-0 z-30 ${
-              isActive ? 'is-open' : 'is-closed'
-            }`}
-          >
-            <button
-              type="button"
-              onClick={() => onSelect(index)}
-              tabIndex={isActive ? -1 : 0}
-              aria-hidden={isActive}
-              aria-label={`Select ${event.englishName} invitation`}
-              style={{ background: style.coverGradient }}
-              className={`backface-hidden relative w-full h-full rounded-2xl sm:rounded-3xl border-2 ${style.coverBorderClass} shadow-[0_20px_52px_rgba(10,3,5,0.45)] flex flex-col items-center justify-center px-5 py-7 sm:p-10 text-center cursor-pointer overflow-hidden`}
-            >
-              {/* Left Physical Book Spine Shading */}
-              <div
-                aria-hidden="true"
-                className="pointer-events-none absolute inset-y-0 left-0 w-3 sm:w-4 bg-gradient-to-r from-black/25 via-white/20 to-transparent border-r border-[#C49A45]/45"
-              />
-
-              {/* Inner Gilt Border */}
-              <div
-                aria-hidden="true"
-                className={`pointer-events-none absolute inset-3 sm:inset-4 rounded-xl sm:rounded-2xl border ${style.coverBorderClass} opacity-65`}
-              />
-
-              {isMainWedding && (
+          {/* LAYER 2: Cover Page (Special Bottom-to-Top Cover for Ganesh Puja ONLY; Standard Auto-Opening Cover for All Others) */}
+          {isGanesh ? (
+            <>
+              {showGaneshShine && (
                 <div
                   aria-hidden="true"
-                  className="pointer-events-none absolute inset-5 sm:inset-7 rounded-t-[120px] sm:rounded-t-[160px] rounded-b-xl border border-[#DFBA66]/55"
+                  className="animate-ganesh-shine pointer-events-none absolute inset-0 z-40 rounded-2xl sm:rounded-3xl"
+                  style={{
+                    background:
+                      'linear-gradient(to top, rgba(253, 230, 138, 0) 0%, rgba(255, 246, 204, 0.82) 45%, rgba(223, 186, 102, 0.36) 78%, rgba(255, 255, 255, 0) 100%)',
+                  }}
                 />
               )}
 
-              {/* Cover Floral Corners */}
-              <FloralCornerCluster
-                variant={style.cornerVariant}
-                position="top-left"
-                className="absolute top-1 left-1 w-11 h-11 sm:w-24 sm:h-24 opacity-95"
-              />
-              <FloralCornerCluster
-                variant={style.cornerVariant}
-                position="top-right"
-                className="absolute top-1 right-1 w-11 h-11 sm:w-24 sm:h-24 opacity-95"
-              />
-              <FloralCornerCluster
-                variant={style.cornerVariant}
-                position="bottom-left"
-                className="absolute bottom-1 left-1 w-10 h-10 sm:w-22 sm:h-22 opacity-90"
-              />
-              <FloralCornerCluster
-                variant={style.cornerVariant}
-                position="bottom-right"
-                className="absolute bottom-1 right-1 w-10 h-10 sm:w-22 sm:h-22 opacity-90"
-              />
-
-              <div className="relative z-10 w-full max-w-md flex flex-col items-center px-3">
-                <CoverOrnamentCenterpiece event={event} />
-
-                <p
-                  lang="gu"
-                  className={`font-gujarati text-sm sm:text-xl font-semibold mt-1 sm:mt-2 ${style.coverSubClass}`}
+              <div
+                className={`book-cover-flap-upward preserve-3d absolute inset-0 z-30 ${
+                  isCardOpen ? 'is-open' : 'is-closed'
+                }`}
+              >
+                <div
+                  onClick={() => {
+                    if (isActive) {
+                      onOpenGanesh();
+                    } else {
+                      onSelect(index);
+                    }
+                  }}
+                  aria-hidden={isCardOpen}
+                  style={{ background: style.coverGradient }}
+                  className={`backface-hidden relative w-full h-full rounded-2xl sm:rounded-3xl border-2 ${style.coverBorderClass} shadow-[0_20px_56px_rgba(10,3,5,0.48)] flex flex-col items-center justify-center px-5 py-6 sm:p-9 text-center cursor-pointer overflow-hidden`}
                 >
-                  {event.coverSealText}
-                </p>
+                  {/* Top Physical Crease Shading Hinting Vertical Upward Opening */}
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-x-0 top-0 h-3 bg-gradient-to-b from-black/15 via-white/25 to-transparent border-b border-[#C49A45]/45"
+                  />
 
-                <LotusDivider
-                  tone={style.dividerTone}
-                  className="my-1.5 sm:my-3 scale-75 sm:scale-100"
+                  {/* Traditional Ornamental Double Borders */}
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-2.5 sm:inset-4 rounded-xl sm:rounded-2xl border border-[#D97706]/65"
+                  />
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-4 sm:inset-6 rounded-lg sm:rounded-xl border border-dashed border-[#C49A45]/55"
+                  />
+
+                  {/* Top Marigold Toran & Four Floral Corners */}
+                  <HangingFloralToran
+                    tone="marigold"
+                    className="hidden sm:block absolute top-1 left-1/2 -translate-x-1/2 max-w-[260px] opacity-90"
+                  />
+                  <FloralCornerCluster
+                    variant="jasmine-saffron"
+                    position="top-left"
+                    className="absolute top-1 left-1 w-12 h-12 sm:w-24 sm:h-24 opacity-95"
+                  />
+                  <FloralCornerCluster
+                    variant="jasmine-saffron"
+                    position="top-right"
+                    className="absolute top-1 right-1 w-12 h-12 sm:w-24 sm:h-24 opacity-95"
+                  />
+                  <FloralCornerCluster
+                    variant="jasmine-saffron"
+                    position="bottom-left"
+                    className="absolute bottom-1 left-1 w-11 h-11 sm:w-22 sm:h-22 opacity-90"
+                  />
+                  <FloralCornerCluster
+                    variant="jasmine-saffron"
+                    position="bottom-right"
+                    className="absolute bottom-1 right-1 w-11 h-11 sm:w-22 sm:h-22 opacity-90"
+                  />
+
+                  {/* Subtle Lotus Floral Side Accents */}
+                  <DecorativeCutout
+                    src={weddingConfig.decor.lotusCluster}
+                    alt=""
+                    className="hidden sm:block absolute -bottom-2 left-10 w-20 h-auto opacity-80"
+                  />
+                  <DecorativeCutout
+                    src={weddingConfig.decor.kalashCoconut}
+                    alt=""
+                    className="hidden sm:block absolute bottom-3 right-10 w-14 h-auto opacity-85"
+                  />
+
+                  <div className="relative z-10 w-full max-w-md flex flex-col items-center px-3">
+                    {/* Framed Traditional Ganesh Puja Artwork + Medallion */}
+                    <div className="relative flex items-center justify-center mb-1.5 sm:mb-2.5">
+                      <div className="w-24 h-24 sm:w-32 sm:h-32 rounded-t-full rounded-b-xl border-2 border-[#C49A45] shadow-md overflow-hidden bg-[#FFF9EE]">
+                        {event.artworkSrc ? (
+                          <img
+                            src={event.artworkSrc}
+                            alt={event.artworkAlt}
+                            loading="eager"
+                            decoding="async"
+                            referrerPolicy="no-referrer"
+                            className="w-full h-full object-cover block"
+                          />
+                        ) : (
+                          <SacredGaneshaMedallion className="w-full h-full p-2" />
+                        )}
+                      </div>
+                      <SacredGaneshaMedallion className="absolute -bottom-2 -right-3 w-10 h-10 sm:w-12 sm:h-12 drop-shadow" />
+                    </div>
+
+                    <SilkRibbonBow
+                      variant="saffron"
+                      className="w-24 sm:w-28 h-7 sm:h-9 -mt-1"
+                    />
+
+                    {/* Gujarati Auspicious Invocation */}
+                    <p
+                      lang="gu"
+                      className="font-gujarati text-sm sm:text-lg font-semibold text-[#9A3412] mt-1"
+                    >
+                      {event.coverSealText}
+                    </p>
+
+                    <LotusDivider
+                      tone="saffron"
+                      className="my-1.5 sm:my-2.5 scale-75 sm:scale-100"
+                    />
+
+                    <h4 className="text-2xl sm:text-4xl font-semibold tracking-[0.06em] uppercase text-[#7C2D12]">
+                      {event.englishName}
+                    </h4>
+                    <p
+                      lang="gu"
+                      className="font-gujarati text-lg sm:text-2xl font-semibold text-[#9A3412] mt-0.5"
+                    >
+                      {event.gujaratiName}
+                    </p>
+
+                    <button
+                      type="button"
+                      tabIndex={isCardOpen ? -1 : 0}
+                      onClick={(e) => {
+                        e.stopPropagation();
+                        if (isActive) {
+                          onOpenGanesh();
+                        } else {
+                          onSelect(index);
+                        }
+                      }}
+                      className="mt-4 sm:mt-5 inline-flex items-center justify-center gap-2.5 min-h-[44px] px-6 py-2.5 sm:px-7 sm:py-3 rounded-full border-2 border-[#FDE68A]/85 bg-gradient-to-b from-[#9A3412] to-[#7C2D12] text-[#FFFDF7] text-xs sm:text-sm font-bold tracking-[0.22em] uppercase shadow-[0_8px_24px_rgba(124,45,18,0.38)] hover:brightness-110 active:scale-[0.98] transition-all cursor-pointer whitespace-nowrap"
+                    >
+                      <Sparkles className="w-4 h-4 text-[#FDE68A] shrink-0" />
+                      <span>TAP TO OPEN</span>
+                      <ChevronUp className="w-4 h-4 text-[#FDE68A] shrink-0" />
+                    </button>
+                  </div>
+                </div>
+
+                {/* Underside Foil Face Seen While Cover Lifts Upward */}
+                <div
+                  aria-hidden="true"
+                  className="backface-hidden absolute inset-0 rounded-2xl sm:rounded-3xl border-2 border-[#D97706]/85 shadow-inner"
+                  style={{
+                    background: style.coverUndersideGradient,
+                    transform: 'rotateX(180deg)',
+                  }}
+                />
+              </div>
+            </>
+          ) : (
+            <div
+              className={`book-cover-flap preserve-3d absolute inset-0 z-30 ${
+                isCardOpen ? 'is-open' : 'is-closed'
+              }`}
+            >
+              <button
+                type="button"
+                onClick={() => onSelect(index)}
+                tabIndex={isCardOpen ? -1 : 0}
+                aria-hidden={isCardOpen}
+                aria-label={`Select ${event.englishName} invitation`}
+                style={{ background: style.coverGradient }}
+                className={`backface-hidden relative w-full h-full rounded-2xl sm:rounded-3xl border-2 ${style.coverBorderClass} shadow-[0_20px_52px_rgba(10,3,5,0.45)] flex flex-col items-center justify-center px-5 py-7 sm:p-10 text-center cursor-pointer overflow-hidden`}
+              >
+                {/* Left Physical Book Spine Shading */}
+                <div
+                  aria-hidden="true"
+                  className="pointer-events-none absolute inset-y-0 left-0 w-3 sm:w-4 bg-gradient-to-r from-black/25 via-white/20 to-transparent border-r border-[#C49A45]/45"
                 />
 
-                <p
-                  className={`text-[11px] sm:text-sm tracking-[0.14em] sm:tracking-[0.22em] uppercase font-semibold tabular-nums ${style.coverSubClass}`}
-                >
-                  {event.date} · {event.time}
-                </p>
+                {/* Inner Gilt Border */}
+                <div
+                  aria-hidden="true"
+                  className={`pointer-events-none absolute inset-3 sm:inset-4 rounded-xl sm:rounded-2xl border ${style.coverBorderClass} opacity-65`}
+                />
 
-                <h4
-                  className={`text-xl sm:text-4xl font-semibold tracking-[0.05em] uppercase mt-1.5 sm:mt-2 ${style.coverTextClass}`}
-                >
-                  {event.englishName}
-                </h4>
-                <p
-                  lang="gu"
-                  className={`font-gujarati text-base sm:text-2xl font-semibold mt-0.5 sm:mt-1 ${style.coverSubClass}`}
-                >
-                  {event.gujaratiName}
-                </p>
+                {isMainWedding && (
+                  <div
+                    aria-hidden="true"
+                    className="pointer-events-none absolute inset-5 sm:inset-7 rounded-t-[120px] sm:rounded-t-[160px] rounded-b-xl border border-[#DFBA66]/55"
+                  />
+                )}
 
-                <p
-                  className={`mt-4 text-[11px] sm:text-xs tracking-[0.22em] uppercase font-semibold opacity-80 ${style.coverSubClass}`}
-                >
-                  Swipe or Tap to Unfold
-                </p>
-              </div>
-            </button>
+                {/* Cover Floral Corners */}
+                <FloralCornerCluster
+                  variant={style.cornerVariant}
+                  position="top-left"
+                  className="absolute top-1 left-1 w-11 h-11 sm:w-24 sm:h-24 opacity-95"
+                />
+                <FloralCornerCluster
+                  variant={style.cornerVariant}
+                  position="top-right"
+                  className="absolute top-1 right-1 w-11 h-11 sm:w-24 sm:h-24 opacity-95"
+                />
+                <FloralCornerCluster
+                  variant={style.cornerVariant}
+                  position="bottom-left"
+                  className="absolute bottom-1 left-1 w-10 h-10 sm:w-22 sm:h-22 opacity-90"
+                />
+                <FloralCornerCluster
+                  variant={style.cornerVariant}
+                  position="bottom-right"
+                  className="absolute bottom-1 right-1 w-10 h-10 sm:w-22 sm:h-22 opacity-90"
+                />
 
-            {/* Underside Cover Foil Lining Seen Mid-Swing */}
-            <div
-              aria-hidden="true"
-              className={`backface-hidden absolute inset-0 rounded-2xl sm:rounded-3xl border-2 ${style.coverBorderClass} shadow-inner`}
-              style={{
-                background: style.coverUndersideGradient,
-                transform: 'rotateY(180deg)',
-              }}
-            />
-          </div>
+                <div className="relative z-10 w-full max-w-md flex flex-col items-center px-3">
+                  <CoverOrnamentCenterpiece event={event} />
+
+                  <p
+                    lang="gu"
+                    className={`font-gujarati text-sm sm:text-xl font-semibold mt-1 sm:mt-2 ${style.coverSubClass}`}
+                  >
+                    {event.coverSealText}
+                  </p>
+
+                  <LotusDivider
+                    tone={style.dividerTone}
+                    className="my-1.5 sm:my-3 scale-75 sm:scale-100"
+                  />
+
+                  <p
+                    className={`text-[11px] sm:text-sm tracking-[0.14em] sm:tracking-[0.22em] uppercase font-semibold tabular-nums ${style.coverSubClass}`}
+                  >
+                    {event.date} · {event.time}
+                  </p>
+
+                  <h4
+                    className={`text-xl sm:text-4xl font-semibold tracking-[0.05em] uppercase mt-1.5 sm:mt-2 ${style.coverTextClass}`}
+                  >
+                    {event.englishName}
+                  </h4>
+                  <p
+                    lang="gu"
+                    className={`font-gujarati text-base sm:text-2xl font-semibold mt-0.5 sm:mt-1 ${style.coverSubClass}`}
+                  >
+                    {event.gujaratiName}
+                  </p>
+
+                  <p
+                    className={`mt-4 text-[11px] sm:text-xs tracking-[0.22em] uppercase font-semibold opacity-80 ${style.coverSubClass}`}
+                  >
+                    Swipe or Tap to Unfold
+                  </p>
+                </div>
+              </button>
+
+              {/* Underside Cover Foil Lining Seen Mid-Swing */}
+              <div
+                aria-hidden="true"
+                className={`backface-hidden absolute inset-0 rounded-2xl sm:rounded-3xl border-2 ${style.coverBorderClass} shadow-inner`}
+                style={{
+                  background: style.coverUndersideGradient,
+                  transform: 'rotateY(180deg)',
+                }}
+              />
+            </div>
+          )}
         </div>
       </div>
     </div>
@@ -600,6 +775,31 @@ export function ClickEventCards({
   const [viewportWidth, setViewportWidth] = useState<number>(() =>
     typeof window !== 'undefined' ? window.innerWidth : 1024
   );
+  const [isGaneshOpened, setIsGaneshOpened] = useState(false);
+  const [showGaneshShine, setShowGaneshShine] = useState(false);
+  const shineTimerRef = useRef<number | null>(null);
+
+  useEffect(() => {
+    return () => {
+      if (shineTimerRef.current !== null) {
+        window.clearTimeout(shineTimerRef.current);
+      }
+    };
+  }, []);
+
+  const handleOpenGanesh = useCallback(() => {
+    setIsGaneshOpened(true);
+    const prefersReduced = window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (!prefersReduced) {
+      setShowGaneshShine(true);
+      if (shineTimerRef.current !== null) {
+        window.clearTimeout(shineTimerRef.current);
+      }
+      shineTimerRef.current = window.setTimeout(() => {
+        setShowGaneshShine(false);
+      }, 880);
+    }
+  }, []);
 
   // Refs for 60fps horizontal swipe/drag without React re-render overhead
   const dragStateRef = useRef<{
@@ -733,6 +933,11 @@ export function ClickEventCards({
       if (st.mode !== 'touch') return;
 
       if (st.lock === 'horizontal') {
+        suppressClickRef.current = true;
+        window.setTimeout(() => {
+          suppressClickRef.current = false;
+        }, 80);
+
         const dt = performance.now() - st.startTime;
         const threshold = Math.min(48, slideWidth * 0.16);
         const isQuickFlick = Math.abs(st.dx) > 22 && dt < 260;
@@ -986,8 +1191,11 @@ export function ClickEventCards({
                 event={event}
                 index={idx}
                 isActive={idx === activeIndex}
+                isGaneshOpened={isGaneshOpened}
+                showGaneshShine={showGaneshShine}
                 slideWidth={slideWidth}
                 onSelect={goToIndex}
+                onOpenGanesh={handleOpenGanesh}
                 onJumpToRsvp={onJumpToRsvp}
               />
             ))}
